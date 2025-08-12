@@ -14,3 +14,5 @@ LazyData: true
 Imports:
   midr, parsnip
 RoxygenNote: 7.3.2
+URL: https://github.com/ryo-asashi/midnight
+BugReports: https://github.com/ryo-asashi/midnight/issues
