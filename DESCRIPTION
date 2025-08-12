@@ -1,0 +1,16 @@
+Package: midnight
+Type: Package
+Title: A Tidymodels Interface for the 'midr' Package
+Version: 0.1.0
+Authors@R: c(
+    person("Ryoichi", "Asasihba", email = "ryoichi.asashiba@gmail.com",
+           role = c("aut", "cre"))
+  )
+Description:
+  The 'midnight' package implements a 'parsnip' engine for the 'midr' package, allowing users to seamlessly fit, tune, and evaluate MID (Maximum Interpretation Decomposition) models with 'tidymodels' workflows. Development and augmentation of the package are driven by research from the "Moonlight Seminar 2025", a collaborative study group of actuaries from the Institute of Actuaries of Japan focused on advancing the practical applications of interpretable models.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+  midr, parsnip
+RoxygenNote: 7.3.2
