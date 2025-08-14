@@ -1,7 +1,7 @@
 Package: midnight
 Type: Package
 Title: A Tidymodels Interface for the 'midr' Package
-Version: 0.1.0.900
+Version: 0.1.0.901
 Authors@R: c(
     person("Ryoichi", "Asasihba", email = "ryoichi.asashiba@gmail.com",
            role = c("aut", "cre"))
@@ -12,7 +12,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
-  midr, parsnip
+  midr, parsnip, rlang
 RoxygenNote: 7.3.2
-URL: https://github.com/ryo-asashi/midnight
+URL: https://github.com/ryo-asashi/midnight, https://ryo-asashi.github.io/midnight/
 BugReports: https://github.com/ryo-asashi/midnight/issues

@@ -111,6 +111,7 @@ fit_mid_surrogate <- function(
 ) {
   k <- c(params_main, params_inter)
   if (!is.null(custom_formula)) {
+    environment(custom_formula) <- rlang::ns_env("midnight")
     data <- cbind(y, x)
     names(data)[1L] <- as.character(custom_formula[[2L]])
     midr::interpret(

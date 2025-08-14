@@ -1,0 +1,10 @@
+url: https://ryo-asashi.github.io/midnight/
+
+template:
+  bootstrap: 5
+  bootswatch: slate
+
+reference:
+- title: Parsnip Interface
+  contents:
+  - mid_surrogate
