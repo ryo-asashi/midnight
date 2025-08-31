@@ -33,16 +33,26 @@ This is a basic example which shows you how to solve a common problem:
 library(parsnip)
 library(midr)
 library(midnight)
-library(khroma)
 library(ggplot2)
 library(gridExtra)
-theme_set(theme_midr())
+library(tune)
+library(rsample)
+theme_set(theme_midr("y"))
+```
+
+``` r
 # create a first-order mid surrogate model
-mid_spec_1 <- mid_surrogate() %>%
+mid_spec_1 <- mid_surrogate(
+  params_main = 50, penalty = .9
+) %>%
   set_mode("regression") %>%
   set_engine("midr", verbosity = 3)
 mid_spec_1
 #> mid surrogate Model Specification (regression)
+#> 
+#> Main Arguments:
+#>   penalty = 0.9
+#>   params_main = 50
 #> 
 #> Engine-Specific Arguments:
 #>   verbosity = 3
@@ -50,7 +60,7 @@ mid_spec_1
 #> Computational engine: midr
 # fit the model
 mid_1 <- mid_spec_1 %>%
-  fit_xy(x = airquality[, -1], y = airquality[1])
+  fit(Ozone ~ ., airquality)
 mid_1
 #> parsnip model object
 #> 
@@ -64,7 +74,10 @@ mid_1
 #> Main Effects:
 #> 5 main effect terms
 #> 
-#> Uninterpreted Variation Ratio: 0.028441
+#> Uninterpreted Variation Ratio: 0.085045
+```
+
+``` r
 # create a second-order mid surrogate model via "custom formula"
 mid_spec_2 <- mid_surrogate(
   params_main = 50, params_inter = 5, penalty = .9,
@@ -72,9 +85,22 @@ mid_spec_2 <- mid_surrogate(
 ) %>%
   set_mode("regression") %>%
   set_engine("midr", verbosity = 3)
+mid_spec_2
+#> mid surrogate Model Specification (regression)
+#> 
+#> Main Arguments:
+#>   penalty = 0.9
+#>   params_main = 50
+#>   params_inter = 5
+#>   custom_formula = Ozone ~ .^2
+#> 
+#> Engine-Specific Arguments:
+#>   verbosity = 3
+#> 
+#> Computational engine: midr
 # fit the model
 mid_2 <- mid_spec_2 %>%
-  fit_xy(x = airquality[, -1], y = airquality[1])
+  fit(Ozone ~ ., airquality) # pass original data on to interpret()
 mid_2
 #> parsnip model object
 #> 
@@ -96,11 +122,111 @@ mid_2
 
 ``` r
 grid.arrange(nrow = 2,
- ggmid(mid.importance(mid_2$fit), theme = "muted"),
+ ggmid(mid.importance(mid_2$fit), theme = "moon"),
  ggmid(mid_2$fit, "Temp", main.effects = TRUE),
  ggmid(mid_2$fit, "Wind", main.effects = TRUE),
- ggmid(mid_2$fit, "Temp:Wind", main.effects = TRUE, theme = "tokyo") 
+ ggmid(mid_2$fit, "Temp:Wind", main.effects = TRUE, theme = "moonlit")
 )
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+<img src="man/figures/README-ggmid_2d_fit-1.png" width="100%" />
+
+## Tune MID Surrogate Models using ‘tune’
+
+``` r
+# create a second-order mid surrogate model via "custom formula"
+mid_spec <- mid_surrogate(
+  params_main = tune(),
+  params_inter = tune(),
+  penalty = tune(),
+  custom_formula = Ozone ~ .^2
+) %>%
+  set_mode("regression") %>%
+  set_engine("midr", verbosity = 3)
+mid_spec
+#> mid surrogate Model Specification (regression)
+#> 
+#> Main Arguments:
+#>   penalty = tune()
+#>   params_main = tune()
+#>   params_inter = tune()
+#>   custom_formula = Ozone ~ .^2
+#> 
+#> Engine-Specific Arguments:
+#>   verbosity = 3
+#> 
+#> Computational engine: midr
+# define a cross validation method
+set.seed(42)
+cv <- vfold_cv(na.omit(airquality), v = 3)
+# execute the hyperparameter tuning
+tune_res <- mid_spec %>%
+  tune_grid(
+    Ozone ~ .,
+    resamples = cv,
+    grid = 100
+  )
+tune_best <- select_best(tune_res, metric = "rmse")
+tune_best
+#> # A tibble: 1 × 4
+#>   penalty params_main params_inter .config               
+#>     <dbl>       <int>        <int> <chr>                 
+#> 1    8.70          38            1 Preprocessor1_Model079
+```
+
+``` r
+# create a second-order mid surrogate model via "custom formula"
+mid_spec <- mid_surrogate(
+  params_main = tune_best$params_main,
+  params_inter = tune_best$params_inter,
+  penalty = tune_best$penalty,
+  custom_formula = Ozone ~ .^2
+) %>%
+  set_mode("regression") %>%
+  set_engine("midr", verbosity = 3)
+mid_spec
+#> mid surrogate Model Specification (regression)
+#> 
+#> Main Arguments:
+#>   penalty = tune_best$penalty
+#>   params_main = tune_best$params_main
+#>   params_inter = tune_best$params_inter
+#>   custom_formula = Ozone ~ .^2
+#> 
+#> Engine-Specific Arguments:
+#>   verbosity = 3
+#> 
+#> Computational engine: midr
+# fit the model
+mid_tune <- mid_spec %>%
+  fit(Ozone ~ ., airquality) # pass original data on to interpret()
+mid_tune
+#> parsnip model object
+#> 
+#> 
+#> Call:
+#> interpret(formula = Ozone ~ .^2, data = data, weights = weights,
+#>  verbosity = ..1, k = k, lambda = penalty)
+#> 
+#> Intercept: 42.099
+#> 
+#> Main Effects:
+#> 5 main effect terms
+#> 
+#> Interactions:
+#> 10 interaction terms
+#> 
+#> Uninterpreted Variation Ratio: 0.18429
+```
+
+``` r
+grid.arrange(nrow = 2,
+ ggmid(mid.importance(mid_tune$fit), theme = "moon"),
+ ggmid(mid_tune$fit, "Temp", main.effects = TRUE),
+ ggmid(mid_tune$fit, "Wind", main.effects = TRUE),
+ ggmid(mid_tune$fit, "Temp:Wind",
+       main.effects = TRUE, theme = "moonlit")
+)
+```
+
+<img src="man/figures/README-ggmid_tune_fit-1.png" width="100%" />

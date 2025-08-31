@@ -39,7 +39,7 @@ make_mid_surrogate <- function() {
     original = "params_inter",
     func = list(pkg = "dials",
                 fun = "num_knots",
-                range = c(2L, 5L)),
+                range = c(1L, 5L)),
     has_submodel = FALSE
   )
   # set model arg: lambda --> penalty
@@ -103,6 +103,7 @@ make_mid_surrogate <- function() {
       )
     )
   )
+  invisible(NULL)
 }
 
 fit_mid_surrogate <- function(

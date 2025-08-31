@@ -15,11 +15,13 @@ mid_surrogate(
 \arguments{
 \item{mode}{A single character string for the type of model.}
 
-\item{params_main}{An integer for the maximum number of sample points to model main effects (`k` for main effects in midr).}
+\item{params_main}{An integer for the maximum number of sample points to model main effects (`k` for main effects in \code{interpret()}).}
 
-\item{params_inter}{An integer for the maximum number of sample points to model interaction effects (`k` for interactions in midr).}
+\item{params_inter}{An integer for the maximum number of sample points to model interaction effects (`k` for interactions in \code{interpret()}).}
 
-\item{penalty}{A non-negative number representing the total amount of regularization (`lambda` in midr).}
+\item{penalty}{A non-negative number representing the total amount of regularization (`lambda` in \code{interpret()}).}
+
+\item{custom_formula}{A formula object. If passed, \code{fit()} internally uses \code{interpret.formula()}, otherwise it uses \code{interpret.default()} (`formula` in \code{interpret()}).}
 }
 \description{
 \code{mid_surrogate()} defines a model that serves as a surrogate model of another target model. This function can fit classification and regression models.
