@@ -2,6 +2,7 @@ url: https://ryo-asashi.github.io/midnight/
 
 template:
   bootstrap: 5
+  bootswatch: null
   light-switch: true
   includes:
     in_header: |
