@@ -2,7 +2,7 @@ pandoc: 3.1.11
 pkgdown: 2.1.3
 pkgdown_sha: ~
 articles: {}
-last_built: 2025-08-31T09:31Z
+last_built: 2025-09-04T17:35Z
 urls:
   reference: https://ryo-asashi.github.io/midnight/reference
   article: https://ryo-asashi.github.io/midnight/articles
