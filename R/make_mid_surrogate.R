@@ -106,6 +106,10 @@ make_mid_surrogate <- function() {
   invisible(NULL)
 }
 
+# global variable declaration
+utils::globalVariables(c("object", "new_data", "new_model_spec"))
+
+# helper function that links parsnip::fit with midr::interpret()
 fit_mid_surrogate <- function(
     x, y, weights = NULL, params_main = NA, params_inter = NA,
     penalty = 0, custom_formula = NULL, ...
