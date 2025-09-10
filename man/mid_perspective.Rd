@@ -2,7 +2,7 @@
 % Please edit documentation in R/mid_perspective.R
 \name{mid_perspective}
 \alias{mid_perspective}
-\title{Perspective Plot of MID Interaction Effects}
+\title{Perspective Plot of MID Effects}
 \usage{
 mid_perspective(
   object,
@@ -43,12 +43,11 @@ The resulting sum is plotted as the height on the z-axis.
 \examples{
 mid <- midr::interpret(mpg ~ wt * hp + am, data = mtcars, lambda = .5)
 
-Create a basic perspective plot
+# Create a basic perspective plot
 mid_perspective(mid, xvar = "wt", yvar = "hp")
 
 # Customize the plot by passing arguments to graphics::persp
 mid_perspective(mid, "wt", "hp", theta = 210, phi = 20, col = "lightblue", shade = .5)
-
 }
 \seealso{
 \code{\link[graphics]{persp}}

@@ -1,4 +1,4 @@
-#' Perspective Plot of MID Interaction Effects
+#' Perspective Plot of MID Effects
 #'
 #' @description
 #' Visualizes the combined effect of two variables from a "mid" object using a 3D perspective plot.
@@ -15,20 +15,19 @@
 #' @param ... additional arguments passed on to \code{graphics::persp()}. Used to customize the plot's appearance, such as view angles (\code{theta}, \code{phi}) or color (\code{col}).
 #' @param resolution an integer or an integer vector of length two, specifying the number of grid points to use when creating the sequence for numeric variables.
 #'
+#' @examples
+#' mid <- midr::interpret(mpg ~ wt * hp + am, data = mtcars, lambda = .5)
+#'
+#' # Create a basic perspective plot
+#' mid_perspective(mid, xvar = "wt", yvar = "hp")
+#'
+#' # Customize the plot by passing arguments to graphics::persp
+#' mid_perspective(mid, "wt", "hp", theta = 210, phi = 20, col = "lightblue", shade = .5)
 #' @returns
 #' \code{mid_perspective()} invisibly returns the viewing transformation matrix, see \code{\link[graphics]{persp}} for details.
 #' This function is primarily called for its side effect of creating a plot.
 #'
 #' @seealso \code{\link[graphics]{persp}}
-#'
-#' @examples
-#' mid <- midr::interpret(mpg ~ wt * hp + am, data = mtcars, lambda = .5)
-#'
-#' Create a basic perspective plot
-#' mid_perspective(mid, xvar = "wt", yvar = "hp")
-#'
-#' # Customize the plot by passing arguments to graphics::persp
-#' mid_perspective(mid, "wt", "hp", theta = 210, phi = 20, col = "lightblue", shade = .5)
 #'
 #' @export mid_perspective
 #'
