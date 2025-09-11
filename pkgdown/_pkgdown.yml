@@ -16,4 +16,4 @@ reference:
   - mid_surrogate
 - title: Helper Functions
   contents:
-  - mid_perspective
+  - persp_mid
