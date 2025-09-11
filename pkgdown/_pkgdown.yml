@@ -16,4 +16,4 @@ reference:
   - mid_surrogate
 - title: Helper Functions
   contents:
-  - persp_mid
+  - persp.mid
