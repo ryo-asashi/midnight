@@ -14,6 +14,14 @@
                "#53927D", "#6EA07E", "#8AAC80", "#A7B584", "#C0BA8B"),
     kernel.args = list(mode = "ramp")
   )
+  # DALEX --------
+  if (requireNamespace("DALEX", quietly = TRUE)) {
+    midr::set.color.theme(
+      name = "drwhy", source = "DALEX", type = "qualitative",
+      kernel = c(text = "colors_discrete_drwhy", namespace = "DALEX"),
+      options = list(kernel.size = 7L, palette.formatter = "recycle")
+    )
+  }
   # return nothing
   invisible(NULL)
 }
