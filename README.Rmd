@@ -36,7 +36,7 @@ pak::pak("ryo-asashi/midnight")
 
 This is a basic example which shows you how to solve a common problem:
 
-```{r packages}
+```{r packages, message=FALSE}
 library(parsnip)
 library(midr)
 library(midnight)
@@ -44,51 +44,72 @@ library(ggplot2)
 library(gridExtra)
 library(tune)
 library(rsample)
+library(dplyr)
 library(ISLR2)
 theme_set(theme_midr())
+```
+
+```{r data}
+# split dataset into training / validating subsets
+set.seed(42)
+usecol <- c("mnth", "hr", "workingday", "weathersit",
+            "temp", "hum", "windspeed", "bikers")
+all <- ISLR2::Bikeshare |>
+  select(all_of(usecol)) |>
+  mutate(workingday = as.factor(workingday))
+holdout <- initial_split(all, prop = .5)
+train <- training(holdout)
+valid <- testing(holdout)
 ```
 
 ```{r 1d_fit, message = FALSE}
 # create a first-order mid surrogate model
 mid_spec_1 <- mid_surrogate(
-  params_main = 50, penalty = .1
+  params_main = 25, penalty = .1
 ) %>%
   set_mode("regression") %>%
   set_engine("midr", verbosity = 0)
 mid_spec_1
 # fit the model
 mid_1 <- mid_spec_1 %>%
-  fit(medv ~ ., ISLR2::Boston)
+  fit(bikers ~ ., train)
 mid_1
+# evaluate the model
+rmse <- weighted.loss(valid$bikers, predict(mid_1$fit, valid))
+cat(sprintf("\nRMSE: %.3f", rmse))
 ```
 
 ```{r 2d_fit, message = FALSE}
 # create a second-order mid surrogate model via "custom formula"
 mid_spec_2 <- mid_surrogate(
-  params_main = 50, params_inter = 5, penalty = .1,
-  custom_formula = medv ~ .^2
+  params_main = 25, params_inter = 5, penalty = .1,
+  custom_formula = bikers ~ .^2
 ) %>%
   set_mode("regression") %>%
   set_engine("midr", verbosity = 0)
 mid_spec_2
 # fit the model
 mid_2 <- mid_spec_2 %>%
-  fit(medv ~ ., ISLR2::Boston) # pass original data on to interpret()
+  fit(bikers ~ ., train) # pass original data on to interpret()
 mid_2
+# evaluate the model
+rmse <- weighted.loss(valid$bikers, predict(mid_2$fit, valid))
+cat(sprintf("\nRMSE: %.3f", rmse))
 ```
 
 ```{r ggmid_2d_fit}
 grid.arrange(nrow = 2,
  ggmid(mid.importance(mid_2$fit), theme = "moon", max.nterms = 15),
- ggmid(mid_2$fit, "lstat", main.effects = TRUE),
- ggmid(mid_2$fit, "dis", main.effects = TRUE),
- ggmid(mid_2$fit, "lstat:dis", theme = "moonlit")
+ ggmid(mid_2$fit, "hr"),
+ ggmid(mid_2$fit, "temp"),
+ ggmid(mid_2$fit, "hr:workingday", type = "data", data = valid,
+       main.effects = TRUE, theme = "moonlit")
 )
 ```
 
 ```{r persp_mid}
 par.midr()
-persp(mid_2$fit, "lstat:dis", theta = 150, phi = 20, shade = .5)
+persp(mid_2$fit, "temp:hr", theta = 50, phi = 20, shade = .5)
 ```
 
 ## Tune MID Surrogate Models using 'tune'
@@ -99,18 +120,18 @@ mid_spec <- mid_surrogate(
   params_main = tune(),
   params_inter = tune(),
   penalty = tune(),
-  custom_formula = medv ~ .^2
+  custom_formula = bikers ~ .^2
 ) %>%
   set_mode("regression") %>%
   set_engine("midr", verbosity = 0)
 mid_spec
 # define a cross validation method
 set.seed(42)
-cv <- vfold_cv(ISLR2::Boston, v = 2)
+cv <- vfold_cv(train, v = 2)
 # execute the hyperparameter tuning
 tune_res <- mid_spec %>%
   tune_bayes(
-    medv ~ .,
+    bikers ~ .,
     resamples = cv,
     iter = 50
   )
@@ -124,27 +145,31 @@ mid_spec <- mid_surrogate(
   params_main = tune_best$params_main,
   params_inter = tune_best$params_inter,
   penalty = tune_best$penalty,
-  custom_formula = medv ~ .^2
+  custom_formula = bikers ~ .^2
 ) %>%
   set_mode("regression") %>%
   set_engine("midr", verbosity = 0, singular.ok = TRUE)
 mid_spec
 # fit the model
 mid_tune <- mid_spec %>%
-  fit(medv ~ ., ISLR2::Boston) # pass original data on to interpret()
+  fit(bikers ~ ., train) # pass original data on to interpret()
 mid_tune
+# evaluate the model
+rmse <- weighted.loss(valid$bikers, predict(mid_tune$fit, valid))
+cat(sprintf("\nRMSE: %.3f", rmse))
 ```
 
 ```{r ggmid_tune_fit}
 grid.arrange(nrow = 2,
- ggmid(mid.importance(mid_2$fit), theme = "moon", max.nterms = 15),
- ggmid(mid_tune$fit, "lstat", main.effects = TRUE),
- ggmid(mid_tune$fit, "dis", main.effects = TRUE),
- ggmid(mid_tune$fit, "lstat:dis", theme = "moonlit")
+ ggmid(mid.importance(mid_tune$fit), theme = "moon", max.nterms = 15),
+ ggmid(mid_tune$fit, "hr"),
+ ggmid(mid_tune$fit, "temp"),
+ ggmid(mid_tune$fit, "hr:workingday", type = "data", data = valid,
+       main.effects = TRUE, theme = "moonlit")
 )
 ```
 
 ```{r persp_tuned_mid}
 par.midr()
-persp(mid_tune$fit, "lstat:dis", theta = 150, phi = 20, shade = .5)
+persp(mid_tune$fit, "temp:hr", theta = 50, phi = 20, shade = .5)
 ```

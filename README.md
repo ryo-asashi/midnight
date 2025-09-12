@@ -37,14 +37,28 @@ library(ggplot2)
 library(gridExtra)
 library(tune)
 library(rsample)
+library(dplyr)
 library(ISLR2)
 theme_set(theme_midr())
 ```
 
 ``` r
+# split dataset into training / validating subsets
+set.seed(42)
+usecol <- c("mnth", "hr", "workingday", "weathersit",
+            "temp", "hum", "windspeed", "bikers")
+all <- ISLR2::Bikeshare |>
+  select(all_of(usecol)) |>
+  mutate(workingday = as.factor(workingday))
+holdout <- initial_split(all, prop = .5)
+train <- training(holdout)
+valid <- testing(holdout)
+```
+
+``` r
 # create a first-order mid surrogate model
 mid_spec_1 <- mid_surrogate(
-  params_main = 50, penalty = .1
+  params_main = 25, penalty = .1
 ) %>%
   set_mode("regression") %>%
   set_engine("midr", verbosity = 0)
@@ -53,7 +67,7 @@ mid_spec_1
 #> 
 #> Main Arguments:
 #>   penalty = 0.1
-#>   params_main = 50
+#>   params_main = 25
 #> 
 #> Engine-Specific Arguments:
 #>   verbosity = 0
@@ -61,7 +75,7 @@ mid_spec_1
 #> Computational engine: midr
 # fit the model
 mid_1 <- mid_spec_1 %>%
-  fit(medv ~ ., ISLR2::Boston)
+  fit(bikers ~ ., train)
 mid_1
 #> parsnip model object
 #> 
@@ -70,19 +84,24 @@ mid_1
 #> interpret(x = x, y = y, weights = weights, k = k, lambda = penalty,
 #>  verbosity = ..1)
 #> 
-#> Intercept: 22.533
+#> Intercept: 146.06
 #> 
 #> Main Effects:
-#> 12 main effect terms
+#> 7 main effect terms
 #> 
-#> Uninterpreted Variation Ratio: 0.055656
+#> Uninterpreted Variation Ratio: 0.30267
+# evaluate the model
+rmse <- weighted.loss(valid$bikers, predict(mid_1$fit, valid))
+cat(sprintf("\nRMSE: %.3f", rmse))
+#> 
+#> RMSE: 73.072
 ```
 
 ``` r
 # create a second-order mid surrogate model via "custom formula"
 mid_spec_2 <- mid_surrogate(
-  params_main = 50, params_inter = 5, penalty = .1,
-  custom_formula = medv ~ .^2
+  params_main = 25, params_inter = 5, penalty = .1,
+  custom_formula = bikers ~ .^2
 ) %>%
   set_mode("regression") %>%
   set_engine("midr", verbosity = 0)
@@ -91,9 +110,9 @@ mid_spec_2
 #> 
 #> Main Arguments:
 #>   penalty = 0.1
-#>   params_main = 50
+#>   params_main = 25
 #>   params_inter = 5
-#>   custom_formula = medv ~ .^2
+#>   custom_formula = bikers ~ .^2
 #> 
 #> Engine-Specific Arguments:
 #>   verbosity = 0
@@ -101,32 +120,38 @@ mid_spec_2
 #> Computational engine: midr
 # fit the model
 mid_2 <- mid_spec_2 %>%
-  fit(medv ~ ., ISLR2::Boston) # pass original data on to interpret()
+  fit(bikers ~ ., train) # pass original data on to interpret()
 mid_2
 #> parsnip model object
 #> 
 #> 
 #> Call:
-#> interpret(formula = medv ~ .^2, data = data, weights = weights,
+#> interpret(formula = bikers ~ .^2, data = data, weights = weights,
 #>  verbosity = ..1, k = k, lambda = penalty)
 #> 
-#> Intercept: 22.533
+#> Intercept: 146.06
 #> 
 #> Main Effects:
-#> 12 main effect terms
+#> 7 main effect terms
 #> 
 #> Interactions:
-#> 66 interaction terms
+#> 21 interaction terms
 #> 
-#> Uninterpreted Variation Ratio: 0.032996
+#> Uninterpreted Variation Ratio: 0.076418
+# evaluate the model
+rmse <- weighted.loss(valid$bikers, predict(mid_2$fit, valid))
+cat(sprintf("\nRMSE: %.3f", rmse))
+#> 
+#> RMSE: 42.683
 ```
 
 ``` r
 grid.arrange(nrow = 2,
  ggmid(mid.importance(mid_2$fit), theme = "moon", max.nterms = 15),
- ggmid(mid_2$fit, "lstat", main.effects = TRUE),
- ggmid(mid_2$fit, "dis", main.effects = TRUE),
- ggmid(mid_2$fit, "lstat:dis", theme = "moonlit")
+ ggmid(mid_2$fit, "hr"),
+ ggmid(mid_2$fit, "temp"),
+ ggmid(mid_2$fit, "hr:workingday", type = "data", data = valid,
+       main.effects = TRUE, theme = "moonlit")
 )
 ```
 
@@ -134,7 +159,7 @@ grid.arrange(nrow = 2,
 
 ``` r
 par.midr()
-persp(mid_2$fit, "lstat:dis", theta = 150, phi = 20, shade = .5)
+persp(mid_2$fit, "temp:hr", theta = 50, phi = 20, shade = .5)
 ```
 
 <img src="man/figures/README-persp_mid-1.png" width="100%" />
@@ -147,7 +172,7 @@ mid_spec <- mid_surrogate(
   params_main = tune(),
   params_inter = tune(),
   penalty = tune(),
-  custom_formula = medv ~ .^2
+  custom_formula = bikers ~ .^2
 ) %>%
   set_mode("regression") %>%
   set_engine("midr", verbosity = 0)
@@ -158,7 +183,7 @@ mid_spec
 #>   penalty = tune()
 #>   params_main = tune()
 #>   params_inter = tune()
-#>   custom_formula = medv ~ .^2
+#>   custom_formula = bikers ~ .^2
 #> 
 #> Engine-Specific Arguments:
 #>   verbosity = 0
@@ -166,11 +191,11 @@ mid_spec
 #> Computational engine: midr
 # define a cross validation method
 set.seed(42)
-cv <- vfold_cv(ISLR2::Boston, v = 2)
+cv <- vfold_cv(train, v = 2)
 # execute the hyperparameter tuning
 tune_res <- mid_spec %>%
   tune_bayes(
-    medv ~ .,
+    bikers ~ .,
     resamples = cv,
     iter = 50
   )
@@ -179,7 +204,7 @@ tune_best
 #> # A tibble: 1 × 4
 #>   penalty params_main params_inter .config
 #>     <dbl>       <int>        <int> <chr>  
-#> 1    11.4          60            5 Iter5
+#> 1   0.668          70            5 Iter23
 ```
 
 ``` r
@@ -188,7 +213,7 @@ mid_spec <- mid_surrogate(
   params_main = tune_best$params_main,
   params_inter = tune_best$params_inter,
   penalty = tune_best$penalty,
-  custom_formula = medv ~ .^2
+  custom_formula = bikers ~ .^2
 ) %>%
   set_mode("regression") %>%
   set_engine("midr", verbosity = 0, singular.ok = TRUE)
@@ -199,7 +224,7 @@ mid_spec
 #>   penalty = tune_best$penalty
 #>   params_main = tune_best$params_main
 #>   params_inter = tune_best$params_inter
-#>   custom_formula = medv ~ .^2
+#>   custom_formula = bikers ~ .^2
 #> 
 #> Engine-Specific Arguments:
 #>   verbosity = 0
@@ -208,32 +233,38 @@ mid_spec
 #> Computational engine: midr
 # fit the model
 mid_tune <- mid_spec %>%
-  fit(medv ~ ., ISLR2::Boston) # pass original data on to interpret()
+  fit(bikers ~ ., train) # pass original data on to interpret()
 mid_tune
 #> parsnip model object
 #> 
 #> 
 #> Call:
-#> interpret(formula = medv ~ .^2, data = data, weights = weights,
+#> interpret(formula = bikers ~ .^2, data = data, weights = weights,
 #>  verbosity = ..1, k = k, lambda = penalty, singular.ok = ..2)
 #> 
-#> Intercept: 22.533
+#> Intercept: 146.06
 #> 
 #> Main Effects:
-#> 12 main effect terms
+#> 7 main effect terms
 #> 
 #> Interactions:
-#> 66 interaction terms
+#> 21 interaction terms
 #> 
-#> Uninterpreted Variation Ratio: 0.1004
+#> Uninterpreted Variation Ratio: 0.080808
+# evaluate the model
+rmse <- weighted.loss(valid$bikers, predict(mid_tune$fit, valid))
+cat(sprintf("\nRMSE: %.3f", rmse))
+#> 
+#> RMSE: 43.047
 ```
 
 ``` r
 grid.arrange(nrow = 2,
- ggmid(mid.importance(mid_2$fit), theme = "moon", max.nterms = 15),
- ggmid(mid_tune$fit, "lstat", main.effects = TRUE),
- ggmid(mid_tune$fit, "dis", main.effects = TRUE),
- ggmid(mid_tune$fit, "lstat:dis", theme = "moonlit")
+ ggmid(mid.importance(mid_tune$fit), theme = "moon", max.nterms = 15),
+ ggmid(mid_tune$fit, "hr"),
+ ggmid(mid_tune$fit, "temp"),
+ ggmid(mid_tune$fit, "hr:workingday", type = "data", data = valid,
+       main.effects = TRUE, theme = "moonlit")
 )
 ```
 
@@ -241,7 +272,7 @@ grid.arrange(nrow = 2,
 
 ``` r
 par.midr()
-persp(mid_tune$fit, "lstat:dis", theta = 150, phi = 20, shade = .5)
+persp(mid_tune$fit, "temp:hr", theta = 50, phi = 20, shade = .5)
 ```
 
 <img src="man/figures/README-persp_tuned_mid-1.png" width="100%" />
