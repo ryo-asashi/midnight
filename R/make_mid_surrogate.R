@@ -108,24 +108,3 @@ make_mid_surrogate <- function() {
 
 # global variable declaration
 utils::globalVariables(c("object", "new_data", "new_model_spec"))
-
-# helper function that links parsnip::fit with midr::interpret()
-fit_mid_surrogate <- function(
-    x, y, weights = NULL, params_main = NA, params_inter = NA,
-    penalty = 0, custom_formula = NULL, ...
-) {
-  k <- c(params_main, params_inter)
-  if (!is.null(custom_formula)) {
-    environment(custom_formula) <- rlang::ns_env("midnight")
-    data <- cbind(y, x)
-    names(data)[1L] <- as.character(custom_formula[[2L]])
-    midr::interpret(
-      custom_formula, data = data, weights = weights,
-      k = k, lambda = penalty, ...
-    )
-  } else {
-    midr::interpret(
-      x = x, y = y, weights = weights, k = k, lambda = penalty, ...
-    )
-  }
-}

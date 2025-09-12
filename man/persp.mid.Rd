@@ -38,7 +38,7 @@ persp(mid, xvar = "wt", yvar = "hp")
 
 # Customize the plot by passing arguments to graphics:::persp.default()
 persp(mid, "wt", "hp", theta = 210, phi = 20, col = "lightblue", shade = .5)
-persp(mid, "factor(am):wt", theta = 210, shade = .2, xval = c("1", "0"))
+persp(mid, "factor(am):wt", theta = 210, shade = .2)
 }
 \seealso{
 \code{\link[graphics]{persp}}
