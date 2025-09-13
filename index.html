@@ -83,98 +83,88 @@
 </h2>
 <p>This is a basic example which shows you how to solve a common problem:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/parsnip" class="external-link">parsnip</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidymodels.tidymodels.org" class="external-link">tidymodels</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ryo-asashi/midr" class="external-link">midr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ryo-asashi/midnight" class="external-link">midnight</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">gridExtra</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tune.tidymodels.org/" class="external-link">tune</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rsample.tidymodels.org" class="external-link">rsample</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.statlearning.com" class="external-link">ISLR2</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/theme_midr.html" class="external-link">theme_midr</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">theme_set</span><span class="op">(</span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/theme_midr.html" class="external-link">theme_midr</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># split dataset into training / validating subsets</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
 <span><span class="va">usecol</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mnth"</span>, <span class="st">"hr"</span>, <span class="st">"workingday"</span>, <span class="st">"weathersit"</span>,</span>
 <span>            <span class="st">"temp"</span>, <span class="st">"hum"</span>, <span class="st">"windspeed"</span>, <span class="st">"bikers"</span><span class="op">)</span></span>
 <span><span class="va">all</span> <span class="op">&lt;-</span> <span class="fu">ISLR2</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/ISLR2/man/Bikeshare.html" class="external-link">Bikeshare</a></span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">all_of</a></span><span class="op">(</span><span class="va">usecol</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>workingday <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">workingday</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="fu">all_of</span><span class="op">(</span><span class="va">usecol</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>workingday <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">workingday</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">holdout</span> <span class="op">&lt;-</span> <span class="fu">initial_split</span><span class="op">(</span><span class="va">all</span>, prop <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span></span>
 <span><span class="va">train</span> <span class="op">&lt;-</span> <span class="fu">training</span><span class="op">(</span><span class="va">holdout</span><span class="op">)</span></span>
 <span><span class="va">valid</span> <span class="op">&lt;-</span> <span class="fu">testing</span><span class="op">(</span><span class="va">holdout</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create a first-order mid surrogate model</span></span>
-<span><span class="va">mid_spec_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mid_surrogate.html">mid_surrogate</a></span><span class="op">(</span></span>
-<span>  params_main <span class="op">=</span> <span class="fl">25</span>, penalty <span class="op">=</span> <span class="fl">.1</span></span>
-<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/set_args.html" class="external-link">set_mode</a></span><span class="op">(</span><span class="st">"regression"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/set_engine.html" class="external-link">set_engine</a></span><span class="op">(</span><span class="st">"midr"</span>, verbosity <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">mid_spec_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mid_surrogate.html">mid_surrogate</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">set_mode</span><span class="op">(</span><span class="st">"regression"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">set_engine</span><span class="op">(</span><span class="st">"midr"</span><span class="op">)</span></span>
 <span><span class="va">mid_spec_1</span></span>
 <span><span class="co">#&gt; mid surrogate Model Specification (regression)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Main Arguments:</span></span>
-<span><span class="co">#&gt;   penalty = 0.1</span></span>
-<span><span class="co">#&gt;   params_main = 25</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Engine-Specific Arguments:</span></span>
-<span><span class="co">#&gt;   verbosity = 0</span></span>
-<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Computational engine: midr</span></span>
 <span><span class="co"># fit the model</span></span>
-<span><span class="va">mid_1</span> <span class="op">&lt;-</span> <span class="va">mid_spec_1</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span>, <span class="va">train</span><span class="op">)</span></span>
+<span><span class="va">mid_1</span> <span class="op">&lt;-</span> <span class="va">mid_spec_1</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">fit</span><span class="op">(</span><span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span>, <span class="va">train</span><span class="op">)</span></span>
 <span><span class="va">mid_1</span></span>
 <span><span class="co">#&gt; parsnip model object</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; interpret(x = x, y = y, weights = weights, k = k, lambda = penalty,</span></span>
-<span><span class="co">#&gt;  verbosity = ..1)</span></span>
+<span><span class="co">#&gt; interpret(x = x, y = y, weights = weights, k = k, lambda = penalty)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Intercept: 146.06</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Main Effects:</span></span>
 <span><span class="co">#&gt; 7 main effect terms</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Uninterpreted Variation Ratio: 0.30267</span></span>
+<span><span class="co">#&gt; Uninterpreted Variation Ratio: 0.30041</span></span>
 <span><span class="co"># evaluate the model</span></span>
-<span><span class="va">rmse</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/weighted.loss.html" class="external-link">weighted.loss</a></span><span class="op">(</span><span class="va">valid</span><span class="op">$</span><span class="va">bikers</span>, <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mid_1</span><span class="op">$</span><span class="va">fit</span>, <span class="va">valid</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"\nRMSE: %.3f"</span>, <span class="va">rmse</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; RMSE: 73.072</span></span></code></pre></div>
+<span><span class="fu">augment</span><span class="op">(</span><span class="va">mid_1</span>, new_data <span class="op">=</span> <span class="va">valid</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">rmse</span><span class="op">(</span>truth <span class="op">=</span> <span class="va">bikers</span>, estimate <span class="op">=</span> <span class="va">.pred</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 3</span></span>
+<span><span class="co">#&gt;   .metric .estimator .estimate</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 rmse    standard        72.9</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">grid.arrange</span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span>,</span>
+<span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/mid.importance.html" class="external-link">mid.importance</a></span><span class="op">(</span><span class="va">mid_1</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span>, theme <span class="op">=</span> <span class="st">"moon"</span>, max.nterms <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>,</span>
+<span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">mid_1</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"hr"</span><span class="op">)</span>,</span>
+<span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">mid_1</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"temp"</span><span class="op">)</span>,</span>
+<span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">mid_1</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"mnth"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-ggmid_1d_fit-1.png" width="100%"></p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create a second-order mid surrogate model via "custom formula"</span></span>
 <span><span class="va">mid_spec_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mid_surrogate.html">mid_surrogate</a></span><span class="op">(</span></span>
-<span>  params_main <span class="op">=</span> <span class="fl">25</span>, params_inter <span class="op">=</span> <span class="fl">5</span>, penalty <span class="op">=</span> <span class="fl">.1</span>,</span>
-<span>  custom_formula <span class="op">=</span> <span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span><span class="op">^</span><span class="fl">2</span></span>
-<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/set_args.html" class="external-link">set_mode</a></span><span class="op">(</span><span class="st">"regression"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/set_engine.html" class="external-link">set_engine</a></span><span class="op">(</span><span class="st">"midr"</span>, verbosity <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span>  penalty <span class="op">=</span> <span class="fl">0.000001</span>, custom_formula <span class="op">=</span> <span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span><span class="op">^</span><span class="fl">2</span></span>
+<span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">set_mode</span><span class="op">(</span><span class="st">"regression"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">set_engine</span><span class="op">(</span><span class="st">"midr"</span><span class="op">)</span></span>
 <span><span class="va">mid_spec_2</span></span>
 <span><span class="co">#&gt; mid surrogate Model Specification (regression)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Main Arguments:</span></span>
-<span><span class="co">#&gt;   penalty = 0.1</span></span>
-<span><span class="co">#&gt;   params_main = 25</span></span>
-<span><span class="co">#&gt;   params_inter = 5</span></span>
+<span><span class="co">#&gt;   penalty = 1e-06</span></span>
 <span><span class="co">#&gt;   custom_formula = bikers ~ .^2</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Engine-Specific Arguments:</span></span>
-<span><span class="co">#&gt;   verbosity = 0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Computational engine: midr</span></span>
 <span><span class="co"># fit the model</span></span>
-<span><span class="va">mid_2</span> <span class="op">&lt;-</span> <span class="va">mid_spec_2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span>, <span class="va">train</span><span class="op">)</span> <span class="co"># pass original data on to interpret()</span></span>
+<span><span class="va">mid_2</span> <span class="op">&lt;-</span> <span class="va">mid_spec_2</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">fit</span><span class="op">(</span><span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span>, <span class="va">train</span><span class="op">)</span> <span class="co"># pass original data on to interpret()</span></span>
 <span><span class="va">mid_2</span></span>
 <span><span class="co">#&gt; parsnip model object</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
 <span><span class="co">#&gt; interpret(formula = bikers ~ .^2, data = data, weights = weights,</span></span>
-<span><span class="co">#&gt;  verbosity = ..1, k = k, lambda = penalty)</span></span>
+<span><span class="co">#&gt;  k = k, lambda = penalty)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Intercept: 146.06</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -184,13 +174,15 @@
 <span><span class="co">#&gt; Interactions:</span></span>
 <span><span class="co">#&gt; 21 interaction terms</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Uninterpreted Variation Ratio: 0.076418</span></span>
+<span><span class="co">#&gt; Uninterpreted Variation Ratio: 0.069436</span></span>
 <span><span class="co"># evaluate the model</span></span>
-<span><span class="va">rmse</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/weighted.loss.html" class="external-link">weighted.loss</a></span><span class="op">(</span><span class="va">valid</span><span class="op">$</span><span class="va">bikers</span>, <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mid_2</span><span class="op">$</span><span class="va">fit</span>, <span class="va">valid</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"\nRMSE: %.3f"</span>, <span class="va">rmse</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; RMSE: 42.683</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<span><span class="fu">augment</span><span class="op">(</span><span class="va">mid_2</span>, new_data <span class="op">=</span> <span class="va">valid</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">rmse</span><span class="op">(</span>truth <span class="op">=</span> <span class="va">bikers</span>, estimate <span class="op">=</span> <span class="va">.pred</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 3</span></span>
+<span><span class="co">#&gt;   .metric .estimator .estimate</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 rmse    standard        44.3</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">grid.arrange</span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span>,</span>
 <span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/mid.importance.html" class="external-link">mid.importance</a></span><span class="op">(</span><span class="va">mid_2</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span>, theme <span class="op">=</span> <span class="st">"moon"</span>, max.nterms <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>,</span>
 <span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">mid_2</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"hr"</span><span class="op">)</span>,</span>
@@ -199,7 +191,7 @@
 <span>       main.effects <span class="op">=</span> <span class="cn">TRUE</span>, theme <span class="op">=</span> <span class="st">"moonlit"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-ggmid_2d_fit-1.png" width="100%"></p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/theme_midr.html" class="external-link">par.midr</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/persp.html" class="external-link">persp</a></span><span class="op">(</span><span class="va">mid_2</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"temp:hr"</span>, theta <span class="op">=</span> <span class="fl">50</span>, phi <span class="op">=</span> <span class="fl">20</span>, shade <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-persp_mid-1.png" width="100%"></p>
@@ -207,16 +199,16 @@
 <div class="section level2">
 <h2 id="tune-mid-surrogate-models-using-tune">Tune MID Surrogate Models using ‘tune’<a class="anchor" aria-label="anchor" href="#tune-mid-surrogate-models-using-tune"></a>
 </h2>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create a second-order mid surrogate model via "custom formula"</span></span>
 <span><span class="va">mid_spec</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mid_surrogate.html">mid_surrogate</a></span><span class="op">(</span></span>
-<span>  params_main <span class="op">=</span> <span class="fu"><a href="https://hardhat.tidymodels.org/reference/tune.html" class="external-link">tune</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  params_inter <span class="op">=</span> <span class="fu"><a href="https://hardhat.tidymodels.org/reference/tune.html" class="external-link">tune</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  penalty <span class="op">=</span> <span class="fu"><a href="https://hardhat.tidymodels.org/reference/tune.html" class="external-link">tune</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  params_main <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  params_inter <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  penalty <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  custom_formula <span class="op">=</span> <span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span><span class="op">^</span><span class="fl">2</span></span>
-<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/set_args.html" class="external-link">set_mode</a></span><span class="op">(</span><span class="st">"regression"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/set_engine.html" class="external-link">set_engine</a></span><span class="op">(</span><span class="st">"midr"</span>, verbosity <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">set_mode</span><span class="op">(</span><span class="st">"regression"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">set_engine</span><span class="op">(</span><span class="st">"midr"</span>, verbosity <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">mid_spec</span></span>
 <span><span class="co">#&gt; mid surrogate Model Specification (regression)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -234,7 +226,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
 <span><span class="va">cv</span> <span class="op">&lt;-</span> <span class="fu">vfold_cv</span><span class="op">(</span><span class="va">train</span>, v <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="co"># execute the hyperparameter tuning</span></span>
-<span><span class="va">tune_res</span> <span class="op">&lt;-</span> <span class="va">mid_spec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span><span class="va">tune_res</span> <span class="op">&lt;-</span> <span class="va">mid_spec</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">tune_bayes</span><span class="op">(</span></span>
 <span>    <span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span>,</span>
 <span>    resamples <span class="op">=</span> <span class="va">cv</span>,</span>
@@ -246,16 +238,16 @@
 <span><span class="co">#&gt;   penalty params_main params_inter .config</span></span>
 <span><span class="co">#&gt;     &lt;dbl&gt;       &lt;int&gt;        &lt;int&gt; &lt;chr&gt;  </span></span>
 <span><span class="co">#&gt; 1   0.668          70            5 Iter23</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create a second-order mid surrogate model via "custom formula"</span></span>
 <span><span class="va">mid_spec</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mid_surrogate.html">mid_surrogate</a></span><span class="op">(</span></span>
 <span>  params_main <span class="op">=</span> <span class="va">tune_best</span><span class="op">$</span><span class="va">params_main</span>,</span>
 <span>  params_inter <span class="op">=</span> <span class="va">tune_best</span><span class="op">$</span><span class="va">params_inter</span>,</span>
 <span>  penalty <span class="op">=</span> <span class="va">tune_best</span><span class="op">$</span><span class="va">penalty</span>,</span>
 <span>  custom_formula <span class="op">=</span> <span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span><span class="op">^</span><span class="fl">2</span></span>
-<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/set_args.html" class="external-link">set_mode</a></span><span class="op">(</span><span class="st">"regression"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/set_engine.html" class="external-link">set_engine</a></span><span class="op">(</span><span class="st">"midr"</span>, verbosity <span class="op">=</span> <span class="fl">0</span>, singular.ok <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">set_mode</span><span class="op">(</span><span class="st">"regression"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">set_engine</span><span class="op">(</span><span class="st">"midr"</span>, verbosity <span class="op">=</span> <span class="fl">0</span>, singular.ok <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">mid_spec</span></span>
 <span><span class="co">#&gt; mid surrogate Model Specification (regression)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -271,8 +263,8 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Computational engine: midr</span></span>
 <span><span class="co"># fit the model</span></span>
-<span><span class="va">mid_tune</span> <span class="op">&lt;-</span> <span class="va">mid_spec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span>, <span class="va">train</span><span class="op">)</span> <span class="co"># pass original data on to interpret()</span></span>
+<span><span class="va">mid_tune</span> <span class="op">&lt;-</span> <span class="va">mid_spec</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">fit</span><span class="op">(</span><span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span>, <span class="va">train</span><span class="op">)</span> <span class="co"># pass original data on to interpret()</span></span>
 <span><span class="va">mid_tune</span></span>
 <span><span class="co">#&gt; parsnip model object</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -291,11 +283,13 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Uninterpreted Variation Ratio: 0.080808</span></span>
 <span><span class="co"># evaluate the model</span></span>
-<span><span class="va">rmse</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/weighted.loss.html" class="external-link">weighted.loss</a></span><span class="op">(</span><span class="va">valid</span><span class="op">$</span><span class="va">bikers</span>, <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mid_tune</span><span class="op">$</span><span class="va">fit</span>, <span class="va">valid</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"\nRMSE: %.3f"</span>, <span class="va">rmse</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; RMSE: 43.047</span></span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<span><span class="fu">augment</span><span class="op">(</span><span class="va">mid_tune</span>, new_data <span class="op">=</span> <span class="va">valid</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">rmse</span><span class="op">(</span>truth <span class="op">=</span> <span class="va">bikers</span>, estimate <span class="op">=</span> <span class="va">.pred</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 3</span></span>
+<span><span class="co">#&gt;   .metric .estimator .estimate</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 rmse    standard        43.0</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">grid.arrange</span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span>,</span>
 <span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/mid.importance.html" class="external-link">mid.importance</a></span><span class="op">(</span><span class="va">mid_tune</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span>, theme <span class="op">=</span> <span class="st">"moon"</span>, max.nterms <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>,</span>
 <span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">mid_tune</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"hr"</span><span class="op">)</span>,</span>
@@ -304,7 +298,7 @@
 <span>       main.effects <span class="op">=</span> <span class="cn">TRUE</span>, theme <span class="op">=</span> <span class="st">"moonlit"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-ggmid_tune_fit-1.png" width="100%"></p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/theme_midr.html" class="external-link">par.midr</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/persp.html" class="external-link">persp</a></span><span class="op">(</span><span class="va">mid_tune</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"temp:hr"</span>, theta <span class="op">=</span> <span class="fl">50</span>, phi <span class="op">=</span> <span class="fl">20</span>, shade <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-persp_tuned_mid-1.png" width="100%"></p>
