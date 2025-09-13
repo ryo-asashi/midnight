@@ -30,14 +30,10 @@ pak::pak("ryo-asashi/midnight")
 This is a basic example which shows you how to solve a common problem:
 
 ``` r
-library(parsnip)
+library(tidymodels)
 library(midr)
 library(midnight)
-library(ggplot2)
 library(gridExtra)
-library(tune)
-library(rsample)
-library(dplyr)
 library(ISLR2)
 theme_set(theme_midr())
 ```
@@ -57,20 +53,11 @@ valid <- testing(holdout)
 
 ``` r
 # create a first-order mid surrogate model
-mid_spec_1 <- mid_surrogate(
-  params_main = 25, penalty = .1
-) %>%
+mid_spec_1 <- mid_surrogate() %>%
   set_mode("regression") %>%
-  set_engine("midr", verbosity = 0)
+  set_engine("midr")
 mid_spec_1
 #> mid surrogate Model Specification (regression)
-#> 
-#> Main Arguments:
-#>   penalty = 0.1
-#>   params_main = 25
-#> 
-#> Engine-Specific Arguments:
-#>   verbosity = 0
 #> 
 #> Computational engine: midr
 # fit the model
@@ -81,41 +68,47 @@ mid_1
 #> 
 #> 
 #> Call:
-#> interpret(x = x, y = y, weights = weights, k = k, lambda = penalty,
-#>  verbosity = ..1)
+#> interpret(x = x, y = y, weights = weights, k = k, lambda = penalty)
 #> 
 #> Intercept: 146.06
 #> 
 #> Main Effects:
 #> 7 main effect terms
 #> 
-#> Uninterpreted Variation Ratio: 0.30267
+#> Uninterpreted Variation Ratio: 0.30041
 # evaluate the model
-rmse <- weighted.loss(valid$bikers, predict(mid_1$fit, valid))
-cat(sprintf("\nRMSE: %.3f", rmse))
-#> 
-#> RMSE: 73.072
+augment(mid_1, new_data = valid) %>%
+  rmse(truth = bikers, estimate = .pred)
+#> # A tibble: 1 × 3
+#>   .metric .estimator .estimate
+#>   <chr>   <chr>          <dbl>
+#> 1 rmse    standard        72.9
 ```
+
+``` r
+grid.arrange(nrow = 2,
+ ggmid(mid.importance(mid_1$fit), theme = "moon", max.nterms = 15),
+ ggmid(mid_1$fit, "hr"),
+ ggmid(mid_1$fit, "temp"),
+ ggmid(mid_1$fit, "mnth")
+)
+```
+
+<img src="man/figures/README-ggmid_1d_fit-1.png" width="100%" />
 
 ``` r
 # create a second-order mid surrogate model via "custom formula"
 mid_spec_2 <- mid_surrogate(
-  params_main = 25, params_inter = 5, penalty = .1,
-  custom_formula = bikers ~ .^2
+  penalty = 0.000001, custom_formula = bikers ~ .^2
 ) %>%
   set_mode("regression") %>%
-  set_engine("midr", verbosity = 0)
+  set_engine("midr")
 mid_spec_2
 #> mid surrogate Model Specification (regression)
 #> 
 #> Main Arguments:
-#>   penalty = 0.1
-#>   params_main = 25
-#>   params_inter = 5
+#>   penalty = 1e-06
 #>   custom_formula = bikers ~ .^2
-#> 
-#> Engine-Specific Arguments:
-#>   verbosity = 0
 #> 
 #> Computational engine: midr
 # fit the model
@@ -127,7 +120,7 @@ mid_2
 #> 
 #> Call:
 #> interpret(formula = bikers ~ .^2, data = data, weights = weights,
-#>  verbosity = ..1, k = k, lambda = penalty)
+#>  k = k, lambda = penalty)
 #> 
 #> Intercept: 146.06
 #> 
@@ -137,12 +130,14 @@ mid_2
 #> Interactions:
 #> 21 interaction terms
 #> 
-#> Uninterpreted Variation Ratio: 0.076418
+#> Uninterpreted Variation Ratio: 0.069436
 # evaluate the model
-rmse <- weighted.loss(valid$bikers, predict(mid_2$fit, valid))
-cat(sprintf("\nRMSE: %.3f", rmse))
-#> 
-#> RMSE: 42.683
+augment(mid_2, new_data = valid) %>%
+  rmse(truth = bikers, estimate = .pred)
+#> # A tibble: 1 × 3
+#>   .metric .estimator .estimate
+#>   <chr>   <chr>          <dbl>
+#> 1 rmse    standard        44.3
 ```
 
 ``` r
@@ -252,10 +247,12 @@ mid_tune
 #> 
 #> Uninterpreted Variation Ratio: 0.080808
 # evaluate the model
-rmse <- weighted.loss(valid$bikers, predict(mid_tune$fit, valid))
-cat(sprintf("\nRMSE: %.3f", rmse))
-#> 
-#> RMSE: 43.047
+augment(mid_tune, new_data = valid) %>%
+  rmse(truth = bikers, estimate = .pred)
+#> # A tibble: 1 × 3
+#>   .metric .estimator .estimate
+#>   <chr>   <chr>          <dbl>
+#> 1 rmse    standard        43.0
 ```
 
 ``` r

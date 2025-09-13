@@ -1,7 +1,7 @@
 #' Global Surrogate Model Specification
 #'
 #' @description
-#' \code{mid_surrogate()} defines a model that serves as a surrogate model of another target model. This function can fit classification (to be implemented) and regression models.
+#' \code{mid_surrogate()} defines a model that serves as a surrogate model of another target model. This function can fit regression models.
 #'
 #' @details
 #' This function is the main specification for the \strong{parsnip} model.
@@ -19,11 +19,11 @@
 #'
 #' @export
 mid_surrogate <- function(
-    mode = "regression", params_main = NULL, params_inter = NULL,
-    penalty = NULL, custom_formula = NULL
+    mode = c("regression"), params_main = NULL,
+    params_inter = NULL, penalty = NULL, custom_formula = NULL
 ) {
   if (mode != "regression") {
-    rlang::abort("`mode` should be 'regression'")
+    rlang::arg_match(mode)
   }
   args <- list(
     penalty = rlang::enquo(penalty),

@@ -37,14 +37,10 @@ pak::pak("ryo-asashi/midnight")
 This is a basic example which shows you how to solve a common problem:
 
 ```{r packages, message=FALSE}
-library(parsnip)
+library(tidymodels)
 library(midr)
 library(midnight)
-library(ggplot2)
 library(gridExtra)
-library(tune)
-library(rsample)
-library(dplyr)
 library(ISLR2)
 theme_set(theme_midr())
 ```
@@ -64,37 +60,43 @@ valid <- testing(holdout)
 
 ```{r 1d_fit, message = FALSE}
 # create a first-order mid surrogate model
-mid_spec_1 <- mid_surrogate(
-  params_main = 25, penalty = .1
-) %>%
+mid_spec_1 <- mid_surrogate() %>%
   set_mode("regression") %>%
-  set_engine("midr", verbosity = 0)
+  set_engine("midr")
 mid_spec_1
 # fit the model
 mid_1 <- mid_spec_1 %>%
   fit(bikers ~ ., train)
 mid_1
 # evaluate the model
-rmse <- weighted.loss(valid$bikers, predict(mid_1$fit, valid))
-cat(sprintf("\nRMSE: %.3f", rmse))
+augment(mid_1, new_data = valid) %>%
+  rmse(truth = bikers, estimate = .pred)
+```
+
+```{r ggmid_1d_fit}
+grid.arrange(nrow = 2,
+ ggmid(mid.importance(mid_1$fit), theme = "moon", max.nterms = 15),
+ ggmid(mid_1$fit, "hr"),
+ ggmid(mid_1$fit, "temp"),
+ ggmid(mid_1$fit, "mnth")
+)
 ```
 
 ```{r 2d_fit, message = FALSE}
 # create a second-order mid surrogate model via "custom formula"
 mid_spec_2 <- mid_surrogate(
-  params_main = 25, params_inter = 5, penalty = .1,
-  custom_formula = bikers ~ .^2
+  penalty = 0.000001, custom_formula = bikers ~ .^2
 ) %>%
   set_mode("regression") %>%
-  set_engine("midr", verbosity = 0)
+  set_engine("midr")
 mid_spec_2
 # fit the model
 mid_2 <- mid_spec_2 %>%
   fit(bikers ~ ., train) # pass original data on to interpret()
 mid_2
 # evaluate the model
-rmse <- weighted.loss(valid$bikers, predict(mid_2$fit, valid))
-cat(sprintf("\nRMSE: %.3f", rmse))
+augment(mid_2, new_data = valid) %>%
+  rmse(truth = bikers, estimate = .pred)
 ```
 
 ```{r ggmid_2d_fit}
@@ -155,8 +157,8 @@ mid_tune <- mid_spec %>%
   fit(bikers ~ ., train) # pass original data on to interpret()
 mid_tune
 # evaluate the model
-rmse <- weighted.loss(valid$bikers, predict(mid_tune$fit, valid))
-cat(sprintf("\nRMSE: %.3f", rmse))
+augment(mid_tune, new_data = valid) %>%
+  rmse(truth = bikers, estimate = .pred)
 ```
 
 ```{r ggmid_tune_fit}
