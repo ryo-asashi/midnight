@@ -35,7 +35,6 @@ library(midr)
 library(midnight)
 library(gridExtra)
 library(ISLR2)
-theme_set(theme_midr())
 ```
 
 ``` r
@@ -53,11 +52,9 @@ valid <- testing(holdout)
 
 ``` r
 # create a first-order mid surrogate model
-mid_spec_1 <- mid_surrogate() %>%
-  set_mode("regression") %>%
-  set_engine("midr")
+mid_spec_1 <- mid_reg()
 mid_spec_1
-#> mid surrogate Model Specification (regression)
+#> mid reg Model Specification (regression)
 #> 
 #> Computational engine: midr
 # fit the model
@@ -98,13 +95,11 @@ grid.arrange(nrow = 2,
 
 ``` r
 # create a second-order mid surrogate model via "custom formula"
-mid_spec_2 <- mid_surrogate(
+mid_spec_2 <- mid_reg(
   penalty = 0.000001, custom_formula = bikers ~ .^2
-) %>%
-  set_mode("regression") %>%
-  set_engine("midr")
+)
 mid_spec_2
-#> mid surrogate Model Specification (regression)
+#> mid reg Model Specification (regression)
 #> 
 #> Main Arguments:
 #>   penalty = 1e-06
@@ -163,16 +158,15 @@ persp(mid_2$fit, "temp:hr", theta = 50, phi = 20, shade = .5)
 
 ``` r
 # create a second-order mid surrogate model via "custom formula"
-mid_spec <- mid_surrogate(
+mid_spec <- mid_reg(
   params_main = tune(),
   params_inter = tune(),
   penalty = tune(),
   custom_formula = bikers ~ .^2
 ) %>%
-  set_mode("regression") %>%
   set_engine("midr", verbosity = 0)
 mid_spec
-#> mid surrogate Model Specification (regression)
+#> mid reg Model Specification (regression)
 #> 
 #> Main Arguments:
 #>   penalty = tune()
@@ -204,16 +198,15 @@ tune_best
 
 ``` r
 # create a second-order mid surrogate model via "custom formula"
-mid_spec <- mid_surrogate(
+mid_spec <- mid_reg(
   params_main = tune_best$params_main,
   params_inter = tune_best$params_inter,
   penalty = tune_best$penalty,
   custom_formula = bikers ~ .^2
 ) %>%
-  set_mode("regression") %>%
   set_engine("midr", verbosity = 0, singular.ok = TRUE)
 mid_spec
-#> mid surrogate Model Specification (regression)
+#> mid reg Model Specification (regression)
 #> 
 #> Main Arguments:
 #>   penalty = tune_best$penalty

@@ -1,28 +1,28 @@
-make_mid_surrogate <- function() {
+make_mid_reg <- function() {
   # set new model
   parsnip::set_new_model(
-    model = "mid_surrogate"
+    model = "mid_reg"
   )
   # set model mode
   parsnip::set_model_mode(
-    model = "mid_surrogate",
+    model = "mid_reg",
     mode = "regression"
   )
   # set model engine
   parsnip::set_model_engine(
-    model = "mid_surrogate",
+    model = "mid_reg",
     mode = "regression",
     eng = "midr"
   )
   # set dependency
   parsnip::set_dependency(
-    model = "mid_surrogate",
+    model = "mid_reg",
     eng = "midr",
     pkg = "midr"
   )
   # set model arg: k --> params_main
   parsnip::set_model_arg(
-    model = "mid_surrogate",
+    model = "mid_reg",
     eng = "midr",
     parsnip = "params_main",
     original = "params_main",
@@ -33,7 +33,7 @@ make_mid_surrogate <- function() {
   )
   # set model arg: k2 --> params_inter
   parsnip::set_model_arg(
-    model = "mid_surrogate",
+    model = "mid_reg",
     eng = "midr",
     parsnip = "params_inter",
     original = "params_inter",
@@ -44,7 +44,7 @@ make_mid_surrogate <- function() {
   )
   # set model arg: lambda --> penalty
   parsnip::set_model_arg(
-    model = "mid_surrogate",
+    model = "mid_reg",
     eng = "midr",
     parsnip = "penalty",
     original = "penalty",
@@ -55,7 +55,7 @@ make_mid_surrogate <- function() {
   )
   # set model arg: formula --> custom_formula
   parsnip::set_model_arg(
-    model = "mid_surrogate",
+    model = "mid_reg",
     eng = "midr",
     parsnip = "custom_formula",
     original = "custom_formula",
@@ -64,19 +64,20 @@ make_mid_surrogate <- function() {
   )
   # set fit
   parsnip::set_fit(
-    model = "mid_surrogate",
+    model = "mid_reg",
     eng = "midr",
     mode = "regression",
     value = list(
       interface = "data.frame",
       protect = c("x", "y", "weights"),
-      func = c(fun = "fit_mid_surrogate"),
+      func = c(pkg = "midnight",
+               fun = "fit_mid_reg"),
       defaults = list()
     )
   )
   # set encoding
   parsnip::set_encoding(
-    model = "mid_surrogate",
+    model = "mid_reg",
     eng = "midr",
     mode = "regression",
     options = list(
@@ -88,7 +89,7 @@ make_mid_surrogate <- function() {
   )
   # set pred
   parsnip::set_pred(
-    model = "mid_surrogate",
+    model = "mid_reg",
     eng = "midr",
     mode = "regression",
     type = "numeric",
