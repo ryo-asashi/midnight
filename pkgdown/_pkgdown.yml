@@ -13,7 +13,7 @@ template:
 reference:
 - title: Parsnip Interface
   contents:
-  - mid_surrogate
+  - mid_reg
 - title: Helper Functions
   contents:
   - persp.mid
