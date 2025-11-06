@@ -8,41 +8,42 @@
 mid_reg(
   mode = "regression",
   engine = "midr",
+  model = NULL,
   params_main = NULL,
   params_inter = NULL,
   penalty = NULL,
-  custom_formula = NULL
+  terms = NULL
 )
 
 fit_mid_reg(
-  x,
-  y,
+  formula,
+  data,
   weights = NULL,
-  params_main = NA,
-  params_inter = NA,
-  penalty = 0,
-  custom_formula = NULL,
-  ...
+  model = NULL,
+  params_main = NULL,
+  params_inter = NULL,
+  penalty = NULL,
+  terms = NULL
 )
 }
 \arguments{
 \item{mode}{A single character string for the type of model.}
 
-\item{params_main}{An integer for the maximum number of sample points to model main effects. i.e., \code{k} for main effects in \code{interpret()}.}
+\item{model}{A fitted model object to be interpreted. Default is \code{NULL}.}
 
-\item{params_inter}{An integer for the maximum number of sample points to model interaction effects. i.e., \code{k} for interactions in \code{interpret()}.}
+\item{params_main}{An integer for the maximum number of sample points to model main effects, i.e., \code{k} for main effects in \code{interpret()}.}
 
-\item{penalty}{A non-negative number representing the total amount of regularization. i.e., \code{lambda} in \code{interpret()}.}
+\item{params_inter}{An integer for the maximum number of sample points to model interaction effects, i.e., \code{k} for interactions in \code{interpret()}.}
 
-\item{custom_formula}{A formula object. If passed, \code{fit()} internally uses \code{interpret.formula()} with the specified formula, otherwise it uses \code{interpret.default()}. i.e., `formula` in \code{interpret.formula()}.}
+\item{penalty}{A non-negative number representing the total amount of regularization, i.e., \code{lambda} in \code{interpret()}.}
+
+\item{terms}{A character vector or formula of term labels to be included in the fitting process.}
+
+\item{weights}{an optional vector of case weights.}
 
 \item{x}{a data frame or matrix of predictor variables.}
 
 \item{y}{a vector of target variable.}
-
-\item{weights}{an optional vector of case weights.}
-
-\item{...}{other arguments passed to \code{midr::interpret()}.}
 }
 \value{
 a \code{mid_reg} model specification.

@@ -81,13 +81,11 @@ grid.arrange(nrow = 2,
 
 ```{r 2d_fit, message = FALSE}
 # create a second-order mid surrogate model via "custom formula"
-mid_spec_2 <- mid_reg(
-  penalty = 0.000001, custom_formula = bikers ~ .^2
-)
+mid_spec_2 <- mid_reg(penalty = 0.000001)
 mid_spec_2
 # fit the model
 mid_2 <- mid_spec_2 %>%
-  fit(bikers ~ ., train) # pass original data on to interpret()
+  fit(bikers ~ .^2, train) # pass original data on to interpret()
 mid_2
 # evaluate the model
 augment(mid_2, new_data = valid) %>%
@@ -113,21 +111,22 @@ persp(mid_2$fit, "temp:hr", theta = 50, phi = 20, shade = .5)
 
 ```{r tune}
 # create a second-order mid surrogate model via "custom formula"
-mid_spec <- mid_reg(
+# 
+mid_spec_3 <- mid_reg(
   params_main = tune(),
   params_inter = tune(),
   penalty = tune(),
-  custom_formula = bikers ~ .^2
-) %>%
-  set_engine("midr", verbosity = 0)
-mid_spec
+  terms = ~(mnth+hr+workingday+weathersit+temp+hum+windspeed)^2
+  # all main effects and all 2-way interactions
+)
+mid_spec_3
 # define a cross validation method
 set.seed(42)
 cv <- vfold_cv(train, v = 2)
 # execute the hyperparameter tuning
-tune_res <- mid_spec %>%
+tune_res <- mid_spec_3 %>%
   tune_bayes(
-    bikers ~ .,
+    bikers ~ ., # not allow tune_bayes() to preprocess data
     resamples = cv,
     iter = 50
   )
@@ -137,17 +136,15 @@ tune_best
 
 ```{r tuned_fit, message = FALSE}
 # create a second-order mid surrogate model via "custom formula"
-mid_spec <- mid_reg(
+mid_spec_4 <- mid_reg(
   params_main = tune_best$params_main,
   params_inter = tune_best$params_inter,
-  penalty = tune_best$penalty,
-  custom_formula = bikers ~ .^2
-) %>%
-  set_engine("midr", verbosity = 0, singular.ok = TRUE)
-mid_spec
+  penalty = tune_best$penalty
+)
+mid_spec_4
 # fit the model
-mid_tune <- mid_spec %>%
-  fit(bikers ~ ., train) # pass original data on to interpret()
+mid_tune <- mid_spec_4 %>%
+  fit(bikers ~ .^2, train) # pass original data on to interpret()
 mid_tune
 # evaluate the model
 augment(mid_tune, new_data = valid) %>%

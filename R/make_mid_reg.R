@@ -53,12 +53,21 @@ make_mid_reg <- function() {
                 range = c(-3, 2)),
     has_submodel = FALSE
   )
-  # set model arg: formula --> custom_formula
+  # set model arg: terms --> terms
   parsnip::set_model_arg(
     model = "mid_reg",
     eng = "midr",
-    parsnip = "custom_formula",
-    original = "custom_formula",
+    parsnip = "terms",
+    original = "terms",
+    func = list(fun = "none"),
+    has_submodel = FALSE
+  )
+  # set model arg: model --> model
+  parsnip::set_model_arg(
+    model = "mid_reg",
+    eng = "midr",
+    parsnip = "model",
+    original = "model",
     func = list(fun = "none"),
     has_submodel = FALSE
   )
@@ -68,8 +77,8 @@ make_mid_reg <- function() {
     eng = "midr",
     mode = "regression",
     value = list(
-      interface = "data.frame",
-      protect = c("x", "y", "weights"),
+      interface = "formula",
+      protect = c("formula", "data", "weights"),
       func = c(pkg = "midnight",
                fun = "fit_mid_reg"),
       defaults = list()
@@ -98,14 +107,11 @@ make_mid_reg <- function() {
       post = NULL,
       func = c(fun = "predict"),
       args = list(
-        object = rlang::expr(object$fit),
-        newdata = rlang::expr(new_data),
+        object = str2lang("object$fit"),
+        newdata = str2lang("new_data"),
         type = "response"
       )
     )
   )
   invisible(NULL)
 }
-
-# global variable declaration
-utils::globalVariables(c("object", "new_data", "new_model_spec"))

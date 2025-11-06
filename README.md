@@ -65,7 +65,7 @@ mid_1
 #> 
 #> 
 #> Call:
-#> interpret(x = x, y = y, weights = weights, k = k, lambda = penalty)
+#> interpret(formula = bikers ~ ., data = data)
 #> 
 #> Intercept: 146.06
 #> 
@@ -95,27 +95,23 @@ grid.arrange(nrow = 2,
 
 ``` r
 # create a second-order mid surrogate model via "custom formula"
-mid_spec_2 <- mid_reg(
-  penalty = 0.000001, custom_formula = bikers ~ .^2
-)
+mid_spec_2 <- mid_reg(penalty = 0.000001)
 mid_spec_2
 #> mid reg Model Specification (regression)
 #> 
 #> Main Arguments:
 #>   penalty = 1e-06
-#>   custom_formula = bikers ~ .^2
 #> 
 #> Computational engine: midr
 # fit the model
 mid_2 <- mid_spec_2 %>%
-  fit(bikers ~ ., train) # pass original data on to interpret()
+  fit(bikers ~ .^2, train) # pass original data on to interpret()
 mid_2
 #> parsnip model object
 #> 
 #> 
 #> Call:
-#> interpret(formula = bikers ~ .^2, data = data, weights = weights,
-#>  k = k, lambda = penalty)
+#> interpret(formula = bikers ~ .^2, data = data, lambda = 1e-06)
 #> 
 #> Intercept: 146.06
 #> 
@@ -158,33 +154,31 @@ persp(mid_2$fit, "temp:hr", theta = 50, phi = 20, shade = .5)
 
 ``` r
 # create a second-order mid surrogate model via "custom formula"
-mid_spec <- mid_reg(
+# 
+mid_spec_3 <- mid_reg(
   params_main = tune(),
   params_inter = tune(),
   penalty = tune(),
-  custom_formula = bikers ~ .^2
-) %>%
-  set_engine("midr", verbosity = 0)
-mid_spec
+  terms = ~(mnth+hr+workingday+weathersit+temp+hum+windspeed)^2
+  # all main effects and all 2-way interactions
+)
+mid_spec_3
 #> mid reg Model Specification (regression)
 #> 
 #> Main Arguments:
 #>   penalty = tune()
 #>   params_main = tune()
 #>   params_inter = tune()
-#>   custom_formula = bikers ~ .^2
-#> 
-#> Engine-Specific Arguments:
-#>   verbosity = 0
+#>   terms = ~(mnth + hr + workingday + weathersit + temp + hum + windspeed)^2
 #> 
 #> Computational engine: midr
 # define a cross validation method
 set.seed(42)
 cv <- vfold_cv(train, v = 2)
 # execute the hyperparameter tuning
-tune_res <- mid_spec %>%
+tune_res <- mid_spec_3 %>%
   tune_bayes(
-    bikers ~ .,
+    bikers ~ ., # not allow tune_bayes() to preprocess data
     resamples = cv,
     iter = 50
   )
@@ -198,37 +192,30 @@ tune_best
 
 ``` r
 # create a second-order mid surrogate model via "custom formula"
-mid_spec <- mid_reg(
+mid_spec_4 <- mid_reg(
   params_main = tune_best$params_main,
   params_inter = tune_best$params_inter,
-  penalty = tune_best$penalty,
-  custom_formula = bikers ~ .^2
-) %>%
-  set_engine("midr", verbosity = 0, singular.ok = TRUE)
-mid_spec
+  penalty = tune_best$penalty
+)
+mid_spec_4
 #> mid reg Model Specification (regression)
 #> 
 #> Main Arguments:
 #>   penalty = tune_best$penalty
 #>   params_main = tune_best$params_main
 #>   params_inter = tune_best$params_inter
-#>   custom_formula = bikers ~ .^2
-#> 
-#> Engine-Specific Arguments:
-#>   verbosity = 0
-#>   singular.ok = TRUE
 #> 
 #> Computational engine: midr
 # fit the model
-mid_tune <- mid_spec %>%
-  fit(bikers ~ ., train) # pass original data on to interpret()
+mid_tune <- mid_spec_4 %>%
+  fit(bikers ~ .^2, train) # pass original data on to interpret()
 mid_tune
 #> parsnip model object
 #> 
 #> 
 #> Call:
-#> interpret(formula = bikers ~ .^2, data = data, weights = weights,
-#>  verbosity = ..1, k = k, lambda = penalty, singular.ok = ..2)
+#> interpret(formula = bikers ~ .^2, data = data, k = 70L, lambda = 0.668346758138943,
+#>  k2 = 5L)
 #> 
 #> Intercept: 146.06
 #> 
