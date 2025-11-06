@@ -9,7 +9,7 @@ This function can fit regression models."><meta property="og:image" content="htt
 
     <a class="navbar-brand me-2" href="../index.html">midnight</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.905</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.906</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,21 +50,22 @@ This function can fit regression models.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mid_reg</span><span class="op">(</span></span>
 <span>  mode <span class="op">=</span> <span class="st">"regression"</span>,</span>
 <span>  engine <span class="op">=</span> <span class="st">"midr"</span>,</span>
+<span>  model <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  params_main <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  params_inter <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  penalty <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  custom_formula <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  terms <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">fit_mid_reg</span><span class="op">(</span></span>
-<span>  <span class="va">x</span>,</span>
-<span>  <span class="va">y</span>,</span>
+<span>  <span class="va">formula</span>,</span>
+<span>  <span class="va">data</span>,</span>
 <span>  weights <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  params_main <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  params_inter <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  penalty <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  custom_formula <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  <span class="va">...</span></span>
+<span>  model <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  params_main <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  params_inter <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  penalty <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  terms <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -76,20 +77,28 @@ This function can fit regression models.</p>
 <dd><p>A single character string for the type of model.</p></dd>
 
 
+<dt id="arg-model">model<a class="anchor" aria-label="anchor" href="#arg-model"></a></dt>
+<dd><p>A fitted model object to be interpreted. Default is <code>NULL</code>.</p></dd>
+
+
 <dt id="arg-params-main">params_main<a class="anchor" aria-label="anchor" href="#arg-params-main"></a></dt>
-<dd><p>An integer for the maximum number of sample points to model main effects. i.e., <code>k</code> for main effects in <code><a href="https://ryo-asashi.github.io/midr/reference/interpret.html" class="external-link">interpret()</a></code>.</p></dd>
+<dd><p>An integer for the maximum number of sample points to model main effects, i.e., <code>k</code> for main effects in <code><a href="https://ryo-asashi.github.io/midr/reference/interpret.html" class="external-link">interpret()</a></code>.</p></dd>
 
 
 <dt id="arg-params-inter">params_inter<a class="anchor" aria-label="anchor" href="#arg-params-inter"></a></dt>
-<dd><p>An integer for the maximum number of sample points to model interaction effects. i.e., <code>k</code> for interactions in <code><a href="https://ryo-asashi.github.io/midr/reference/interpret.html" class="external-link">interpret()</a></code>.</p></dd>
+<dd><p>An integer for the maximum number of sample points to model interaction effects, i.e., <code>k</code> for interactions in <code><a href="https://ryo-asashi.github.io/midr/reference/interpret.html" class="external-link">interpret()</a></code>.</p></dd>
 
 
 <dt id="arg-penalty">penalty<a class="anchor" aria-label="anchor" href="#arg-penalty"></a></dt>
-<dd><p>A non-negative number representing the total amount of regularization. i.e., <code>lambda</code> in <code><a href="https://ryo-asashi.github.io/midr/reference/interpret.html" class="external-link">interpret()</a></code>.</p></dd>
+<dd><p>A non-negative number representing the total amount of regularization, i.e., <code>lambda</code> in <code><a href="https://ryo-asashi.github.io/midr/reference/interpret.html" class="external-link">interpret()</a></code>.</p></dd>
 
 
-<dt id="arg-custom-formula">custom_formula<a class="anchor" aria-label="anchor" href="#arg-custom-formula"></a></dt>
-<dd><p>A formula object. If passed, <code>fit()</code> internally uses <code>interpret.formula()</code> with the specified formula, otherwise it uses <code>interpret.default()</code>. i.e., `formula` in <code>interpret.formula()</code>.</p></dd>
+<dt id="arg-terms">terms<a class="anchor" aria-label="anchor" href="#arg-terms"></a></dt>
+<dd><p>A character vector or formula of term labels to be included in the fitting process.</p></dd>
+
+
+<dt id="arg-weights">weights<a class="anchor" aria-label="anchor" href="#arg-weights"></a></dt>
+<dd><p>an optional vector of case weights.</p></dd>
 
 
 <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
@@ -98,14 +107,6 @@ This function can fit regression models.</p>
 
 <dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
 <dd><p>a vector of target variable.</p></dd>
-
-
-<dt id="arg-weights">weights<a class="anchor" aria-label="anchor" href="#arg-weights"></a></dt>
-<dd><p>an optional vector of case weights.</p></dd>
-
-
-<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>other arguments passed to <code><a href="https://ryo-asashi.github.io/midr/reference/interpret.html" class="external-link">midr::interpret()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
