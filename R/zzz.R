@@ -1,7 +1,7 @@
 .onLoad <- function(libname, pkgname) {
-  # define global_surrogate() in the model database
-  try(make_mid_reg())
-  # define color.themes
+  # define mid_reg() in the model database
+  make_mid_reg()
+  # define color themes
   midr::set.color.theme(
     name = "moon", source = "midnight", type = "qualitative",
     kernel = c("#333A59", "#2F4D66", "#2C6070", "#2F7277", "#3D837B",
