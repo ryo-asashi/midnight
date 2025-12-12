@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="index.html">midnight</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.907</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.908</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -107,8 +107,8 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Computational engine: midr</span></span>
 <span><span class="co"># fit the model</span></span>
-<span><span class="va">mid_1</span> <span class="op">&lt;-</span> <span class="va">mid_spec_1</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">fit</span><span class="op">(</span><span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span>, <span class="va">train</span><span class="op">)</span></span>
+<span><span class="va">mid_1</span> <span class="op">&lt;-</span> <span class="va">mid_spec_1</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span>, <span class="va">train</span><span class="op">)</span></span>
 <span><span class="va">mid_1</span></span>
 <span><span class="co">#&gt; parsnip model object</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -123,7 +123,7 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Uninterpreted Variation Ratio: 0.30041</span></span>
 <span><span class="co"># evaluate the model</span></span>
-<span><span class="fu">augment</span><span class="op">(</span><span class="va">mid_1</span>, new_data <span class="op">=</span> <span class="va">valid</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span><span class="fu"><a href="https://generics.r-lib.org/reference/augment.html" class="external-link">augment</a></span><span class="op">(</span><span class="va">mid_1</span>, new_data <span class="op">=</span> <span class="va">valid</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">rmse</span><span class="op">(</span>truth <span class="op">=</span> <span class="va">bikers</span>, estimate <span class="op">=</span> <span class="va">.pred</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 1 × 3</span></span>
 <span><span class="co">#&gt;   .metric .estimator .estimate</span></span>
@@ -148,8 +148,8 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Computational engine: midr</span></span>
 <span><span class="co"># fit the model</span></span>
-<span><span class="va">mid_2</span> <span class="op">&lt;-</span> <span class="va">mid_spec_2</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">fit</span><span class="op">(</span><span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span><span class="op">^</span><span class="fl">2</span>, <span class="va">train</span><span class="op">)</span> <span class="co"># pass original data on to interpret()</span></span>
+<span><span class="va">mid_2</span> <span class="op">&lt;-</span> <span class="va">mid_spec_2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span><span class="op">^</span><span class="fl">2</span>, <span class="va">train</span><span class="op">)</span> <span class="co"># pass original data on to interpret()</span></span>
 <span><span class="va">mid_2</span></span>
 <span><span class="co">#&gt; parsnip model object</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -167,7 +167,7 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Uninterpreted Variation Ratio: 0.069436</span></span>
 <span><span class="co"># evaluate the model</span></span>
-<span><span class="fu">augment</span><span class="op">(</span><span class="va">mid_2</span>, new_data <span class="op">=</span> <span class="va">valid</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span><span class="fu"><a href="https://generics.r-lib.org/reference/augment.html" class="external-link">augment</a></span><span class="op">(</span><span class="va">mid_2</span>, new_data <span class="op">=</span> <span class="va">valid</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">rmse</span><span class="op">(</span>truth <span class="op">=</span> <span class="va">bikers</span>, estimate <span class="op">=</span> <span class="va">.pred</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 1 × 3</span></span>
 <span><span class="co">#&gt;   .metric .estimator .estimate</span></span>
@@ -194,9 +194,9 @@
 <code class="sourceCode R"><span><span class="co"># create a second-order mid surrogate model via "custom formula"</span></span>
 <span><span class="co"># </span></span>
 <span><span class="va">mid_spec_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mid_reg.html">mid_reg</a></span><span class="op">(</span></span>
-<span>  params_main <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  params_inter <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  penalty <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  params_main <span class="op">=</span> <span class="fu"><a href="https://hardhat.tidymodels.org/reference/tune.html" class="external-link">tune</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  params_inter <span class="op">=</span> <span class="fu"><a href="https://hardhat.tidymodels.org/reference/tune.html" class="external-link">tune</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  penalty <span class="op">=</span> <span class="fu"><a href="https://hardhat.tidymodels.org/reference/tune.html" class="external-link">tune</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  terms <span class="op">=</span> <span class="op">~</span><span class="op">(</span><span class="va">mnth</span><span class="op">+</span><span class="va">hr</span><span class="op">+</span><span class="va">workingday</span><span class="op">+</span><span class="va">weathersit</span><span class="op">+</span><span class="va">temp</span><span class="op">+</span><span class="va">hum</span><span class="op">+</span><span class="va">windspeed</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></span>
 <span>  <span class="co"># all main effects and all 2-way interactions</span></span>
 <span><span class="op">)</span></span>
@@ -214,7 +214,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
 <span><span class="va">cv</span> <span class="op">&lt;-</span> <span class="fu">vfold_cv</span><span class="op">(</span><span class="va">train</span>, v <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="co"># execute the hyperparameter tuning</span></span>
-<span><span class="va">tune_res</span> <span class="op">&lt;-</span> <span class="va">mid_spec_3</span> <span class="op">%&gt;%</span></span>
+<span><span class="va">tune_res</span> <span class="op">&lt;-</span> <span class="va">mid_spec_3</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">tune_bayes</span><span class="op">(</span></span>
 <span>    <span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span>, <span class="co"># not allow tune_bayes() to preprocess data</span></span>
 <span>    resamples <span class="op">=</span> <span class="va">cv</span>,</span>
@@ -243,8 +243,8 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Computational engine: midr</span></span>
 <span><span class="co"># fit the model</span></span>
-<span><span class="va">mid_tune</span> <span class="op">&lt;-</span> <span class="va">mid_spec_4</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">fit</span><span class="op">(</span><span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span><span class="op">^</span><span class="fl">2</span>, <span class="va">train</span><span class="op">)</span> <span class="co"># pass original data on to interpret()</span></span>
+<span><span class="va">mid_tune</span> <span class="op">&lt;-</span> <span class="va">mid_spec_4</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span><span class="op">^</span><span class="fl">2</span>, <span class="va">train</span><span class="op">)</span> <span class="co"># pass original data on to interpret()</span></span>
 <span><span class="va">mid_tune</span></span>
 <span><span class="co">#&gt; parsnip model object</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -263,7 +263,7 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Uninterpreted Variation Ratio: 0.080808</span></span>
 <span><span class="co"># evaluate the model</span></span>
-<span><span class="fu">augment</span><span class="op">(</span><span class="va">mid_tune</span>, new_data <span class="op">=</span> <span class="va">valid</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span><span class="fu"><a href="https://generics.r-lib.org/reference/augment.html" class="external-link">augment</a></span><span class="op">(</span><span class="va">mid_tune</span>, new_data <span class="op">=</span> <span class="va">valid</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">rmse</span><span class="op">(</span>truth <span class="op">=</span> <span class="va">bikers</span>, estimate <span class="op">=</span> <span class="va">.pred</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 1 × 3</span></span>
 <span><span class="co">#&gt;   .metric .estimator .estimate</span></span>

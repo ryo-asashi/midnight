@@ -2,7 +2,8 @@
 
 `mid_reg()` defines a model that can predict numeric values from
 predictors using a set of functions each with up to two predictors. This
-function can fit regression models.
+function fits a regression model based on the Maximum Interpretation
+Decomposition.
 
 ## Usage
 
@@ -25,7 +26,8 @@ fit_mid_reg(
   params_main = NULL,
   params_inter = NULL,
   penalty = NULL,
-  terms = NULL
+  terms = NULL,
+  ...
 )
 ```
 
@@ -33,56 +35,71 @@ fit_mid_reg(
 
 - mode:
 
-  A single character string for the type of model.
+  a single character string for the type of model. Currently, only
+  "regression" is supported.
+
+- engine:
+
+  a single character string specifying the computational engine to use.
+  The default is "midr".
 
 - model:
 
-  A fitted model object to be interpreted. Default is `NULL`.
+  an optional fitted model object (black-box model) to be interpreted.
+  Default is `NULL`.
 
 - params_main:
 
-  An integer for the maximum number of sample points to model main
-  effects, i.e., `k` for main effects in
-  [`interpret()`](https://ryo-asashi.github.io/midr/reference/interpret.html).
+  an integer specifying the maximum number of sample points (knots) to
+  model main effects. Corresponds to the argument `k[1]` in
+  [`midr::interpret()`](https://ryo-asashi.github.io/midr/reference/interpret.html).
 
 - params_inter:
 
-  An integer for the maximum number of sample points to model
-  interaction effects, i.e., `k` for interactions in
-  [`interpret()`](https://ryo-asashi.github.io/midr/reference/interpret.html).
+  an integer specifying the maximum number of sample points (knots) to
+  model interaction effects. Corresponds to the argument `k[2]` or `k2`
+  in
+  [`midr::interpret()`](https://ryo-asashi.github.io/midr/reference/interpret.html).
 
 - penalty:
 
-  A non-negative number representing the total amount of regularization,
-  i.e., `lambda` in
-  [`interpret()`](https://ryo-asashi.github.io/midr/reference/interpret.html).
+  a non-negative number representing the total amount of regularization.
+  Corresponds to the argument `lambda` in
+  [`midr::interpret()`](https://ryo-asashi.github.io/midr/reference/interpret.html).
 
 - terms:
 
-  A character vector or formula of term labels to be included in the
+  a character vector or formula of term labels to be included in the
   fitting process.
+
+- formula:
+
+  an object of class `formula`: a symbolic description of the model to
+  be fitted.
+
+- data:
+
+  a data frame containing the variables in the model.
 
 - weights:
 
   an optional vector of case weights.
 
-- x:
+- ...:
 
-  a data frame or matrix of predictor variables.
-
-- y:
-
-  a vector of target variable.
+  other arguments to be passed on to
+  [`midr::interpret()`](https://ryo-asashi.github.io/midr/reference/interpret.html).
 
 ## Value
 
-a `mid_reg` model specification.
+a "model_spec" object with class "mid_reg".
 
 ## Details
 
 This function is the main specification for the **parsnip** model. The
 underlying fitting is performed by `fit_mid_reg()`, which is a helper
-function that connects `fit()` to the
+function that connects
+[`fit()`](https://generics.r-lib.org/reference/fit.html) to the
 [`midr::interpret()`](https://ryo-asashi.github.io/midr/reference/interpret.html)
 function.
 
