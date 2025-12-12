@@ -2,20 +2,21 @@
 #'
 #' @description
 #' \code{mid_reg()} defines a model that can predict numeric values from predictors using a set of functions each with up to two predictors.
-#' This function can fit regression models.
+#' This function fits a regression model based on the Maximum Interpretation Decomposition.
 #'
 #' @details
 #' This function is the main specification for the \strong{parsnip} model.
 #' The underlying fitting is performed by \code{fit_mid_reg()}, which is a helper function that connects \code{fit()} to the \code{midr::interpret()} function.
 #'
-#' @param mode A single character string for the type of model.
-#' @param model A fitted model object to be interpreted. Default is \code{NULL}.
-#' @param params_main An integer for the maximum number of sample points to model main effects, i.e., \code{k} for main effects in \code{interpret()}.
-#' @param params_inter An integer for the maximum number of sample points to model interaction effects, i.e., \code{k} for interactions in \code{interpret()}.
-#' @param penalty A non-negative number representing the total amount of regularization, i.e., \code{lambda} in \code{interpret()}.
-#' @param terms A character vector or formula of term labels to be included in the fitting process.
+#' @param mode a single character string for the type of model. Currently, only "regression" is supported.
+#' @param engine a single character string specifying the computational engine to use. The default is "midr".
+#' @param model an optional fitted model object (black-box model) to be interpreted. Default is \code{NULL}.
+#' @param params_main an integer specifying the maximum number of sample points (knots) to model main effects. Corresponds to the argument \code{k[1]} in \code{midr::interpret()}.
+#' @param params_inter an integer specifying the maximum number of sample points (knots) to model interaction effects. Corresponds to the argument \code{k[2]} or \code{k2} in \code{midr::interpret()}.
+#' @param penalty a non-negative number representing the total amount of regularization. Corresponds to the argument \code{lambda} in \code{midr::interpret()}.
+#' @param terms a character vector or formula of term labels to be included in the fitting process.
 #'
-#' @returns a \code{mid_reg} model specification.
+#' @returns a "model_spec" object with class "mid_reg".
 #'
 #' @seealso \code{\link[midr]{interpret}}
 #'
@@ -50,10 +51,10 @@ mid_reg <- function(
 
 #' @rdname mid_reg
 #'
-#' @param x A data frame or matrix of predictor variables.
-#' @param y A vector of target variable.
-#' @param weights An optional vector of case weights.
-#' @param ... Other arguments to be passed on to \code{midr::interpret()}.
+#' @param formula an object of class \code{formula}: a symbolic description of the model to be fitted.
+#' @param data a data frame containing the variables in the model.
+#' @param weights an optional vector of case weights.
+#' @param ... other arguments to be passed on to \code{midr::interpret()}.
 #'
 #' @keywords internal
 #'

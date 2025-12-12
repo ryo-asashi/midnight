@@ -1,4 +1,4 @@
-# midnight (development version) 0.1.0.900-905
+# midnight (development version) 0.1.0.900-908
 
 - Renamed main functions (from `mid_surrogate()` to `mid_reg()`).
 - Added `persp.mid()`.

@@ -23,34 +23,39 @@ fit_mid_reg(
   params_main = NULL,
   params_inter = NULL,
   penalty = NULL,
-  terms = NULL
+  terms = NULL,
+  ...
 )
 }
 \arguments{
-\item{mode}{A single character string for the type of model.}
+\item{mode}{a single character string for the type of model. Currently, only "regression" is supported.}
 
-\item{model}{A fitted model object to be interpreted. Default is \code{NULL}.}
+\item{engine}{a single character string specifying the computational engine to use. The default is "midr".}
 
-\item{params_main}{An integer for the maximum number of sample points to model main effects, i.e., \code{k} for main effects in \code{interpret()}.}
+\item{model}{an optional fitted model object (black-box model) to be interpreted. Default is \code{NULL}.}
 
-\item{params_inter}{An integer for the maximum number of sample points to model interaction effects, i.e., \code{k} for interactions in \code{interpret()}.}
+\item{params_main}{an integer specifying the maximum number of sample points (knots) to model main effects. Corresponds to the argument \code{k[1]} in \code{midr::interpret()}.}
 
-\item{penalty}{A non-negative number representing the total amount of regularization, i.e., \code{lambda} in \code{interpret()}.}
+\item{params_inter}{an integer specifying the maximum number of sample points (knots) to model interaction effects. Corresponds to the argument \code{k[2]} or \code{k2} in \code{midr::interpret()}.}
 
-\item{terms}{A character vector or formula of term labels to be included in the fitting process.}
+\item{penalty}{a non-negative number representing the total amount of regularization. Corresponds to the argument \code{lambda} in \code{midr::interpret()}.}
+
+\item{terms}{a character vector or formula of term labels to be included in the fitting process.}
+
+\item{formula}{an object of class \code{formula}: a symbolic description of the model to be fitted.}
+
+\item{data}{a data frame containing the variables in the model.}
 
 \item{weights}{an optional vector of case weights.}
 
-\item{x}{a data frame or matrix of predictor variables.}
-
-\item{y}{a vector of target variable.}
+\item{...}{other arguments to be passed on to \code{midr::interpret()}.}
 }
 \value{
-a \code{mid_reg} model specification.
+a "model_spec" object with class "mid_reg".
 }
 \description{
 \code{mid_reg()} defines a model that can predict numeric values from predictors using a set of functions each with up to two predictors.
-This function can fit regression models.
+This function fits a regression model based on the Maximum Interpretation Decomposition.
 }
 \details{
 This function is the main specification for the \strong{parsnip} model.
