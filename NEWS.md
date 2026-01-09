@@ -1,5 +1,6 @@
-# midnight (development version) 0.1.0.900-908
+# midnight (development version) 0.1.0.900-909
 
+- Added wrapper method for `ggmid.mid.importance` with new types: "violin", "beeswarm", "sinaplot".
 - Renamed main functions (from `mid_surrogate()` to `mid_reg()`).
 - Added `persp.mid()`.
 - Added the "moon" and "moonlit" color themes

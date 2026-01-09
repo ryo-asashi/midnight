@@ -1,4 +1,7 @@
 make_mid_reg <- function() {
+  if ("mid_reg" %in% parsnip::get_model_env()$models) {
+    return()
+  }
   # set new model
   parsnip::set_new_model(
     model = "mid_reg"
