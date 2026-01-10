@@ -28,4 +28,5 @@ reference:
   - mid_reg
 - title: Helper Functions
   contents:
+  - ggmid.mid.importance
   - persp.mid
