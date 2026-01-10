@@ -19,6 +19,18 @@
 <meta name="description" content='The midnight package implements a parsnip engine for the midr package, allowing users to seamlessly fit, tune, and evaluate MID (Maximum Interpretation Decomposition) models with tidymodels workflows. Development and augmentation of the package are driven by research from the "Moonlight Seminar 2025", a collaborative study group of actuaries from the Institute of Actuaries of Japan focused on advancing the practical applications of interpretable models.'>
 <meta property="og:description" content='The midnight package implements a parsnip engine for the midr package, allowing users to seamlessly fit, tune, and evaluate MID (Maximum Interpretation Decomposition) models with tidymodels workflows. Development and augmentation of the package are driven by research from the "Moonlight Seminar 2025", a collaborative study group of actuaries from the Institute of Actuaries of Japan focused on advancing the practical applications of interpretable models.'>
 <meta property="og:image" content="https://ryo-asashi.github.io/midnight/logo.png">
+<style>
+[data-bs-theme="dark"] img,
+[data-bs-theme="dark"] .contents img,
+[data-bs-theme="dark"] .examples img {
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+img {
+  background-color: #ffffff !important;
+  border-radius: 4px;
+}
+</style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
 </head>
@@ -30,7 +42,7 @@
 
     <a class="navbar-brand me-2" href="index.html">midnight</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.908</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.909</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -130,7 +142,7 @@
 <span><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt; 1 rmse    standard        72.9</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">grid.arrange</span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span>,</span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span>,</span>
 <span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/mid.importance.html" class="external-link">mid.importance</a></span><span class="op">(</span><span class="va">mid_1</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span>, theme <span class="op">=</span> <span class="st">"moon"</span>, max.nterms <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>,</span>
 <span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">mid_1</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"hr"</span><span class="op">)</span>,</span>
 <span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">mid_1</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"temp"</span><span class="op">)</span>,</span>
@@ -174,7 +186,7 @@
 <span><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt; 1 rmse    standard        44.3</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">grid.arrange</span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span>,</span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span>,</span>
 <span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/mid.importance.html" class="external-link">mid.importance</a></span><span class="op">(</span><span class="va">mid_2</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span>, theme <span class="op">=</span> <span class="st">"moon"</span>, max.nterms <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>,</span>
 <span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">mid_2</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"hr"</span><span class="op">)</span>,</span>
 <span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">mid_2</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"temp"</span><span class="op">)</span>,</span>
@@ -270,7 +282,7 @@
 <span><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt; 1 rmse    standard        43.0</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">grid.arrange</span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span>,</span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span>,</span>
 <span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/mid.importance.html" class="external-link">mid.importance</a></span><span class="op">(</span><span class="va">mid_tune</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span>, theme <span class="op">=</span> <span class="st">"moon"</span>, max.nterms <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>,</span>
 <span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">mid_tune</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"hr"</span><span class="op">)</span>,</span>
 <span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">mid_tune</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"temp"</span><span class="op">)</span>,</span>

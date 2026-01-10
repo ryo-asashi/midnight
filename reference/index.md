@@ -8,5 +8,7 @@
 
 ## Helper Functions
 
+- [`ggmid(`*`<mid.importance>`*`)`](https://ryo-asashi.github.io/midnight/reference/ggmid.mid.importance.md)
+  : Advanced Visualizations for MID Importance
 - [`persp(`*`<mid>`*`)`](https://ryo-asashi.github.io/midnight/reference/persp.mid.md)
   : Perspective Plot of MID Effects
