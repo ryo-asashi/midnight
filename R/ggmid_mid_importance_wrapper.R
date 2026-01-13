@@ -8,7 +8,7 @@
 #' This function wraps the S3 method of \code{midr::ggmid} for "mid.importance" objects and replaces the primary layer with modern distribution geoms when \code{type} is one of the extended options.
 #'
 #' @param object a "mid.importance" object created by \code{midr::mid.importance}.
-#' @param type a character string specifying the plot type. In addition to standard types ("barplot", "boxplot", "dotchart", "heatmap"), this extended method supports "violin", "sinaplot", and "beeswarm".
+#' @param type a character string specifying the plot type. In addition to standard types ("barplot", "boxplot", "dotchart", "heatmap"), this extended method supports "violinplot", "sinaplot", and "beeswarm".
 #' @param theme a character string for the visual theme.
 #' @param terms a character vector of terms to include. If \code{NULL} (default), all terms are shown.
 #' @param max.nterms an integer. The maximum number of terms to display.
@@ -16,7 +16,23 @@
 #' @param method a character string specifying the distribution algorithm. Default is "density" for \code{sinaplot} and "frowney" for \code{beeswarm}.
 #' @param ... additional arguments passed to the underlying geoms.
 #'
-#' @return a "ggplot" object.
+#' @examples
+#' data(diamonds, package = "ggplot2")
+#' set.seed(42)
+#' idx <- sample(nrow(diamonds), 5e3)
+#' mid <- midr::interpret(price ~ (carat + cut + color + clarity)^2, diamonds[idx, ])
+#' imp <- midr::mid.importance(mid)
+#'
+#' # Create a violin plot
+#' midr::ggmid(imp, type = "violinplot")
+#'
+#' # Create a beeswarm plot
+#' midr::ggmid(imp, type = "beeswarm", theme = "bluescale")
+#'
+#' # Create a sina plot
+#' midr::ggmid(imp, type = "sinaplot", theme = "Zissou 1")
+#' @returns
+#' a "ggplot" object.
 #'
 #' @exportS3Method midr::ggmid
 #'
@@ -24,7 +40,7 @@ ggmid.mid.importance <- function(
     object, type = NULL, theme = NULL, terms = NULL, max.nterms = 30,
     scale = NULL, method = NULL, ...
   ) {
-  type_new <- c("violin", "sinaplot", "beeswarm")
+  type_new <- c("violinplot", "sinaplot", "beeswarm")
   type_all <- c("barplot", "dotchart", "heatmap", "boxplot", type_new)
   type <- match.arg(type, type_all)
   func <- utils::getS3method(
@@ -64,7 +80,7 @@ ggmid.mid.importance <- function(
         orientation = "y", method = method %||% "quasirandom", ...
       )
     },
-    "violin" = {
+    "violinplot" = {
       names(pl$layers[[1L]] <- "geom_violin")
       ggplot2::geom_violin(
         ggplot2::aes(.data[["mid"]], .data[["term"]]),
@@ -74,7 +90,7 @@ ggmid.mid.importance <- function(
   theme <- midr::color.theme(theme)
   use.theme <- inherits(theme, "color.theme")
   if (use.theme) {
-    if (type == "violin") {
+    if (type == "violinplot") {
       var <- switch(theme$type, "qualitative" = "order", "importance")
       pl <- pl + ggplot2::aes(fill = .data[[var]], group = .data[["term"]]) +
         midr::scale_fill_theme(theme = theme)

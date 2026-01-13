@@ -18,7 +18,7 @@
 \arguments{
 \item{object}{a "mid.importance" object created by \code{midr::mid.importance}.}
 
-\item{type}{a character string specifying the plot type. In addition to standard types ("barplot", "boxplot", "dotchart", "heatmap"), this extended method supports "violin", "sinaplot", and "beeswarm".}
+\item{type}{a character string specifying the plot type. In addition to standard types ("barplot", "boxplot", "dotchart", "heatmap"), this extended method supports "violinplot", "sinaplot", and "beeswarm".}
 
 \item{theme}{a character string for the visual theme.}
 
@@ -41,4 +41,20 @@ Added types include sina, beeswarm, and violin plots.
 }
 \details{
 This function wraps the S3 method of \code{midr::ggmid} for "mid.importance" objects and replaces the primary layer with modern distribution geoms when \code{type} is one of the extended options.
+}
+\examples{
+data(diamonds, package = "ggplot2")
+set.seed(42)
+idx <- sample(nrow(diamonds), 5e3)
+mid <- midr::interpret(price ~ (carat + cut + color + clarity)^2, diamonds[idx, ])
+imp <- midr::mid.importance(mid)
+
+# Create a violin plot
+midr::ggmid(imp, type = "violinplot")
+
+# Create a beeswarm plot
+midr::ggmid(imp, type = "beeswarm", theme = "bluescale")
+
+# Create a sina plot
+midr::ggmid(imp, type = "sinaplot", theme = "Zissou 1")
 }
