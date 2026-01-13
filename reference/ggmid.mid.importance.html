@@ -80,7 +80,7 @@ Added types include sina, beeswarm, and violin plots.</p>
 
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
-<dd><p>a character string specifying the plot type. In addition to standard types ("barplot", "boxplot", "dotchart", "heatmap"), this extended method supports "violin", "sinaplot", and "beeswarm".</p></dd>
+<dd><p>a character string specifying the plot type. In addition to standard types ("barplot", "boxplot", "dotchart", "heatmap"), this extended method supports "violinplot", "sinaplot", and "beeswarm".</p></dd>
 
 
 <dt id="arg-theme">theme<a class="anchor" aria-label="anchor" href="#arg-theme"></a></dt>
@@ -116,6 +116,31 @@ Added types include sina, beeswarm, and violin plots.</p>
     <p>This function wraps the S3 method of <code><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">midr::ggmid</a></code> for "mid.importance" objects and replaces the primary layer with modern distribution geoms when <code>type</code> is one of the extended options.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">diamonds</span>, package <span class="op">=</span> <span class="st">"ggplot2"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">diamonds</span><span class="op">)</span>, <span class="fl">5e3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mid</span> <span class="op">&lt;-</span> <span class="fu">midr</span><span class="fu">::</span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/interpret.html" class="external-link">interpret</a></span><span class="op">(</span><span class="va">price</span> <span class="op">~</span> <span class="op">(</span><span class="va">carat</span> <span class="op">+</span> <span class="va">cut</span> <span class="op">+</span> <span class="va">color</span> <span class="op">+</span> <span class="va">clarity</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span>, <span class="va">diamonds</span><span class="op">[</span><span class="va">idx</span>, <span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 'model' not passed: response variable in 'data' is used</span>
+<span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu">midr</span><span class="fu">::</span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/mid.importance.html" class="external-link">mid.importance</a></span><span class="op">(</span><span class="va">mid</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Create a violin plot</span></span></span>
+<span class="r-in"><span><span class="fu">midr</span><span class="fu">::</span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">imp</span>, type <span class="op">=</span> <span class="st">"violinplot"</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Ignoring unknown parameters: `terms`</span>
+<span class="r-plt img"><img src="ggmid.mid.importance-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Create a beeswarm plot</span></span></span>
+<span class="r-in"><span><span class="fu">midr</span><span class="fu">::</span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">imp</span>, type <span class="op">=</span> <span class="st">"beeswarm"</span>, theme <span class="op">=</span> <span class="st">"bluescale"</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Ignoring unknown parameters: `terms`</span>
+<span class="r-plt img"><img src="ggmid.mid.importance-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Create a sina plot</span></span></span>
+<span class="r-in"><span><span class="fu">midr</span><span class="fu">::</span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">imp</span>, type <span class="op">=</span> <span class="st">"sinaplot"</span>, theme <span class="op">=</span> <span class="st">"Zissou 1"</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Ignoring unknown parameters: `terms`</span>
+<span class="r-plt img"><img src="ggmid.mid.importance-3.png" alt="" width="700" height="433"></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

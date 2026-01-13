@@ -33,7 +33,7 @@ ggmid(
 
   a character string specifying the plot type. In addition to standard
   types ("barplot", "boxplot", "dotchart", "heatmap"), this extended
-  method supports "violin", "sinaplot", and "beeswarm".
+  method supports "violinplot", "sinaplot", and "beeswarm".
 
 - theme:
 
@@ -73,3 +73,28 @@ This function wraps the S3 method of
 [`midr::ggmid`](https://ryo-asashi.github.io/midr/reference/ggmid.html)
 for "mid.importance" objects and replaces the primary layer with modern
 distribution geoms when `type` is one of the extended options.
+
+## Examples
+
+``` r
+data(diamonds, package = "ggplot2")
+set.seed(42)
+idx <- sample(nrow(diamonds), 5e3)
+mid <- midr::interpret(price ~ (carat + cut + color + clarity)^2, diamonds[idx, ])
+#> 'model' not passed: response variable in 'data' is used
+imp <- midr::mid.importance(mid)
+
+# Create a violin plot
+midr::ggmid(imp, type = "violinplot")
+#> Warning: Ignoring unknown parameters: `terms`
+
+
+# Create a beeswarm plot
+midr::ggmid(imp, type = "beeswarm", theme = "bluescale")
+#> Warning: Ignoring unknown parameters: `terms`
+
+
+# Create a sina plot
+midr::ggmid(imp, type = "sinaplot", theme = "Zissou 1")
+#> Warning: Ignoring unknown parameters: `terms`
+```
