@@ -1,6 +1,11 @@
 # Changelog
 
-## midnight (development version) 0.1.0.900-909
+## midnight (development version) 0.1.1.900
+
+- Renamed and Updated the `ggmid.midimp` wrapper (for better alignment
+  with **midr** 0.6.0).
+
+## midnight 0.1.0
 
 - Added wrapper method for `ggmid.mid.importance` with new types:
   “violin”, “beeswarm”, “sinaplot”.
