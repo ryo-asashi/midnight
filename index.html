@@ -99,7 +99,11 @@ img {
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ryo-asashi/midr" class="external-link">midr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ryo-asashi/midnight" class="external-link">midnight</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">gridExtra</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.statlearning.com" class="external-link">ISLR2</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.statlearning.com" class="external-link">ISLR2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span></span>
+<span>  midr.sequential <span class="op">=</span> <span class="st">"moonlit"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># split dataset into training / validating subsets</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
@@ -142,8 +146,9 @@ img {
 <span><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt; 1 rmse    standard        72.9</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span>,</span>
-<span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/mid.importance.html" class="external-link">mid.importance</a></span><span class="op">(</span><span class="va">mid_1</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span>, theme <span class="op">=</span> <span class="st">"moon"</span>, max.nterms <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>,</span>
+<code class="sourceCode R"><span><span class="va">imp_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/mid.importance.html" class="external-link">mid.importance</a></span><span class="op">(</span><span class="va">mid_1</span><span class="op">$</span><span class="va">fit</span>, data <span class="op">=</span> <span class="va">train</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span>,</span>
+<span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">imp_1</span><span class="op">)</span>,</span>
 <span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">mid_1</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"hr"</span><span class="op">)</span>,</span>
 <span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">mid_1</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"temp"</span><span class="op">)</span>,</span>
 <span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">mid_1</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"mnth"</span><span class="op">)</span></span>
@@ -186,16 +191,17 @@ img {
 <span><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt; 1 rmse    standard        44.3</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span>,</span>
-<span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/mid.importance.html" class="external-link">mid.importance</a></span><span class="op">(</span><span class="va">mid_2</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span>, theme <span class="op">=</span> <span class="st">"moon"</span>, max.nterms <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>,</span>
+<code class="sourceCode R"><span><span class="va">imp_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/mid.importance.html" class="external-link">mid.importance</a></span><span class="op">(</span><span class="va">mid_2</span><span class="op">$</span><span class="va">fit</span>, data <span class="op">=</span> <span class="va">train</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span>,</span>
+<span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">imp_2</span>, max.nterms <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>,</span>
 <span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">mid_2</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"hr"</span><span class="op">)</span>,</span>
 <span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">mid_2</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"temp"</span><span class="op">)</span>,</span>
-<span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">mid_2</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"hr:workingday"</span>, type <span class="op">=</span> <span class="st">"data"</span>, data <span class="op">=</span> <span class="va">valid</span>,</span>
-<span>       main.effects <span class="op">=</span> <span class="cn">TRUE</span>, theme <span class="op">=</span> <span class="st">"moonlit"</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">mid_2</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"hr:workingday"</span>, type <span class="op">=</span> <span class="st">"data"</span>,</span>
+<span>       data <span class="op">=</span> <span class="va">valid</span>, main.effects <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-ggmid_2d_fit-1.png" width="100%"></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/theme_midr.html" class="external-link">par.midr</a></span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/theme_midr.html" class="external-link">par.midr</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/persp.html" class="external-link">persp</a></span><span class="op">(</span><span class="va">mid_2</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"temp:hr"</span>, theta <span class="op">=</span> <span class="fl">50</span>, phi <span class="op">=</span> <span class="fl">20</span>, shade <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-persp_mid-1.png" width="100%"></p>
 </div>
@@ -211,7 +217,12 @@ img {
 <span>  penalty <span class="op">=</span> <span class="fu"><a href="https://hardhat.tidymodels.org/reference/tune.html" class="external-link">tune</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  terms <span class="op">=</span> <span class="op">~</span><span class="op">(</span><span class="va">mnth</span><span class="op">+</span><span class="va">hr</span><span class="op">+</span><span class="va">workingday</span><span class="op">+</span><span class="va">weathersit</span><span class="op">+</span><span class="va">temp</span><span class="op">+</span><span class="va">hum</span><span class="op">+</span><span class="va">windspeed</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></span>
 <span>  <span class="co"># all main effects and all 2-way interactions</span></span>
-<span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/set_engine.html" class="external-link">set_engine</a></span><span class="op">(</span></span>
+<span>    engine <span class="op">=</span> <span class="st">"midr"</span>,</span>
+<span>    method <span class="op">=</span> <span class="st">"llt"</span>,</span>
+<span>    verbosity <span class="op">=</span> <span class="fl">0L</span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="va">mid_spec_3</span></span>
 <span><span class="co">#&gt; mid reg Model Specification (regression)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -220,6 +231,10 @@ img {
 <span><span class="co">#&gt;   params_main = tune()</span></span>
 <span><span class="co">#&gt;   params_inter = tune()</span></span>
 <span><span class="co">#&gt;   terms = ~(mnth + hr + workingday + weathersit + temp + hum + windspeed)^2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Engine-Specific Arguments:</span></span>
+<span><span class="co">#&gt;   method = llt</span></span>
+<span><span class="co">#&gt;   verbosity = 0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Computational engine: midr</span></span>
 <span><span class="co"># define a cross validation method</span></span>
@@ -273,7 +288,7 @@ img {
 <span><span class="co">#&gt; Interactions:</span></span>
 <span><span class="co">#&gt; 21 interaction terms</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Uninterpreted Variation Ratio: 0.080808</span></span>
+<span><span class="co">#&gt; Uninterpreted Variation Ratio: 0.080807</span></span>
 <span><span class="co"># evaluate the model</span></span>
 <span><span class="fu"><a href="https://generics.r-lib.org/reference/augment.html" class="external-link">augment</a></span><span class="op">(</span><span class="va">mid_tune</span>, new_data <span class="op">=</span> <span class="va">valid</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">rmse</span><span class="op">(</span>truth <span class="op">=</span> <span class="va">bikers</span>, estimate <span class="op">=</span> <span class="va">.pred</span><span class="op">)</span></span>
@@ -282,16 +297,17 @@ img {
 <span><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt; 1 rmse    standard        43.0</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span>,</span>
-<span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/mid.importance.html" class="external-link">mid.importance</a></span><span class="op">(</span><span class="va">mid_tune</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span>, theme <span class="op">=</span> <span class="st">"moon"</span>, max.nterms <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>,</span>
+<code class="sourceCode R"><span><span class="va">imp_tune</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/mid.importance.html" class="external-link">mid.importance</a></span><span class="op">(</span><span class="va">mid_tune</span><span class="op">$</span><span class="va">fit</span>, data <span class="op">=</span> <span class="va">train</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span>,</span>
+<span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">imp_tune</span>, max.nterms <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>,</span>
 <span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">mid_tune</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"hr"</span><span class="op">)</span>,</span>
 <span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">mid_tune</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"temp"</span><span class="op">)</span>,</span>
-<span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">mid_tune</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"hr:workingday"</span>, type <span class="op">=</span> <span class="st">"data"</span>, data <span class="op">=</span> <span class="va">valid</span>,</span>
-<span>       main.effects <span class="op">=</span> <span class="cn">TRUE</span>, theme <span class="op">=</span> <span class="st">"moonlit"</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">mid_tune</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"hr:workingday"</span>, type <span class="op">=</span> <span class="st">"data"</span>,</span>
+<span>       data <span class="op">=</span> <span class="va">valid</span>, main.effects <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-ggmid_tune_fit-1.png" width="100%"></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/theme_midr.html" class="external-link">par.midr</a></span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/theme_midr.html" class="external-link">par.midr</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/persp.html" class="external-link">persp</a></span><span class="op">(</span><span class="va">mid_tune</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"temp:hr"</span>, theta <span class="op">=</span> <span class="fl">50</span>, phi <span class="op">=</span> <span class="fl">20</span>, shade <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-persp_tuned_mid-1.png" width="100%"></p>
 </div>
