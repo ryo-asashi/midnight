@@ -20,7 +20,7 @@
 \item{...}{additional arguments passed to the underlying geoms.}
 }
 \value{
-a "ggplot" object.
+\code{ggmid.midimp()} returns a "ggplot" object.
 }
 \description{
 Extends \code{midr::ggmid} to provide modern distribution plots for Maximum Interpretation Decomposition (MID) feature importance.
@@ -28,4 +28,17 @@ Added types include sina, beeswarm, and violin plots.
 }
 \details{
 This function wraps the S3 method of \code{midr::ggmid} for "midimp" objects and replaces the primary layer with modern distribution geoms when \code{type} is one of the extended options.
+}
+\examples{
+mid <- midr::interpret(Ozone ~ .^2, airquality, lambda = .5)
+imp <- midr::mid.importance(mid)
+
+# Create a violin plot
+midr::ggmid(imp, type = "violinplot", theme = "HCL")
+
+# Create a beeswarm plot
+midr::ggmid(imp, type = "beeswarm", theme = "shap")
+
+# Create a sina plot
+midr::ggmid(imp, type = "sinaplot", theme = "bicolor")
 }

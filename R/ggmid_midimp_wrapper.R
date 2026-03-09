@@ -14,7 +14,20 @@
 #' @param max.nterms an integer. The maximum number of terms to display.
 #' @param ... additional arguments passed to the underlying geoms.
 #'
-#' @returns a "ggplot" object.
+#' @examples
+#' mid <- midr::interpret(Ozone ~ .^2, airquality, lambda = .5)
+#' imp <- midr::mid.importance(mid)
+#'
+#' # Create a violin plot
+#' midr::ggmid(imp, type = "violinplot", theme = "HCL")
+#'
+#' # Create a beeswarm plot
+#' midr::ggmid(imp, type = "beeswarm", theme = "shap")
+#'
+#' # Create a sina plot
+#' midr::ggmid(imp, type = "sinaplot", theme = "bicolor")
+#' @returns
+#' \code{ggmid.midimp()} returns a "ggplot" object.
 #'
 #' @exportS3Method midr::ggmid
 #'
