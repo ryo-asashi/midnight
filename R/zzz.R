@@ -4,14 +4,17 @@
   # define color themes
   midr::set.color.theme(
     name = "moon", source = "midnight", type = "qualitative",
-    kernel = c("#333A59", "#2F4D66", "#2C6070", "#2F7277", "#3D837B",
-               "#53927D", "#6EA07E", "#8AAC80", "#A7B584", "#C0BA8B"),
-    kernel.args = list(mode = "ramp")
+    kernel = c("#F2C94C", "#5B8DB8", "#A66C98", "#4EA699", "#D96A70", "#8C92AC"),
+    kernel.args = list(mode = "palette")
   )
   midr::set.color.theme(
     name = "moonlit", source = "midnight", type = "sequential",
-    kernel = c("#333A59", "#2F4D66", "#2C6070", "#2F7277", "#3D837B",
-               "#53927D", "#6EA07E", "#8AAC80", "#A7B584", "#C0BA8B"),
+    kernel = c("#141824", "#233A5E", "#38657A", "#65968E", "#A4C49D", "#EAF0C1"),
+    kernel.args = list(mode = "ramp")
+  )
+  midr::set.color.theme(
+    name = "eclipse", source = "midnight", type = "diverging",
+    kernel = c("#942A45", "#D18C99", "#F4F5F7", "#7392B0", "#1E2A4F"),
     kernel.args = list(mode = "ramp")
   )
   # DALEX --------

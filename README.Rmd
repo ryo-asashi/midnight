@@ -42,6 +42,10 @@ library(midr)
 library(midnight)
 library(gridExtra)
 library(ISLR2)
+
+options(
+  midr.sequential = "moonlit"
+)
 ```
 
 ```{r data}
@@ -71,8 +75,9 @@ augment(mid_1, new_data = valid) %>%
 ```
 
 ```{r ggmid_1d_fit}
+imp_1 <- mid.importance(mid_1$fit, data = train)
 grid.arrange(nrow = 2,
- ggmid(mid.importance(mid_1$fit), theme = "moon", max.nterms = 15),
+ ggmid(imp_1),
  ggmid(mid_1$fit, "hr"),
  ggmid(mid_1$fit, "temp"),
  ggmid(mid_1$fit, "mnth")
@@ -93,17 +98,18 @@ augment(mid_2, new_data = valid) %>%
 ```
 
 ```{r ggmid_2d_fit}
+imp_2 <- mid.importance(mid_2$fit, data = train)
 grid.arrange(nrow = 2,
- ggmid(mid.importance(mid_2$fit), theme = "moon", max.nterms = 15),
+ ggmid(imp_2, max.nterms = 15),
  ggmid(mid_2$fit, "hr"),
  ggmid(mid_2$fit, "temp"),
- ggmid(mid_2$fit, "hr:workingday", type = "data", data = valid,
-       main.effects = TRUE, theme = "moonlit")
+ ggmid(mid_2$fit, "hr:workingday", type = "data",
+       data = valid, main.effects = TRUE)
 )
 ```
 
 ```{r persp_mid}
-par.midr()
+par.midr(mar = c(1, 1, 0, 0))
 persp(mid_2$fit, "temp:hr", theta = 50, phi = 20, shade = .5)
 ```
 
@@ -118,7 +124,12 @@ mid_spec_3 <- mid_reg(
   penalty = tune(),
   terms = ~(mnth+hr+workingday+weathersit+temp+hum+windspeed)^2
   # all main effects and all 2-way interactions
-)
+) |>
+  set_engine(
+    engine = "midr",
+    method = "llt",
+    verbosity = 0L
+  )
 mid_spec_3
 # define a cross validation method
 set.seed(42)
@@ -152,16 +163,17 @@ augment(mid_tune, new_data = valid) %>%
 ```
 
 ```{r ggmid_tune_fit}
+imp_tune <- mid.importance(mid_tune$fit, data = train)
 grid.arrange(nrow = 2,
- ggmid(mid.importance(mid_tune$fit), theme = "moon", max.nterms = 15),
+ ggmid(imp_tune, max.nterms = 15),
  ggmid(mid_tune$fit, "hr"),
  ggmid(mid_tune$fit, "temp"),
- ggmid(mid_tune$fit, "hr:workingday", type = "data", data = valid,
-       main.effects = TRUE, theme = "moonlit")
+ ggmid(mid_tune$fit, "hr:workingday", type = "data",
+       data = valid, main.effects = TRUE)
 )
 ```
 
 ```{r persp_tuned_mid}
-par.midr()
+par.midr(mar = c(1, 1, 0, 0))
 persp(mid_tune$fit, "temp:hr", theta = 50, phi = 20, shade = .5)
 ```

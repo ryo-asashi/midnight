@@ -35,6 +35,10 @@ library(midr)
 library(midnight)
 library(gridExtra)
 library(ISLR2)
+
+options(
+  midr.sequential = "moonlit"
+)
 ```
 
 ``` r
@@ -83,8 +87,9 @@ augment(mid_1, new_data = valid) %>%
 ```
 
 ``` r
+imp_1 <- mid.importance(mid_1$fit, data = train)
 grid.arrange(nrow = 2,
- ggmid(mid.importance(mid_1$fit), theme = "moon", max.nterms = 15),
+ ggmid(imp_1),
  ggmid(mid_1$fit, "hr"),
  ggmid(mid_1$fit, "temp"),
  ggmid(mid_1$fit, "mnth")
@@ -132,19 +137,20 @@ augment(mid_2, new_data = valid) %>%
 ```
 
 ``` r
+imp_2 <- mid.importance(mid_2$fit, data = train)
 grid.arrange(nrow = 2,
- ggmid(mid.importance(mid_2$fit), theme = "moon", max.nterms = 15),
+ ggmid(imp_2, max.nterms = 15),
  ggmid(mid_2$fit, "hr"),
  ggmid(mid_2$fit, "temp"),
- ggmid(mid_2$fit, "hr:workingday", type = "data", data = valid,
-       main.effects = TRUE, theme = "moonlit")
+ ggmid(mid_2$fit, "hr:workingday", type = "data",
+       data = valid, main.effects = TRUE)
 )
 ```
 
 <img src="man/figures/README-ggmid_2d_fit-1.png" width="100%" />
 
 ``` r
-par.midr()
+par.midr(mar = c(1, 1, 0, 0))
 persp(mid_2$fit, "temp:hr", theta = 50, phi = 20, shade = .5)
 ```
 
@@ -161,7 +167,12 @@ mid_spec_3 <- mid_reg(
   penalty = tune(),
   terms = ~(mnth+hr+workingday+weathersit+temp+hum+windspeed)^2
   # all main effects and all 2-way interactions
-)
+) |>
+  set_engine(
+    engine = "midr",
+    method = "llt",
+    verbosity = 0L
+  )
 mid_spec_3
 #> mid reg Model Specification (regression)
 #> 
@@ -170,6 +181,10 @@ mid_spec_3
 #>   params_main = tune()
 #>   params_inter = tune()
 #>   terms = ~(mnth + hr + workingday + weathersit + temp + hum + windspeed)^2
+#> 
+#> Engine-Specific Arguments:
+#>   method = llt
+#>   verbosity = 0
 #> 
 #> Computational engine: midr
 # define a cross validation method
@@ -225,7 +240,7 @@ mid_tune
 #> Interactions:
 #> 21 interaction terms
 #> 
-#> Uninterpreted Variation Ratio: 0.080808
+#> Uninterpreted Variation Ratio: 0.080807
 # evaluate the model
 augment(mid_tune, new_data = valid) %>%
   rmse(truth = bikers, estimate = .pred)
@@ -236,19 +251,20 @@ augment(mid_tune, new_data = valid) %>%
 ```
 
 ``` r
+imp_tune <- mid.importance(mid_tune$fit, data = train)
 grid.arrange(nrow = 2,
- ggmid(mid.importance(mid_tune$fit), theme = "moon", max.nterms = 15),
+ ggmid(imp_tune, max.nterms = 15),
  ggmid(mid_tune$fit, "hr"),
  ggmid(mid_tune$fit, "temp"),
- ggmid(mid_tune$fit, "hr:workingday", type = "data", data = valid,
-       main.effects = TRUE, theme = "moonlit")
+ ggmid(mid_tune$fit, "hr:workingday", type = "data",
+       data = valid, main.effects = TRUE)
 )
 ```
 
 <img src="man/figures/README-ggmid_tune_fit-1.png" width="100%" />
 
 ``` r
-par.midr()
+par.midr(mar = c(1, 1, 0, 0))
 persp(mid_tune$fit, "temp:hr", theta = 50, phi = 20, shade = .5)
 ```
 
