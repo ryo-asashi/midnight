@@ -17,6 +17,14 @@
     kernel = c("#942A45", "#D18C99", "#F4F5F7", "#7392B0", "#1E2A4F"),
     kernel.args = list(mode = "ramp")
   )
+  # override OLS solvers
+  options(
+    midr.solver.qr = fastLmMatrixQR,
+    midr.solver.unpivoted.qr = fastLmMatrixUnpivotedQR,
+    midr.solver.llt = fastLmMatrixLLT,
+    midr.solver.ldlt = fastLmMatrixLDLT,
+    midr.solver.svd = fastLmMatrixSVD
+  )
   # DALEX --------
   if (requireNamespace("DALEX", quietly = TRUE)) {
     midr::set.color.theme(
