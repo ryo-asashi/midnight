@@ -7,16 +7,6 @@ algebra library.
 ## Usage
 
 ``` r
-fastLmMatrixLDLT(x, y, tol = 1e-07)
-
-fastLmMatrixLLT(x, y)
-
-fastLmMatrixQR(x, y)
-
-fastLmMatrixSVD(x, y, tol = 1e-07)
-
-fastLmMatrixUnpivotedQR(x, y)
-
 fastLmMatrix(x, ...)
 
 # Default S3 method
@@ -32,6 +22,10 @@ fastLmMatrix(formula, data = list(), method = 0L, ...)
 
   a model matrix \\X\\.
 
+- ...:
+
+  optional parameters passed to methods.
+
 - y:
 
   the response matrix \\Y\\.
@@ -39,10 +33,6 @@ fastLmMatrix(formula, data = list(), method = 0L, ...)
 - tol:
 
   tolerance for the rank calculation.
-
-- ...:
-
-  optional parameters passed to methods.
 
 - method:
 

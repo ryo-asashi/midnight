@@ -2,6 +2,11 @@
 
 ## midnight (development version) 0.1.1.900
 
+- Added
+  [`fastLmMatrix()`](https://ryo-asashi.github.io/midnight/reference/fastLmMatrix.md),
+  a wrapper function of
+  [`RcppEigen::fastLm()`](https://rdrr.io/pkg/RcppEigen/man/fastLm.html)
+  supporting matrix responses.
 - Renamed and Updated the `ggmid.midimp` wrapper (for better alignment
   with **midr** 0.6.0).
 
