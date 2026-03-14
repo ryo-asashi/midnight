@@ -3,8 +3,6 @@
 #include <RcppEigen.h>
 
 // [[Rcpp::depends(RcppEigen)]]
-//' @rdname fastLmMatrix
-//' @export
 // [[Rcpp::export]]
 Rcpp::List fastLmMatrixLLT(
     const Rcpp::NumericMatrix x,

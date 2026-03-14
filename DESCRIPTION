@@ -1,7 +1,7 @@
 Package: midnight
 Type: Package
 Title: A Tidymodels Interface for the 'midr' Package
-Version: 0.1.1.900
+Version: 0.1.2.900
 Authors@R: c(
     person("Ryoichi", "Asashiba", email = "ryoichi.asashiba@gmail.com",
            role = c("aut", "cre"))
