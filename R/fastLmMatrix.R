@@ -45,7 +45,7 @@ UseMethod("fastLmMatrix")
 fastLmMatrix.default <- function(x, y, tol = 1e-7, method = 0L, ...) {
   x <- as.matrix(x)
   y <- as.matrix(y)
-  if (method == 0L) {
+  res <- if (method == 0L) {
     fastLmMatrixQR(x, y)
   } else if (method == 1L) {
     fastLmMatrixUnpivotedQR(x, y)
@@ -58,6 +58,9 @@ fastLmMatrix.default <- function(x, y, tol = 1e-7, method = 0L, ...) {
   } else {
     stop("invalid 'method' found")
   }
+  res$call <- match.call()
+  res$intercept <- any(apply(x, 2L, function(x) all(x == x[1L])))
+  res
 }
 
 #' @rdname fastLmMatrix
