@@ -4,6 +4,7 @@
 \alias{fastLmMatrix}
 \alias{fastLmMatrix.default}
 \alias{fastLmMatrix.formula}
+\alias{set_fastLmMatrix}
 \title{Fit Multivariate Linear Models}
 \usage{
 fastLmMatrix(x, ...)
@@ -11,6 +12,8 @@ fastLmMatrix(x, ...)
 \method{fastLmMatrix}{default}(x, y, tol = 1e-07, method = 0L, ...)
 
 \method{fastLmMatrix}{formula}(formula, data = list(), method = 0L, ...)
+
+set_fastLmMatrix(which = 0L:4L)
 }
 \arguments{
 \item{x}{a model matrix \eqn{X}.}
@@ -26,6 +29,8 @@ fastLmMatrix(x, ...)
 \item{formula}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted.}
 
 \item{data}{an optional data frame, list or environment (or object coercible by \code{as.data.frame} to a data frame) containing the variables in the model.}
+
+\item{which}{an integer vector specifying the methods to be registered. If the vector has names, they are used to construct the option names (e.g., \code{"midr.solver.(name)"}).}
 }
 \value{
 \code{fastLmMatrix()} returns a list with the following components:
@@ -40,6 +45,8 @@ fastLmMatrix(x, ...)
 \details{
 \code{fastLmMatrix()} is a performance-optimized version of the standard \code{lm} function, specifically designed to handle multivariate responses (\eqn{Y} as a matrix).
 It leverages the \code{Eigen} C++ template library for high-performance linear algebra, utilizing \code{Eigen::Map} to avoid unnecessary memory copies and providing several decomposition methods with different trade-offs between speed and numerical stability.
+
+\code{set_fastLmMatrix()} registers the C++ based internal functions as the OLS solvers for \code{midr::interpret()} via global \code{options}.
 }
 \examples{
 # Multivariate Regression with Anscombe's Quartet
@@ -54,3 +61,4 @@ print(fit_ans$coefficients)
 fit_form <- fastLmMatrix(cbind(y1, y2, y3) ~ x1, data = anscombe)
 print(fit_form$coefficients)
 }
+\keyword{internal}

@@ -30,6 +30,10 @@ mid_reg <- function(
     penalty = NULL,
     terms = NULL
 ) {
+  if (!requireNamespace("parsnip", quietly = TRUE)) {
+    stop("the 'parsnip' package is required to use mid_reg();",
+         "please install it with install.packages('parsnip')", call. = FALSE)
+  }
   args <- list(
     penalty = rlang::enquo(penalty),
     params_main = rlang::enquo(params_main),
@@ -37,7 +41,7 @@ mid_reg <- function(
     model = rlang::enquo(model),
     terms = rlang::enquo(terms)
   )
-  new_model_spec(
+  parsnip::new_model_spec(
     "mid_reg",
     args = args,
     eng_args = NULL,

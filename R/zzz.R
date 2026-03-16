@@ -1,6 +1,7 @@
 .onLoad <- function(libname, pkgname) {
   # define mid_reg() in the model database
-  make_mid_reg()
+  setHook(packageEvent("parsnip", "onLoad"), function(...) make_mid_reg())
+  if (isNamespaceLoaded("parsnip")) make_mid_reg()
   # define color themes
   midr::set.color.theme(
     name = "moon", source = "midnight", type = "qualitative",
@@ -16,14 +17,6 @@
     name = "eclipse", source = "midnight", type = "diverging",
     kernel = c("#942A45", "#D18C99", "#F4F5F7", "#7392B0", "#1E2A4F"),
     kernel.args = list(mode = "ramp")
-  )
-  # override OLS solvers
-  options(
-    midr.solver.qr = fastLmMatrixQR,
-    midr.solver.unpivoted.qr = fastLmMatrixUnpivotedQR,
-    midr.solver.llt = fastLmMatrixLLT,
-    midr.solver.ldlt = fastLmMatrixLDLT,
-    midr.solver.svd = fastLmMatrixSVD
   )
   # DALEX --------
   if (requireNamespace("DALEX", quietly = TRUE)) {
