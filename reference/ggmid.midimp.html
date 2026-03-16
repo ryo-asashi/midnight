@@ -103,7 +103,6 @@ Added types include sina, beeswarm, and violin plots.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">mid</span> <span class="op">&lt;-</span> <span class="fu">midr</span><span class="fu">::</span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/interpret.html" class="external-link">interpret</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">.</span><span class="op">^</span><span class="fl">2</span>, <span class="va">airquality</span>, lambda <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 'model' not passed: response variable in 'data' is used</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> custom solver 'qr' is used</span>
 <span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu">midr</span><span class="fu">::</span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/mid.importance.html" class="external-link">mid.importance</a></span><span class="op">(</span><span class="va">mid</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Create a violin plot</span></span></span>

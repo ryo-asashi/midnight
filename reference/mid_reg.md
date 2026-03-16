@@ -98,8 +98,7 @@ a "model_spec" object with class "mid_reg".
 
 This function is the main specification for the **parsnip** model. The
 underlying fitting is performed by `fit_mid_reg()`, which is a helper
-function that connects
-[`fit()`](https://generics.r-lib.org/reference/fit.html) to the
+function that connects `fit()` to the
 [`midr::interpret()`](https://ryo-asashi.github.io/midr/reference/interpret.html)
 function.
 

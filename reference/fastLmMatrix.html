@@ -61,7 +61,9 @@ img {
 <span><span class="fu">fastLmMatrix</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, tol <span class="op">=</span> <span class="fl">1e-07</span>, method <span class="op">=</span> <span class="fl">0L</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'formula'</span></span>
-<span><span class="fu">fastLmMatrix</span><span class="op">(</span><span class="va">formula</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>, method <span class="op">=</span> <span class="fl">0L</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">fastLmMatrix</span><span class="op">(</span><span class="va">formula</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>, method <span class="op">=</span> <span class="fl">0L</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">set_fastLmMatrix</span><span class="op">(</span>which <span class="op">=</span> <span class="fl">0L</span><span class="op">:</span><span class="fl">4L</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -95,6 +97,10 @@ img {
 <dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
 <dd><p>an optional data frame, list or environment (or object coercible by <code>as.data.frame</code> to a data frame) containing the variables in the model.</p></dd>
 
+
+<dt id="arg-which">which<a class="anchor" aria-label="anchor" href="#arg-which"></a></dt>
+<dd><p>an integer vector specifying the methods to be registered. If the vector has names, they are used to construct the option names (e.g., <code>"midr.solver.(name)"</code>).</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -116,6 +122,7 @@ img {
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p><code>fastLmMatrix()</code> is a performance-optimized version of the standard <code>lm</code> function, specifically designed to handle multivariate responses (\(Y\) as a matrix).
 It leverages the <code>Eigen</code> C++ template library for high-performance linear algebra, utilizing <code>Eigen::Map</code> to avoid unnecessary memory copies and providing several decomposition methods with different trade-offs between speed and numerical stability.</p>
+<p><code>set_fastLmMatrix()</code> registers the C++ based internal functions as the OLS solvers for <code><a href="https://ryo-asashi.github.io/midr/reference/interpret.html" class="external-link">midr::interpret()</a></code> via global <code>options</code>.</p>
     </div>
 
     <div class="section level2">

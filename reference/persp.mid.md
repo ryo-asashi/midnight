@@ -66,7 +66,6 @@ height on the z-axis.
 ``` r
 mid <- midr::interpret(mpg ~ wt * hp + factor(am), data = mtcars, lambda = .5)
 #> 'model' not passed: response variable in 'data' is used
-#> custom solver 'qr' is used
 
 # Create a basic perspective plot
 persp(mid, xvar = "wt", yvar = "hp")

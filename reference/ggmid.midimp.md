@@ -59,7 +59,6 @@ distribution geoms when `type` is one of the extended options.
 ``` r
 mid <- midr::interpret(Ozone ~ .^2, airquality, lambda = .5)
 #> 'model' not passed: response variable in 'data' is used
-#> custom solver 'qr' is used
 imp <- midr::mid.importance(mid)
 
 # Create a violin plot

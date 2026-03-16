@@ -1,7 +1,8 @@
 # Changelog
 
-## midnight (development version) 0.1.1.900
+## midnight (development version) 0.1.1.90x
 
+- Reduced dependencies to other packages.
 - Added
   [`fastLmMatrix()`](https://ryo-asashi.github.io/midnight/reference/fastLmMatrix.md),
   a wrapper function of
