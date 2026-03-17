@@ -7,9 +7,7 @@ description: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  fig.height = 2.2,
-  fig.width = 6
+  comment = "#>"
 )
 
 pkgs <- c("midr", "colormap", "DT", "ggplot2", "parsnip", "patchwork")
@@ -131,7 +129,7 @@ DT::datatable(
 
 ### Qualitative Themes
 
-```{r qualitative, echo = FALSE}
+```{r qualitative, echo = FALSE, fig.height=2.2, fig.width=6}
 par.midr(mfrow = c(2, 2))
 df <- .df[.df$type == "qualitative", ]
 for (i in seq_len(nrow(df))) {
@@ -143,7 +141,7 @@ for (i in seq_len(nrow(df))) {
 
 ### Sequential Themes
 
-```{r sequential, echo = FALSE}
+```{r sequential, echo = FALSE, fig.height=2.2, fig.width=6}
 par.midr(mfrow = c(2, 2))
 df <- .df[.df$type == "sequential", ]
 for (i in seq_len(nrow(df))) {
@@ -155,7 +153,7 @@ for (i in seq_len(nrow(df))) {
 
 ### Diverging Themes
 
-```{r diverging, echo = FALSE}
+```{r diverging, echo = FALSE, fig.height=2.2, fig.width=6}
 par.midr(mfrow = c(2, 2))
 df <- .df[.df$type == "diverging", ]
 for (i in seq_len(nrow(df))) {

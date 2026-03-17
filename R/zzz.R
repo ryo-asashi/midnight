@@ -29,15 +29,18 @@
   # colormap --------
   if (requireNamespace("colormap", quietly = TRUE)) {
     for (x in colormap::colormaps) {
+      type <- if (x %in% c("picnic", "portland", "RdBu"))
+        "diverging" else "sequential"
       midr::set.color.theme(
-        name = x, source = "colormap", type = "sequential",
+        name = x, source = "colormap", type = type,
         kernel = c(text = "colormap", namespace = "colormap"),
         kernel.args = list(
           colormap = x, format = "hex", alpha = 1, reverse = FALSE
         ),
         options = list(
           kernel.size = Inf,
-          reverse.method = "kernel.args$reverse <- !kernel.args$reverse"
+          reverse.method = "kernel.args$reverse <- !kernel.args$reverse",
+          ramp.scaler = switch(x, NULL, portland = c(0, 0.95))
         )
       )
     }
@@ -48,13 +51,13 @@
       palette.formatter <- NULL
       if (x %in% c(
         "Derain", "Greek", "Hokusai", "Hokusai2", "Hokusai3", "Homer1",
-        "Homer2", "Ingres", "Isfahan1", "Manet", "OKeeffe2", "Peru2",
-        "Pillement", "Tam", "VanGogh1", "VanGogh3", "Veronese"
+        "Homer2", "Manet", "OKeeffe2", "Peru2", "Pillement", "Tam",
+        "VanGogh1", "VanGogh3", "Veronese"
       )) {
         type <- "sequential"
       } else if (x %in% c(
-        "Benedictus", "Cassatt1", "Cassatt2", "Demuth", "Hiroshige",
-        "Morgenstern", "OKeeffe1", "Paquin", "Pissaro", "Troy"
+        "Benedictus", "Cassatt1", "Cassatt2", "Demuth", "Hiroshige", "Ingres",
+        "Isfahan1", "Morgenstern", "OKeeffe1", "Paquin", "Pissaro", "Troy"
       )) {
         type <- "diverging"
       } else {
@@ -78,7 +81,8 @@
             length(MetBrewer::MetPalettes[[x]][[1L]]) else Inf,
           reverse.method = "kernel.args$direction <- - kernel.args$direction",
           ramp.rescaler = switch(
-            x, NULL, Ingres = c(0.1, 1), Isfahan1 = c(0, 0.9)
+            x, NULL,
+            Ingres = c(0.1, 1), Isfahan1 = c(0, 0.9), Cassatt1 = c(0, 0.9)
           ),
           palette.formatter = palette.formatter
         )
