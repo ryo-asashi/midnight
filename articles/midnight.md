@@ -184,11 +184,11 @@ pleasing, **midnight** manages a wide array of color palettes, including
 
 ### Sequential Themes
 
-![](midnight_files/figure-html/sequential-1.png)![](midnight_files/figure-html/sequential-2.png)![](midnight_files/figure-html/sequential-3.png)![](midnight_files/figure-html/sequential-4.png)![](midnight_files/figure-html/sequential-5.png)![](midnight_files/figure-html/sequential-6.png)![](midnight_files/figure-html/sequential-7.png)![](midnight_files/figure-html/sequential-8.png)![](midnight_files/figure-html/sequential-9.png)![](midnight_files/figure-html/sequential-10.png)![](midnight_files/figure-html/sequential-11.png)![](midnight_files/figure-html/sequential-12.png)![](midnight_files/figure-html/sequential-13.png)![](midnight_files/figure-html/sequential-14.png)![](midnight_files/figure-html/sequential-15.png)
+![](midnight_files/figure-html/sequential-1.png)![](midnight_files/figure-html/sequential-2.png)![](midnight_files/figure-html/sequential-3.png)![](midnight_files/figure-html/sequential-4.png)![](midnight_files/figure-html/sequential-5.png)![](midnight_files/figure-html/sequential-6.png)![](midnight_files/figure-html/sequential-7.png)![](midnight_files/figure-html/sequential-8.png)![](midnight_files/figure-html/sequential-9.png)![](midnight_files/figure-html/sequential-10.png)![](midnight_files/figure-html/sequential-11.png)![](midnight_files/figure-html/sequential-12.png)![](midnight_files/figure-html/sequential-13.png)![](midnight_files/figure-html/sequential-14.png)
 
 ### Diverging Themes
 
-![](midnight_files/figure-html/diverging-1.png)![](midnight_files/figure-html/diverging-2.png)![](midnight_files/figure-html/diverging-3.png)
+![](midnight_files/figure-html/diverging-1.png)![](midnight_files/figure-html/diverging-2.png)![](midnight_files/figure-html/diverging-3.png)![](midnight_files/figure-html/diverging-4.png)
 
 ## Summary
 
