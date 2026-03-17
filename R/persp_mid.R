@@ -90,5 +90,5 @@ persp.mid <- function(
   args[["xlab"]] <- args[["xlab"]] %||% xvar
   args[["ylab"]] <- args[["ylab"]] %||% yvar
   args[["zlab"]] <- args[["zlab"]] %||% "mid"
-  do.call("persp.default", args, envir = rlang::ns_env("graphics"))
+  do.call(graphics::persp, args, envir = rlang::ns_env("graphics"))
 }

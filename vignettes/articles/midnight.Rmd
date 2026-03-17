@@ -1,0 +1,171 @@
+---
+title: "Introduction to midnight: Core Modeling and Fast Solvers"
+description: >
+  Discover the core functionalities of the midnight package, featuring the mid_reg() tidymodels interface and high-performance fastLmMatrix solvers.
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.height = 2.2,
+  fig.width = 6
+)
+
+pkgs <- c("midr", "colormap", "DT", "ggplot2", "parsnip", "patchwork")
+install.packages(pkgs[!pkgs %in% list.files(.libPaths())])
+```
+
+The **midnight** package is designed to provide robust modeling capabilities and highly optimized solvers, working seamlessly alongside the **midr** package.
+The core philosophy of **midnight** revolves around its two main functionalities:
+
+1. `mid_reg()`: A seamless **tidymodels** (**parsnip**) interface for intuitive model specification.
+
+2. `fastLmMatrix()`: High-performance multivariate least squares solvers designed for speed and efficiency.
+
+In addition to these core computational features, the package offers advanced visualization tools and integrated color themes.
+
+## The Tidymodels Interface
+
+**midnight** fully integrates with the **tidymodels** ecosystem.
+The `mid_reg()` function allows you to specify models using the familiar **parsnip** syntax, enabling pipeline-based workflows for model fitting and hyperparameter tuning.
+
+```{r mid_reg, warning=FALSE}
+library(midr)
+library(midnight)
+library(parsnip)
+library(ggplot2)
+library(patchwork)
+
+# fitting a model with interaction using mid_reg()
+mid <- mid_reg(
+  params_main = 50, # k
+  penalty = 5 # lambda
+) |>
+  fit(Ozone ~ (Wind + Solar.R) ^ 2, na.omit(airquality))
+
+mid
+```
+
+## High-Performance Least Square Solvers
+
+For situations requiring fitting a surrogate model for multivariate responses, **midnight** provides highly optimized OLS solvers.
+You can compare standard **RcppEigen** implementations with the matrix-based solvers provided by **midnight**.
+
+```{r}
+# standard RcppEigen solver
+fit1 <- RcppEigen::fastLm(
+  Ozone ~ Wind + Solar.R, na.omit(airquality)
+)
+print(as.matrix(fit1$coefficients))
+fit2 <- RcppEigen::fastLm(
+  Temp ~ Wind + Solar.R, na.omit(airquality)
+)
+# fastLmMatrix
+print(as.matrix(fit2$coefficients))
+fit3 <- fastLmMatrix(
+  cbind(Ozone, Temp) ~ Wind + Solar.R, na.omit(airquality)
+)
+print(fit3$coefficients)
+```
+
+Furthermore, you can globally override the default Least Squares Solvers used in `mid_reg()` (and `interpret()`) to leverage this speed boost across your entire modeling pipeline by using `set_fastLmMatrix()`.
+
+```{r}
+set_fastLmMatrix() # override Least Squares Solvers of midr via options
+
+mids <- mid_reg(
+  params_main = 50, # k
+  penalty = 5 # lambda
+) |>
+  fit(cbind(Ozone, Temp) ~ (Wind + Solar.R) ^ 2, airquality)
+
+mids
+```
+
+## New Visualization Styles
+
+To understand the output of `mid_reg()`, **midnight** provides S3 methods for MID models like `ggmid.midimp()` and `persp.mid()`.
+These methods help translate complex model outputs into interpretable insights.
+
+### Variable Importance
+
+Using `ggmid(type = 'beeswarm')`, as well as `'violinplot'` or `'sinaplot'`, you can effortlessly plot feature importance distributions to understand the impact of individual variables and their interactions.
+
+```{r midimp}
+imp <- mid.importance(mid$fit, data = airquality)
+p1 <- ggmid(imp, type = "beeswarm", theme = "Hokusai3") +
+  theme(legend.position = "bottom")
+p2 <- ggmid(imp, type = "violin", theme = "moon") +
+  theme(legend.position = "bottom")
+p1 + p2
+```
+
+### Joint Effect Surface
+
+The S3 method of `persp()` for "mid" creates surface plots, making it easy to examine the joint effect of two predictors.
+
+```{r persp}
+par.midr(mar = c(0, 0, 0, 0))
+persp(mid$fit, "Wind:Solar.R", theta = 45, phi = 30)
+```
+
+## Integrated Color Themes
+
+To ensure the visualizations are both accurate and aesthetically pleasing, **midnight** manages a wide array of color palettes, including **midnight**, **colormap**, and **MetBrewer** themes.
+
+```{r color.theme.info, echo = FALSE}
+.df <- color.theme.info()
+.df <- .df[.df$source %in% c("midnight", "colormap", "MetBrewer"), ]
+DT::datatable(
+  .df,
+  class = 'cell-border stripe hover',
+  rownames = FALSE,
+  options = list(
+    pageLength = 10,
+    lengthMenu = c(10, 20, 50, 100),
+    dom = 'Btip'
+  )
+)
+```
+
+### Qualitative Themes
+
+```{r qualitative, echo = FALSE}
+par.midr(mfrow = c(2, 2))
+df <- .df[.df$type == "qualitative", ]
+for (i in seq_len(nrow(df))) {
+  ct <- color.theme(df[i, 1L], source = df[i, 2L])
+  text <- sprintf("%s/%s", df[i, 2L], df[i, 1L])
+  plot(ct, text = text)
+}
+```
+
+### Sequential Themes
+
+```{r sequential, echo = FALSE}
+par.midr(mfrow = c(2, 2))
+df <- .df[.df$type == "sequential", ]
+for (i in seq_len(nrow(df))) {
+  ct <- color.theme(df[i, 1L], source = df[i, 2L])
+  text <- sprintf("%s/%s", df[i, 2L], df[i, 1L])
+  plot(ct, text = text)
+}
+```
+
+### Diverging Themes
+
+```{r diverging, echo = FALSE}
+par.midr(mfrow = c(2, 2))
+df <- .df[.df$type == "diverging", ]
+for (i in seq_len(nrow(df))) {
+  ct <- color.theme(df[i, 1L], source = df[i, 2L])
+  text <- sprintf("%s/%s", df[i, 2L], df[i, 1L])
+  plot(ct, text = text)
+}
+```
+
+## Summary
+
+The **midnight** package combines the computational speed of `fastLmMatrix()` with the modern API of **tidymodels** via `mid_reg()`.
+When paired with its powerful visualization and color theme systems, it provides a comprehensive toolkit for building, scaling, and interpreting sophisticated models.

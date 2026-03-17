@@ -26,6 +26,65 @@
       options = list(kernel.size = 7L, palette.formatter = "recycle")
     )
   }
+  # colormap --------
+  if (requireNamespace("colormap", quietly = TRUE)) {
+    for (x in colormap::colormaps) {
+      midr::set.color.theme(
+        name = x, source = "colormap", type = "sequential",
+        kernel = c(text = "colormap", namespace = "colormap"),
+        kernel.args = list(
+          colormap = x, format = "hex", alpha = 1, reverse = FALSE
+        ),
+        options = list(
+          kernel.size = Inf,
+          reverse.method = "kernel.args$reverse <- !kernel.args$reverse"
+        )
+      )
+    }
+  }
+  # MetBrewer --------
+  if (requireNamespace("MetBrewer", quietly = TRUE)) {
+    for (x in names(MetBrewer::MetPalettes)) {
+      palette.formatter <- NULL
+      if (x %in% c(
+        "Derain", "Greek", "Hokusai", "Hokusai2", "Hokusai3", "Homer1",
+        "Homer2", "Ingres", "Isfahan1", "Manet", "OKeeffe2", "Peru2",
+        "Pillement", "Tam", "VanGogh1", "VanGogh3", "Veronese"
+      )) {
+        type <- "sequential"
+      } else if (x %in% c(
+        "Benedictus", "Cassatt1", "Cassatt2", "Demuth", "Hiroshige",
+        "Morgenstern", "OKeeffe1", "Paquin", "Pissaro", "Troy"
+      )) {
+        type <- "diverging"
+      } else {
+        type <- "qualitative"
+        palette.formatter <- if (x %in% c(
+          "Austria", "Egypt", "Juarez", "Klimt", "Lakota",
+          "Navajo", "NewKingdom", "Redon", "Tara", "Tsimshian", "Wising"
+        )) "recycle" else "interpolate"
+      }
+      midr::set.color.theme(
+        name = x, source = "MetBrewer", type = type,
+        kernel = c(
+          text = "function(...) as.vector(do.call(met.brewer, list(...)))",
+          namespace = "MetBrewer"
+        ),
+        kernel.args = list(
+          name = x, direction = 1L, override.order = FALSE
+        ),
+        options = list(
+          kernel.size = if (type == "qualitative")
+            length(MetBrewer::MetPalettes[[x]][[1L]]) else Inf,
+          reverse.method = "kernel.args$direction <- - kernel.args$direction",
+          ramp.rescaler = switch(
+            x, NULL, Ingres = c(0.1, 1), Isfahan1 = c(0, 0.9)
+          ),
+          palette.formatter = palette.formatter
+        )
+      )
+    }
+  }
   # return nothing
   invisible(NULL)
 }

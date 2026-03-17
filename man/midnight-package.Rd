@@ -4,11 +4,11 @@
 \name{midnight-package}
 \alias{midnight}
 \alias{midnight-package}
-\title{midnight: A Tidymodels Interface for the 'midr' Package}
+\title{midnight: Parsnip Engine for Maximum Interpretation Decomposition Models}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-The 'midnight' package implements a 'parsnip' engine for the 'midr' package, allowing users to seamlessly fit, tune, and evaluate MID (Maximum Interpretation Decomposition) models with 'tidymodels' workflows. Development and augmentation of the package are driven by research from the "Moonlight Seminar 2025", a collaborative study group of actuaries from the Institute of Actuaries of Japan focused on advancing the practical applications of interpretable models.
+Provides a 'parsnip' engine for the 'midr' package, enabling users to fit, tune, and evaluate Maximum Interpretation Decomposition (MID) models within the 'tidymodels' framework. Developed through research by the 'Moonlight Seminar 2025', a study group of actuaries from the Institute of Actuaries of Japan, to enhance practical applications of interpretable modeling. Detailed methodology is available in Asashiba et al. (2025) \doi{10.48550/arXiv.2506.08338}.
 }
 \seealso{
 Useful links:
