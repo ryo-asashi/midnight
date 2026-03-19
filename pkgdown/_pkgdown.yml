@@ -27,13 +27,17 @@ articles:
   - articles/midnight
 
 reference:
-- title: Tidymodels Interface
-  contents:
-  - mid_reg
-- title: Core Computation
-  contents:
-  - fastLmMatrix
-- title: Visualization
-  contents:
-  - ggmid.midimp
-  - persp.mid
+  - title: Tidymodels Interface
+    contents:
+      - mid_reg
+  - title: Other Functions
+  - subtitle: Core Computation
+    contents:
+      - fastLmMatrix
+  - subtitle: Visualization
+    contents:
+      - ggmid.midimp
+      - persp.mid
+  - subtitle: Data Augmentation
+    contents:
+      - mixup
