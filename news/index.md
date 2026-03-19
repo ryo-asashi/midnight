@@ -2,6 +2,9 @@
 
 ## midnight (development version) 0.1.1.90x
 
+- Added
+  [`mixup()`](https://ryo-asashi.github.io/midnight/reference/mixup.md)
+  for creating synthetic data using Mixup algorithm.
 - Reduced dependencies to other packages.
 - Added
   [`fastLmMatrix()`](https://ryo-asashi.github.io/midnight/reference/fastLmMatrix.md),
