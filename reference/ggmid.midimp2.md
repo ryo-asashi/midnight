@@ -10,8 +10,6 @@ types include sina, beeswarm, and violin plots.
 ``` r
 # S3 method for class 'midimp2'
 ggmid(object, type = NULL, theme = NULL, terms = NULL, max.nterms = 30, ...)
-
-mid.importance(object, ...)
 ```
 
 ## Arguments
@@ -53,9 +51,14 @@ mid.importance(object, ...)
 
 This is an S3 method for the
 [`midr::ggmid()`](https://ryo-asashi.github.io/midr/reference/ggmid.html)
-generic for "midimp2" objects created by `midnight::mid.importance()`.
+generic for "midimp2" objects created by
+[`midnight::mid.importance()`](https://ryo-asashi.github.io/midnight/reference/mid.importance.md).
 This method replaces the primary layer with modern distribution geoms
 when `type` is one of the extended options.
+
+## See also
+
+[`mid.importance`](https://ryo-asashi.github.io/midnight/reference/mid.importance.md)
 
 ## Examples
 

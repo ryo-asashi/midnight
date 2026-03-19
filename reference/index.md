@@ -15,8 +15,9 @@
 ## Visualization
 
 - [`ggmid(`*`<midimp2>`*`)`](https://ryo-asashi.github.io/midnight/reference/ggmid.midimp2.md)
-  [`mid.importance()`](https://ryo-asashi.github.io/midnight/reference/ggmid.midimp2.md)
   : Plot MID Importance with ggplot2
+- [`mid.importance()`](https://ryo-asashi.github.io/midnight/reference/mid.importance.md)
+  : Calculate MID Importance (midnight extension)
 - [`persp(`*`<mid>`*`)`](https://ryo-asashi.github.io/midnight/reference/persp.mid.md)
   : Perspective Plot of MID Effects
 
