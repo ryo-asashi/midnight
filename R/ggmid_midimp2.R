@@ -16,7 +16,7 @@
 #' @param ... optional parameters passed on to the layers.
 #'
 #' @examples
-#' mid <- midr::interpret(Ozone ~ .^2, airquality, lambda = .5)
+#' mid <- interpret(Ozone ~ .^2, airquality, lambda = .5)
 #' imp <- mid.importance(mid)
 #'
 #' # Create a violin plot
@@ -29,6 +29,8 @@
 #' ggmid(imp, type = "sinaplot", theme = "bicolor")
 #' @returns
 #' \code{ggmid.midimp()} returns a "ggplot" object.
+#'
+#' @seealso \code{\link{mid.importance}}
 #'
 #' @exportS3Method midr::ggmid
 #'
@@ -181,9 +183,15 @@ filter_params <- function(dots, allowed) {
 }
 
 
-#' @rdname ggmid.midimp2
+#' Calculate MID Importance (midnight extension)
 #'
-#' @keywords internal
+#' @description
+#' This function wraps and masks \code{midr::mid.importance} to automatically attach the "midimp2" class, enabling extended plotting capabilities.
+#'
+#' @inherit midr::mid.importance
+#'
+#' @seealso \code{\link{ggmid.midimp2}}, \code{\link[midr]{mid.importance}}
+#'
 #' @export
 #'
 mid.importance <- function(object, ...) {

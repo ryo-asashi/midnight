@@ -32,12 +32,12 @@
 #' combined_trees <- rbind(trees, mixup_trees)
 #'
 #' # fit MID models
-#' mid1 <- midr::interpret(Volume ~ ., trees, fit, k = 25, ok = TRUE)
-#' mid2 <- midr::interpret(Volume ~ ., combined_trees, fit, ok = TRUE)
-#' mid3 <- midr::interpret(Volume ~ ., trees, fit, lambda = .1, ok = TRUE)
+#' mid1 <- interpret(Volume ~ ., trees, fit, k = 25, ok = TRUE)
+#' mid2 <- interpret(Volume ~ ., combined_trees, fit, ok = TRUE)
+#' mid3 <- interpret(Volume ~ ., trees, fit, lambda = .1, ok = TRUE)
 #'
 #' # compare effects
-#' ml <- midr::midlist(singular = mid1, mixup = mid2, penalty = mid3)
+#' ml <- midlist(singular = mid1, mixup = mid2, penalty = mid3)
 #' ggmid(ml, "Girth", theme = "Cross", linewidth = 3/4)
 #' ggmid(ml, "Height", theme = "Cross", linewidth = 3/4)
 #' @returns

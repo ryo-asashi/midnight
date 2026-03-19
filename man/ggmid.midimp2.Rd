@@ -2,12 +2,9 @@
 % Please edit documentation in R/ggmid_midimp2.R
 \name{ggmid.midimp2}
 \alias{ggmid.midimp2}
-\alias{mid.importance}
 \title{Plot MID Importance with ggplot2}
 \usage{
 \method{ggmid}{midimp2}(object, type = NULL, theme = NULL, terms = NULL, max.nterms = 30, ...)
-
-mid.importance(object, ...)
 }
 \arguments{
 \item{object}{a "midimp2" object to be visualized.}
@@ -46,4 +43,6 @@ ggmid(imp, type = "beeswarm", theme = "Hokusai3")
 # Create a sina plot
 ggmid(imp, type = "sinaplot", theme = "bicolor")
 }
-\keyword{internal}
+\seealso{
+\code{\link{mid.importance}}
+}

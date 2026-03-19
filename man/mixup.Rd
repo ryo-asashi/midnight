@@ -52,6 +52,6 @@ mid3 <- midr::interpret(Volume ~ ., trees, fit, lambda = .1, ok = TRUE)
 
 # compare effects
 ml <- midr::midlist(singular = mid1, mixup = mid2, penalty = mid3)
-ggmid(ml, "Girth", theme = "Cross")
-ggmid(ml, "Height", theme = "Cross")
+ggmid(ml, "Girth", theme = "Cross", linewidth = 3/4)
+ggmid(ml, "Height", theme = "Cross", linewidth = 3/4)
 }
