@@ -27,6 +27,11 @@ hyperparameter tuning.
 ``` r
 library(midr)
 library(midnight)
+#> 
+#> Attaching package: 'midnight'
+#> The following object is masked from 'package:midr':
+#> 
+#>     mid.importance
 library(parsnip)
 library(ggplot2)
 library(patchwork)
@@ -135,8 +140,7 @@ mids
 
 To understand the output of
 [`mid_reg()`](https://ryo-asashi.github.io/midnight/reference/mid_reg.md),
-**midnight** provides S3 methods for MID models like
-[`ggmid.midimp()`](https://ryo-asashi.github.io/midnight/reference/ggmid.midimp.md)
+**midnight** provides S3 methods for MID models like `ggmid.midimp()`
 and
 [`persp.mid()`](https://ryo-asashi.github.io/midnight/reference/persp.mid.md).
 These methods help translate complex model outputs into interpretable
@@ -172,11 +176,12 @@ persp(mid$fit, "Wind:Solar.R", theta = 45, phi = 30)
 
 ![](midnight_files/figure-html/persp-1.png)
 
-## Integrated Color Themes
+## Additional Color Themes
 
 To ensure the visualizations are both accurate and aesthetically
-pleasing, **midnight** manages a wide array of color palettes, including
-**midnight**, **colormap**, and **MetBrewer** themes.
+pleasing, **midnight** adds a wide array of color palettes from
+**colormap**, *DALEX* and **MetBrewer** as well as three original
+themes.
 
 ### Qualitative Themes
 

@@ -6,22 +6,21 @@
   [`fit_mid_reg()`](https://ryo-asashi.github.io/midnight/reference/mid_reg.md)
   : MID Regression
 
-## Other Functions
-
-### Core Computation
+## Core Computation
 
 - [`fastLmMatrix()`](https://ryo-asashi.github.io/midnight/reference/fastLmMatrix.md)
   [`set_fastLmMatrix()`](https://ryo-asashi.github.io/midnight/reference/fastLmMatrix.md)
   : Fit Multivariate Linear Models
 
-### Visualization
+## Visualization
 
-- [`ggmid(`*`<midimp>`*`)`](https://ryo-asashi.github.io/midnight/reference/ggmid.midimp.md)
-  : Advanced Visualizations for MID Importance
+- [`ggmid(`*`<midimp2>`*`)`](https://ryo-asashi.github.io/midnight/reference/ggmid.midimp2.md)
+  [`mid.importance()`](https://ryo-asashi.github.io/midnight/reference/ggmid.midimp2.md)
+  : Plot MID Importance with ggplot2
 - [`persp(`*`<mid>`*`)`](https://ryo-asashi.github.io/midnight/reference/persp.mid.md)
   : Perspective Plot of MID Effects
 
-### Data Augmentation
+## Data Augmentation
 
 - [`mixup()`](https://ryo-asashi.github.io/midnight/reference/mixup.md)
   : Generate Synthetic Data using Mixup
