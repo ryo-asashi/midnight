@@ -52,7 +52,6 @@ mid3 <- midr::interpret(Volume ~ ., trees, fit, lambda = .1, ok = TRUE)
 
 # compare effects
 ml <- midr::midlist(singular = mid1, mixup = mid2, penalty = mid3)
-plot(ml, "Height")
-hclpal <- midr::color.theme("HCL")$palette(3)
-legend("topleft", labels(ml), lty = 1, col = hclpal)
+ggmid(ml, "Girth", theme = "Cross")
+ggmid(ml, "Height", theme = "Cross")
 }

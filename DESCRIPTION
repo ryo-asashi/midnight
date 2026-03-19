@@ -11,8 +11,10 @@ Description:
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Depends:
+  midr (>= 0.6.0)
 Imports:
-  graphics, midr (>= 0.6.0), rlang, Rcpp, stats, utils
+  graphics, rlang, Rcpp, stats, utils
 Suggests:
   colormap, DALEX, ggbeeswarm, ggforce, ggplot2, ISLR2, MetBrewer, parsnip
 RoxygenNote: 7.3.2

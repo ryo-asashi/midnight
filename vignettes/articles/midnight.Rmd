@@ -108,13 +108,13 @@ par.midr(mar = c(0, 0, 0, 0))
 persp(mid$fit, "Wind:Solar.R", theta = 45, phi = 30)
 ```
 
-## Integrated Color Themes
+## Additional Color Themes
 
-To ensure the visualizations are both accurate and aesthetically pleasing, **midnight** manages a wide array of color palettes, including **midnight**, **colormap**, and **MetBrewer** themes.
+To ensure the visualizations are both accurate and aesthetically pleasing, **midnight** adds a wide array of color palettes from **colormap**, *DALEX* and **MetBrewer** as well as three original themes.
 
 ```{r color.theme.info, echo = FALSE}
 .df <- color.theme.info()
-.df <- .df[.df$source %in% c("midnight", "colormap", "MetBrewer"), ]
+.df <- .df[.df$source %in% c("midnight", "DALEX", "colormap", "MetBrewer"), ]
 DT::datatable(
   .df,
   class = 'cell-border stripe hover',

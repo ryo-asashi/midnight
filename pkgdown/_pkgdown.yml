@@ -30,14 +30,13 @@ reference:
   - title: Tidymodels Interface
     contents:
       - mid_reg
-  - title: Other Functions
-  - subtitle: Core Computation
+  - title: Core Computation
     contents:
       - fastLmMatrix
-  - subtitle: Visualization
+  - title: Visualization
     contents:
       - ggmid.midimp
       - persp.mid
-  - subtitle: Data Augmentation
+  - title: Data Augmentation
     contents:
       - mixup

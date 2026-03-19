@@ -38,9 +38,8 @@
 #'
 #' # compare effects
 #' ml <- midr::midlist(singular = mid1, mixup = mid2, penalty = mid3)
-#' plot(ml, "Height")
-#' hclpal <- midr::color.theme("HCL")$palette(3)
-#' legend("topleft", labels(ml), lty = 1, col = hclpal)
+#' ggmid(ml, "Girth", theme = "Cross", linewidth = 3/4)
+#' ggmid(ml, "Height", theme = "Cross", linewidth = 3/4)
 #' @returns
 #' \code{mixup()} returns an object of the same class as \code{object} (either "matrix" or "data.frame") containing \code{n} generated synthetic observations.
 #'
@@ -56,7 +55,7 @@ mixup <- function(
   if (!is.null(seed)) set.seed(seed)
   idx_1 <- sample.int(n_obs, n, replace = TRUE, prob = weights)
   idx_2 <- sample.int(n_obs, n, replace = TRUE, prob = weights)
-  props <- rbeta(n, shape1 = alpha, shape2 = alpha)
+  props <- stats::rbeta(n, shape1 = alpha, shape2 = alpha)
   ismat <- is.matrix(object)
   if (ismat && is.numeric(object)) {
     mixed <- props * object[idx_1, , drop = FALSE] +
@@ -70,7 +69,7 @@ mixup <- function(
       mixed[[i]] <- props * x[idx_1] + (1 - props) * x[idx_2]
     } else {
       res <- x[idx_2]
-      use_1 <- rbinom(n, size = 1, prob = props) == 1
+      use_1 <- stats::rbinom(n, size = 1, prob = props) == 1
       res[use_1] <- x[idx_1][use_1]
       mixed[[i]] <- res
     }

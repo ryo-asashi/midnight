@@ -1,42 +1,45 @@
-#' Advanced Visualizations for MID Importance
+#' Plot MID Importance with ggplot2
 #'
 #' @description
-#' Extends \code{midr::ggmid} to provide modern distribution plots for Maximum Interpretation Decomposition (MID) feature importance.
+#' Extends \code{midr::ggmid()} to provide modern distribution plots for MID feature importance.
 #' Added types include sina, beeswarm, and violin plots.
 #'
 #' @details
-#' This function wraps the S3 method of \code{midr::ggmid} for "midimp" objects and replaces the primary layer with modern distribution geoms when \code{type} is one of the extended options.
+#' This is an S3 method for the \code{midr::ggmid()} generic for "midimp2" objects created by \code{midnight::mid.importance()}.
+#' This method replaces the primary layer with modern distribution geoms when \code{type} is one of the extended options.
 #'
-#' @param object a "midimp" object created by \code{midr::mid.importance}.
-#' @param type a character string specifying the plot type. In addition to standard types ("barplot", "boxplot", "dotchart", "heatmap"), this extended method supports "violinplot", "sinaplot", and "beeswarm".
-#' @param theme a character string for the visual theme.
-#' @param terms a character vector of terms to include. If \code{NULL} (default), all terms are shown.
-#' @param max.nterms an integer. The maximum number of terms to display.
-#' @param ... additional arguments passed to the underlying geoms.
+#' @param object a "midimp2" object to be visualized.
+#' @param type the plotting style. In addition to standard types ("barplot", "boxplot", "dotchart", "heatmap"), this extended method supports "violinplot", "sinaplot", and "beeswarm".
+#' @param theme a character string or object defining the color theme. See \code{\link[midr]{color.theme}} for details.
+#' @param terms an optional character vector specifying which terms to display.
+#' @param max.nterms an integer specifying the maximum number of terms to display. Defaults to 30.
+#' @param ... optional parameters passed on to the layers.
 #'
 #' @examples
 #' mid <- midr::interpret(Ozone ~ .^2, airquality, lambda = .5)
-#' imp <- midr::mid.importance(mid)
+#' imp <- mid.importance(mid)
 #'
 #' # Create a violin plot
-#' midr::ggmid(imp, type = "violinplot", theme = "HCL")
+#' ggmid(imp, type = "violinplot", theme = "moon")
 #'
 #' # Create a beeswarm plot
-#' midr::ggmid(imp, type = "beeswarm", theme = "shap")
+#' ggmid(imp, type = "beeswarm", theme = "Hokusai3")
 #'
 #' # Create a sina plot
-#' midr::ggmid(imp, type = "sinaplot", theme = "bicolor")
+#' ggmid(imp, type = "sinaplot", theme = "bicolor")
 #' @returns
 #' \code{ggmid.midimp()} returns a "ggplot" object.
 #'
 #' @exportS3Method midr::ggmid
 #'
-ggmid.midimp <- function(
-    object, type = NULL, theme = NULL, terms = NULL, max.nterms = 30, ...) {
-
+ggmid.midimp2 <- function(
+    object, type = NULL, theme = NULL, terms = NULL, max.nterms = 30, ...
+  ) {
   type.new <- c("violinplot", "sinaplot", "beeswarm")
   type.all <- c("barplot", "dotchart", "heatmap", "boxplot", type.new)
-  if (!is.null(type)) type <- match.arg(type, type.all)
+  if (!is.null(type)) {
+    type <- match.arg(type, type.all)
+  }
   mcall <- match.call(expand.dots = TRUE)
   mcall[[1L]] <- utils::getS3method(
     f = "ggmid", class = "midimp", envir = asNamespace("midr")
@@ -175,4 +178,16 @@ filter_params <- function(dots, allowed) {
     filter_params(dots, allowed_params)
   )
   do.call(ggplot2::geom_violin, args)
+}
+
+
+#' @rdname ggmid.midimp2
+#'
+#' @keywords internal
+#' @export
+#'
+mid.importance <- function(object, ...) {
+  out <- midr::mid.importance(object, ...)
+  class(out) <- c("midimp2", class(out))
+  out
 }
