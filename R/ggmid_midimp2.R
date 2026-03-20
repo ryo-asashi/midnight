@@ -5,10 +5,10 @@
 #' Added types include sina, beeswarm, and violin plots.
 #'
 #' @details
-#' This is an S3 method for the \code{midr::ggmid()} generic for "midimp2" objects created by \code{midnight::mid.importance()}.
+#' This is an S3 method for the \code{midr::ggmid()} generic for "midimp" objects created by \code{midr::mid.importance()}.
 #' This method replaces the primary layer with modern distribution geoms when \code{type} is one of the extended options.
 #'
-#' @param object a "midimp2" object to be visualized.
+#' @param object a "midimp" object to be visualized.
 #' @param type the plotting style. In addition to standard types ("barplot", "boxplot", "dotchart", "heatmap"), this extended method supports "violinplot", "sinaplot", and "beeswarm".
 #' @param theme a character string or object defining the color theme. See \code{\link[midr]{color.theme}} for details.
 #' @param terms an optional character vector specifying which terms to display.
@@ -34,7 +34,7 @@
 #'
 #' @exportS3Method midr::ggmid
 #'
-ggmid.midimp2 <- function(
+ggmid.midimp <- function(
     object, type = NULL, theme = NULL, terms = NULL, max.nterms = 30, ...
   ) {
   type.new <- c("violinplot", "sinaplot", "beeswarm")
@@ -180,22 +180,4 @@ filter_params <- function(dots, allowed) {
     filter_params(dots, allowed_params)
   )
   do.call(ggplot2::geom_violin, args)
-}
-
-
-#' Calculate MID Importance (midnight extension)
-#'
-#' @description
-#' This function wraps and masks \code{midr::mid.importance} to automatically attach the "midimp2" class, enabling extended plotting capabilities.
-#'
-#' @inherit midr::mid.importance
-#'
-#' @seealso \code{\link{ggmid.midimp2}}, \code{\link[midr]{mid.importance}}
-#'
-#' @export
-#'
-mid.importance <- function(object, ...) {
-  out <- midr::mid.importance(object, ...)
-  class(out) <- c("midimp2", class(out))
-  out
 }
