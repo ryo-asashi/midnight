@@ -35,9 +35,6 @@ library(parsnip)
 library(ggplot2)
 library(patchwork)
 
-# fully activate midnight package
-nightfall(solvers = FALSE)
-
 # fitting a model with interaction using mid_reg()
 mid <- mid_reg(
   params_main = 50, # k
@@ -70,10 +67,11 @@ fit3 <- fastLmMatrix(
 print(fit3$coefficients)
 ```
 
-Furthermore, you can globally override the default Least Squares Solvers used in `mid_reg()` (and `interpret()`) to leverage this speed boost across your entire modeling pipeline by using `set_fastLmMatrix()`.
+Furthermore, you can globally override the default Least Squares Solvers used in `mid_reg()` (and `interpret()`) to leverage this speed boost across your entire modeling pipeline by using `nightfall()`.
 
 ```{r}
-set_fastLmMatrix() # override Least Squares Solvers of midr via options
+# activate midnight package
+nightfall()
 
 mids <- mid_reg(
   params_main = 50, # k
@@ -86,7 +84,7 @@ mids
 
 ## New Visualization Styles
 
-To understand the output of `mid_reg()`, **midnight** provides S3 methods for MID models like `ggmid.midimp()` and `persp.mid()`.
+To understand the output of `mid_reg()`, **midnight** provides S3 methods for MID models like `persp.mid()` and `ggmid.midimp()`, which is activated when `nightfall()` is called.
 These methods help translate complex model outputs into interpretable insights.
 
 ### Variable Importance
