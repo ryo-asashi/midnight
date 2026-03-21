@@ -4,7 +4,7 @@
 \name{midnight-package}
 \alias{midnight}
 \alias{midnight-package}
-\title{midnight: Parsnip Engine for Maximum Interpretation Decomposition Models}
+\title{midnight: Tidymodels Engine and Other Extensions for the 'midr' Package}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
@@ -20,7 +20,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Ryoichi Asashiba \email{ryoichi.asashiba@gmail.com}
+\strong{Maintainer}: Ryoichi Asashiba \email{ryoichi.asashiba@gmail.com} (\href{https://orcid.org/0009-0001-9532-7000}{ORCID})
 
 }
 \keyword{internal}

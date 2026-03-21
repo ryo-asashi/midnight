@@ -34,13 +34,13 @@
 #'
 #' # Fit MID models
 #' mid1 <- interpret(Volume ~ ., trees, fit, k = 25, ok = TRUE)
-#' mid2 <- interpret(Volume ~ ., combined_trees, fit, ok = TRUE)
-#' mid3 <- interpret(Volume ~ ., trees, fit, lambda = .1, ok = TRUE)
+#' mid2 <- interpret(Volume ~ ., trees, fit, lambda = .1, ok = TRUE)
+#' mid3 <- interpret(Volume ~ ., combined_trees, fit, ok = TRUE)
 #'
 #' # Compare main effects
-#' ml <- midlist(singular = mid1, mixup = mid2, penalty = mid3)
-#' ggmid(ml, "Girth", linewidth = 3/4)
-#' ggmid(ml, "Height", linewidth = 3/4)
+#' ml <- midlist(singular = mid1, penalty = mid2, mixup = mid3)
+#' ggmid(ml, "Girth", theme = "highlight_r")
+#' ggmid(ml, "Height", theme = "highlight_r")
 #' @returns
 #' \code{mixup()} returns an object of the same class as \code{object} (either "matrix" or "data.frame") containing \code{n} generated synthetic observations.
 #'

@@ -9,3 +9,4 @@
 ^dev$
 ^data-raw$
 ^vignettes/articles$
+^cran-comments\.md$
