@@ -1,7 +1,7 @@
 Package: midnight
 Type: Package
 Title: Parsnip Engine for Maximum Interpretation Decomposition Models
-Version: 0.1.1.901
+Version: 0.1.1.902
 Authors@R: c(
     person("Ryoichi", "Asashiba", email = "ryoichi.asashiba@gmail.com",
            role = c("aut", "cre"))
@@ -11,10 +11,8 @@ Description:
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Depends:
-  midr (>= 0.6.0)
 Imports:
-  graphics, rlang, Rcpp, stats, utils
+  graphics, midr (>= 0.6.0), rlang, Rcpp, stats, utils
 Suggests:
   colormap, DALEX, ggbeeswarm, ggforce, ggplot2, ISLR2, MetBrewer, parsnip
 RoxygenNote: 7.3.2

@@ -65,9 +65,6 @@ fastLmMatrix.default <- function(x, y, tol = 1e-7, method = 0L, ...) {
 
 #' @rdname fastLmMatrix
 #'
-#' @details
-#' \code{set_fastLmMatrix()} registers the C++ based internal functions as the OLS solvers for \code{midr::interpret()} via global \code{options}.
-#'
 #' @param formula an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted.
 #' @param data an optional data frame, list or environment (or object coercible by \code{as.data.frame} to a data frame) containing the variables in the model.
 #'
@@ -82,28 +79,4 @@ fastLmMatrix.formula <- function(formula, data = list(), method = 0L, ...) {
   res$formula <- formula
   res$intercept <- attr(attr(mf, "terms"), "intercept")
   res
-}
-
-#' @rdname fastLmMatrix
-#'
-#' @param which an integer vector specifying the methods to be registered. If the vector has names, they are used to construct the option names (e.g., \code{"midr.solver.(name)"}).
-#'
-#' @keywords internal
-#' @export
-#'
-set_fastLmMatrix <- function(which = 0L:4L) {
-  # override OLS solvers
-  if (any(!which %in% 0L:4L))
-    stop("'which' must be an integer vector of values from 0 to 4")
-  opts <- list(
-    qr = fastLmMatrixQR,
-    unpivoted.qr = fastLmMatrixUnpivotedQR,
-    llt = fastLmMatrixLLT,
-    ldlt = fastLmMatrixLDLT,
-    svd = fastLmMatrixSVD
-  )
-  opts <- opts[which + 1L]
-  names(opts) <- paste0("midr.solver.", names(which) %||% names(opts))
-  if (length(opts) > 0L) options(opts)
-  invisible(NULL)
 }

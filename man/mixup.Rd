@@ -35,23 +35,24 @@ For numeric variables, the synthetic data is generated via a convex combination:
 For non-numeric variables, the value is chosen from \eqn{x_1} with probability \eqn{\lambda}, and from \eqn{x_2} with probability \eqn{1 - \lambda}.
 }
 \examples{
-# fit a model
+library(midr)
+library(midnight)
+
+# Fit a model
 fit <- lm(Volume ~ I(Girth^2) + Girth + Height, trees)
 
-# generate new synthetic rows
+# Generate synthetic rows and combine it with the original data
 mixup_trees <- mixup(trees, 500)
 summary(mixup_trees)
-
-# combine with the original data
 combined_trees <- rbind(trees, mixup_trees)
 
-# fit MID models
+# Fit MID models
 mid1 <- interpret(Volume ~ ., trees, fit, k = 25, ok = TRUE)
 mid2 <- interpret(Volume ~ ., combined_trees, fit, ok = TRUE)
 mid3 <- interpret(Volume ~ ., trees, fit, lambda = .1, ok = TRUE)
 
-# compare effects
+# Compare main effects
 ml <- midlist(singular = mid1, mixup = mid2, penalty = mid3)
-ggmid(ml, "Girth", theme = "Cross", linewidth = 3/4)
-ggmid(ml, "Height", theme = "Cross", linewidth = 3/4)
+ggmid(ml, "Girth", linewidth = 3/4)
+ggmid(ml, "Height", linewidth = 3/4)
 }

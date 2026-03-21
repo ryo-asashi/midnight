@@ -1,7 +1,10 @@
 .onLoad <- function(libname, pkgname) {
   # define mid_reg() in the model database
-  setHook(packageEvent("parsnip", "onLoad"), function(...) make_mid_reg())
-  if (isNamespaceLoaded("parsnip")) make_mid_reg()
+  if (isNamespaceLoaded("parsnip")) {
+    make_mid_reg()
+  } else {
+    setHook(packageEvent("parsnip", "onLoad"), function(...) make_mid_reg())
+  }
   # define color themes
   midr::set.color.theme(
     name = "moon", source = "midnight", type = "qualitative",

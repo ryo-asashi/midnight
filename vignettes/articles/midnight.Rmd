@@ -35,6 +35,9 @@ library(parsnip)
 library(ggplot2)
 library(patchwork)
 
+# fully activate midnight package
+nightfall(solvers = FALSE)
+
 # fitting a model with interaction using mid_reg()
 mid <- mid_reg(
   params_main = 50, # k

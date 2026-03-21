@@ -1,5 +1,6 @@
 # midnight (development version) 0.1.1.90x
 
+- Added `nightfall()` and `daybreak()` functions for a registering S3 method, and setting default OLS solvers and color themes via options.
 - Added `mixup()` for creating synthetic data using Mixup algorithm.
 - Reduced dependencies to other packages.
 - Added `fastLmMatrix()`, a wrapper function of `RcppEigen::fastLm()` supporting matrix responses.
