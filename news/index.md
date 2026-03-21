@@ -3,6 +3,12 @@
 ## midnight (development version) 0.1.1.90x
 
 - Added
+  [`nightfall()`](https://ryo-asashi.github.io/midnight/reference/nightfall.md)
+  and
+  [`daybreak()`](https://ryo-asashi.github.io/midnight/reference/nightfall.md)
+  functions for a registering S3 method, and setting default OLS solvers
+  and color themes via options.
+- Added
   [`mixup()`](https://ryo-asashi.github.io/midnight/reference/mixup.md)
   for creating synthetic data using Mixup algorithm.
 - Reduced dependencies to other packages.

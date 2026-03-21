@@ -27,11 +27,6 @@ hyperparameter tuning.
 ``` r
 library(midr)
 library(midnight)
-#> 
-#> Attaching package: 'midnight'
-#> The following object is masked from 'package:midr':
-#> 
-#>     mid.importance
 library(parsnip)
 library(ggplot2)
 library(patchwork)
@@ -105,10 +100,11 @@ used in
 [`interpret()`](https://ryo-asashi.github.io/midr/reference/interpret.html))
 to leverage this speed boost across your entire modeling pipeline by
 using
-[`set_fastLmMatrix()`](https://ryo-asashi.github.io/midnight/reference/fastLmMatrix.md).
+[`nightfall()`](https://ryo-asashi.github.io/midnight/reference/nightfall.md).
 
 ``` r
-set_fastLmMatrix() # override Least Squares Solvers of midr via options
+# activate midnight package
+nightfall()
 
 mids <- mid_reg(
   params_main = 50, # k
@@ -140,11 +136,14 @@ mids
 
 To understand the output of
 [`mid_reg()`](https://ryo-asashi.github.io/midnight/reference/mid_reg.md),
-**midnight** provides S3 methods for MID models like `ggmid.midimp()`
+**midnight** provides S3 methods for MID models like
+[`persp.mid()`](https://ryo-asashi.github.io/midnight/reference/persp.mid.md)
 and
-[`persp.mid()`](https://ryo-asashi.github.io/midnight/reference/persp.mid.md).
-These methods help translate complex model outputs into interpretable
-insights.
+[`ggmid.midimp()`](https://ryo-asashi.github.io/midnight/reference/ggmid.midimp.md),
+which is activated when
+[`nightfall()`](https://ryo-asashi.github.io/midnight/reference/nightfall.md)
+is called. These methods help translate complex model outputs into
+interpretable insights.
 
 ### Variable Importance
 

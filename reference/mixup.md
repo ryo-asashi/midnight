@@ -60,10 +60,13 @@ probability \\\lambda\\, and from \\x_2\\ with probability \\1 -
 ## Examples
 
 ``` r
-# fit a model
+library(midr)
+library(midnight)
+
+# Fit a model
 fit <- lm(Volume ~ I(Girth^2) + Girth + Height, trees)
 
-# generate new synthetic rows
+# Generate synthetic rows and combine it with the original data
 mixup_trees <- mixup(trees, 500)
 summary(mixup_trees)
 #>      Girth           Height          Volume     
@@ -73,19 +76,17 @@ summary(mixup_trees)
 #>  Mean   :13.20   Mean   :75.79   Mean   :30.03  
 #>  3rd Qu.:14.90   3rd Qu.:80.00   3rd Qu.:37.53  
 #>  Max.   :20.60   Max.   :87.00   Max.   :77.00  
-
-# combine with the original data
 combined_trees <- rbind(trees, mixup_trees)
 
-# fit MID models
-mid1 <- midr::interpret(Volume ~ ., trees, fit, k = 25, ok = TRUE)
+# Fit MID models
+mid1 <- interpret(Volume ~ ., trees, fit, k = 25, ok = TRUE)
 #> singular fit encountered
-mid2 <- midr::interpret(Volume ~ ., combined_trees, fit, ok = TRUE)
-mid3 <- midr::interpret(Volume ~ ., trees, fit, lambda = .1, ok = TRUE)
+mid2 <- interpret(Volume ~ ., combined_trees, fit, ok = TRUE)
+mid3 <- interpret(Volume ~ ., trees, fit, lambda = .1, ok = TRUE)
 
-# compare effects
-ml <- midr::midlist(singular = mid1, mixup = mid2, penalty = mid3)
-ggmid(ml, "Girth", theme = "Cross", linewidth = 3/4)
+# Compare main effects
+ml <- midlist(singular = mid1, mixup = mid2, penalty = mid3)
+ggmid(ml, "Girth", linewidth = 3/4)
 
-ggmid(ml, "Height", theme = "Cross", linewidth = 3/4)
+ggmid(ml, "Height", linewidth = 3/4)
 ```

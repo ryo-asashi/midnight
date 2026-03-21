@@ -1,10 +1,9 @@
-# Advanced Visualizations for MID Importance
+# Plot MID Importance with ggplot2
 
-Extends
-[`midr::ggmid`](https://ryo-asashi.github.io/midr/reference/ggmid.html)
-to provide modern distribution plots for Maximum Interpretation
-Decomposition (MID) feature importance. Added types include sina,
-beeswarm, and violin plots.
+The midnight package extends
+[`midr::ggmid()`](https://ryo-asashi.github.io/midr/reference/ggmid.html)
+to provide modern distribution plots for MID feature importance. Added
+types include sina, beeswarm, and violin plots.
 
 ## Usage
 
@@ -17,31 +16,32 @@ ggmid(object, type = NULL, theme = NULL, terms = NULL, max.nterms = 30, ...)
 
 - object:
 
-  a "midimp" object created by
-  [`midr::mid.importance`](https://ryo-asashi.github.io/midr/reference/mid.importance.html).
+  a "midimp" object to be visualized.
 
 - type:
 
-  a character string specifying the plot type. In addition to standard
-  types ("barplot", "boxplot", "dotchart", "heatmap"), this extended
-  method supports "violinplot", "sinaplot", and "beeswarm".
+  the plotting style. In addition to standard types ("barplot",
+  "boxplot", "dotchart", "heatmap"), this extended method supports
+  "violinplot", "sinaplot", and "beeswarm".
 
 - theme:
 
-  a character string for the visual theme.
+  a character string or object defining the color theme. See
+  [`color.theme`](https://ryo-asashi.github.io/midr/reference/color.theme.html)
+  for details.
 
 - terms:
 
-  a character vector of terms to include. If `NULL` (default), all terms
-  are shown.
+  an optional character vector specifying which terms to display.
 
 - max.nterms:
 
-  an integer. The maximum number of terms to display.
+  an integer specifying the maximum number of terms to display. Defaults
+  to 30.
 
 - ...:
 
-  additional arguments passed to the underlying geoms.
+  optional parameters passed on to the layers.
 
 ## Value
 
@@ -49,26 +49,54 @@ ggmid(object, type = NULL, theme = NULL, terms = NULL, max.nterms = 30, ...)
 
 ## Details
 
-This function wraps the S3 method of
-[`midr::ggmid`](https://ryo-asashi.github.io/midr/reference/ggmid.html)
-for "midimp" objects and replaces the primary layer with modern
-distribution geoms when `type` is one of the extended options.
+This is an S3 method for the
+[`midr::ggmid()`](https://ryo-asashi.github.io/midr/reference/ggmid.html)
+generic for "midimp" objects created by
+[`midr::mid.importance()`](https://ryo-asashi.github.io/midr/reference/mid.importance.html).
+This method replaces the primary layer with modern distribution geoms
+when `type` is one of the extended options.
+
+## Note
+
+This S3 method is **NOT** registered automatically when the midnight
+package is loaded, and activated when
+[`nightfall()`](https://ryo-asashi.github.io/midnight/reference/nightfall.md)
+is explicitly called.
+
+## See also
+
+[`nightfall`](https://ryo-asashi.github.io/midnight/reference/nightfall.md),
+[`mid.importance`](https://ryo-asashi.github.io/midr/reference/mid.importance.html)
 
 ## Examples
 
 ``` r
-mid <- midr::interpret(Ozone ~ .^2, airquality, lambda = .5)
+library(midr)
+library(midnight)
+
+mid <- interpret(Ozone ~ .^2, airquality, lambda = .5)
 #> 'model' not passed: response variable in 'data' is used
-imp <- midr::mid.importance(mid)
+imp <- mid.importance(mid)
+
+# Activate the richer S3 method
+old <- nightfall()
 
 # Create a violin plot
-midr::ggmid(imp, type = "violinplot", theme = "HCL")
+ggmid(imp, type = "violinplot", theme = "moon")
 
 
-# Create a beeswarm plot
-midr::ggmid(imp, type = "beeswarm", theme = "shap")
+# Sina and Beeswarm plots require additional packages
+if (requireNamespace("ggforce", quietly = TRUE)) {
+  ggmid(imp, type = "sinaplot", theme = "bicolor")
+}
 
 
-# Create a sina plot
-midr::ggmid(imp, type = "sinaplot", theme = "bicolor")
+if (requireNamespace("ggbeeswarm", quietly = TRUE)) {
+  ggmid(imp, type = "beeswarm", theme = "Hokusai3")
+}
+
+
+# Restore the options
+daybreak()
+options(old)
 ```

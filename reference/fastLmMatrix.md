@@ -14,8 +14,6 @@ fastLmMatrix(x, y, tol = 1e-07, method = 0L, ...)
 
 # S3 method for class 'formula'
 fastLmMatrix(formula, data = list(), method = 0L, ...)
-
-set_fastLmMatrix(which = 0L:4L)
 ```
 
 ## Arguments
@@ -54,12 +52,6 @@ set_fastLmMatrix(which = 0L:4L)
   `as.data.frame` to a data frame) containing the variables in the
   model.
 
-- which:
-
-  an integer vector specifying the methods to be registered. If the
-  vector has names, they are used to construct the option names (e.g.,
-  `"midr.solver.(name)"`).
-
 ## Value
 
 `fastLmMatrix()` returns a list with the following components:
@@ -88,11 +80,6 @@ as a matrix). It leverages the `Eigen` C++ template library for
 high-performance linear algebra, utilizing `Eigen::Map` to avoid
 unnecessary memory copies and providing several decomposition methods
 with different trade-offs between speed and numerical stability.
-
-`set_fastLmMatrix()` registers the C++ based internal functions as the
-OLS solvers for
-[`midr::interpret()`](https://ryo-asashi.github.io/midr/reference/interpret.html)
-via global `options`.
 
 ## Examples
 
