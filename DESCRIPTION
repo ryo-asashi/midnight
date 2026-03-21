@@ -1,6 +1,6 @@
 Package: midnight
 Type: Package
-Title: Tidymodels Engine and Other Extensions for the 'midr' Package
+Title: A 'tidymodels' Engine and Other Extensions for the 'midr' Package
 Version: 0.2.0
 Authors@R: c(
     person("Ryoichi", "Asashiba",
