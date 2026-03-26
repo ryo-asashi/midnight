@@ -74,31 +74,15 @@ fastLmMatrix(formula, data = list(), method = 0L, ...)
 
 ## Details
 
-`fastLmMatrix()` is a performance-optimized version of the standard `lm`
-function, specifically designed to handle multivariate responses (\\Y\\
-as a matrix). It leverages the `Eigen` C++ template library for
-high-performance linear algebra, utilizing `Eigen::Map` to avoid
-unnecessary memory copies and providing several decomposition methods
+`fastLmMatrix()` is a performance-optimized version of the standard
+[`lm.fit()`](https://rdrr.io/r/stats/lmfit.html) function. Unlike
+[`RcppEigen::fastLm()`](https://rdrr.io/pkg/RcppEigen/man/fastLm.html),
+it is specifically designed to handle multivariate responses (\\Y\\ as a
+matrix). It leverages the Eigen C++ template library for
+high-performance linear algebra, providing several decomposition methods
 with different trade-offs between speed and numerical stability.
 
-## Examples
+## See also
 
-``` r
-# Multivariate Regression with Anscombe's Quartet
-# Regress three 'y' variables on 'x1' simultaneously
-Y <- as.matrix(anscombe[, c("y1", "y2", "y3")])
-X <- as.matrix(cbind(1, anscombe$x1)) # Include intercept
-
-fit_ans <- fastLmMatrix(X, Y, method = 0L)
-print(fit_ans$coefficients)
-#>             y1       y2        y3
-#> [1,] 3.0000909 3.000909 3.0024545
-#> [2,] 0.5000909 0.500000 0.4997273
-
-# Formula interface with cbind()
-fit_form <- fastLmMatrix(cbind(y1, y2, y3) ~ x1, data = anscombe)
-print(fit_form$coefficients)
-#>                    y1       y2        y3
-#> (Intercept) 3.0000909 3.000909 3.0024545
-#> x1          0.5000909 0.500000 0.4997273
-```
+[`lm.fit`](https://rdrr.io/r/stats/lmfit.html),
+[`fastLm`](https://rdrr.io/pkg/RcppEigen/man/fastLm.html)

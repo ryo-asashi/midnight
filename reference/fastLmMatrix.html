@@ -18,7 +18,7 @@ img {
 
     <a class="navbar-brand me-2" href="../index.html">midnight</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.902</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -116,31 +116,14 @@ img {
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p><code>fastLmMatrix()</code> is a performance-optimized version of the standard <code>lm</code> function, specifically designed to handle multivariate responses (\(Y\) as a matrix).
-It leverages the <code>Eigen</code> C++ template library for high-performance linear algebra, utilizing <code>Eigen::Map</code> to avoid unnecessary memory copies and providing several decomposition methods with different trade-offs between speed and numerical stability.</p>
+    <p><code>fastLmMatrix()</code> is a performance-optimized version of the standard <code><a href="https://rdrr.io/r/stats/lmfit.html" class="external-link">lm.fit()</a></code> function. Unlike <code><a href="https://rdrr.io/pkg/RcppEigen/man/fastLm.html" class="external-link">RcppEigen::fastLm()</a></code>, it is specifically designed to handle multivariate responses (\(Y\) as a matrix).
+It leverages the Eigen C++ template library for high-performance linear algebra, providing several decomposition methods with different trade-offs between speed and numerical stability.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><code><a href="https://rdrr.io/r/stats/lmfit.html" class="external-link">lm.fit</a></code>, <code><a href="https://rdrr.io/pkg/RcppEigen/man/fastLm.html" class="external-link">fastLm</a></code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Multivariate Regression with Anscombe's Quartet</span></span></span>
-<span class="r-in"><span><span class="co"># Regress three 'y' variables on 'x1' simultaneously</span></span></span>
-<span class="r-in"><span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">anscombe</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y1"</span>, <span class="st">"y2"</span>, <span class="st">"y3"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">anscombe</span><span class="op">$</span><span class="va">x1</span><span class="op">)</span><span class="op">)</span> <span class="co"># Include intercept</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">fit_ans</span> <span class="op">&lt;-</span> <span class="fu">fastLmMatrix</span><span class="op">(</span><span class="va">X</span>, <span class="va">Y</span>, method <span class="op">=</span> <span class="fl">0L</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">fit_ans</span><span class="op">$</span><span class="va">coefficients</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             y1       y2        y3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 3.0000909 3.000909 3.0024545</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.5000909 0.500000 0.4997273</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Formula interface with cbind()</span></span></span>
-<span class="r-in"><span><span class="va">fit_form</span> <span class="op">&lt;-</span> <span class="fu">fastLmMatrix</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">y1</span>, <span class="va">y2</span>, <span class="va">y3</span><span class="op">)</span> <span class="op">~</span> <span class="va">x1</span>, data <span class="op">=</span> <span class="va">anscombe</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">fit_form</span><span class="op">$</span><span class="va">coefficients</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                    y1       y2        y3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 3.0000909 3.000909 3.0024545</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x1          0.5000909 0.500000 0.4997273</span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

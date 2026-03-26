@@ -1,9 +1,9 @@
-# midnight: Parsnip Engine for Maximum Interpretation Decomposition Models
+# midnight: A 'tidymodels' Engine and Other Extensions for the 'midr' Package
 
 Provides a 'parsnip' engine for the 'midr' package, enabling users to
 fit, tune, and evaluate Maximum Interpretation Decomposition (MID)
 models within the 'tidymodels' framework. Developed through research by
-the 'Moonlight Seminar 2025', a study group of actuaries from the
+the Moonlight Seminar 2025, a study group of actuaries from the
 Institute of Actuaries of Japan, to enhance practical applications of
 interpretable modeling. Detailed methodology is available in Asashiba et
 al. (2025)
@@ -23,3 +23,4 @@ Useful links:
 ## Author
 
 **Maintainer**: Ryoichi Asashiba <ryoichi.asashiba@gmail.com>
+([ORCID](https://orcid.org/0009-0001-9532-7000))

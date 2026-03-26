@@ -1,37 +1,51 @@
 # Changelog
 
-## midnight (development version) 0.1.1.90x
+## midnight 0.1.2
 
-- Added
+### New Features
+
+- Introduced
   [`nightfall()`](https://ryo-asashi.github.io/midnight/reference/nightfall.md)
   and
   [`daybreak()`](https://ryo-asashi.github.io/midnight/reference/nightfall.md)
-  functions for a registering S3 method, and setting default OLS solvers
-  and color themes via options.
-- Added
-  [`mixup()`](https://ryo-asashi.github.io/midnight/reference/mixup.md)
-  for creating synthetic data using Mixup algorithm.
-- Reduced dependencies to other packages.
+  to seamlessly toggle the package’s extended features, including
+  dynamic S3 method registration, custom color themes, and
+  high-performance OLS solvers.
 - Added
   [`fastLmMatrix()`](https://ryo-asashi.github.io/midnight/reference/fastLmMatrix.md),
-  a wrapper function of
+  an optimized wrapper around
   [`RcppEigen::fastLm()`](https://rdrr.io/pkg/RcppEigen/man/fastLm.html)
-  supporting matrix responses.
-- Renamed and Updated the `ggmid.midimp` wrapper (for better alignment
-  with **midr** 0.6.0).
+  that efficiently handles multivariate (matrix) responses.
+
+### Minor Improvements
+
+- Renamed and updated the `ggmid.midimp` wrapper to ensure perfect
+  alignment with `midr` (\>= 0.6.0).
+- Streamlined the package structure by significantly reducing hard
+  dependencies (`Imports`).
 
 ## midnight 0.1.0
 
-- Added wrapper method for `ggmid.mid.importance` with new types:
-  “violin”, “beeswarm”, “sinaplot”.
-- Renamed main functions (from `mid_surrogate()` to
-  [`mid_reg()`](https://ryo-asashi.github.io/midnight/reference/mid_reg.md)).
+### Modeling Interfaces (tidymodels)
+
+- Introduced
+  [`mid_reg()`](https://ryo-asashi.github.io/midnight/reference/mid_reg.md)
+  as the primary `parsnip` engine for MID models (formerly
+  `mid_surrogate()`).
+- Added underlying engine utilities (`make_mid_mid()`) and optimized
+  `fit_mid_mid()` to improve memory efficiency.
+
+### Visualizations & Themes
+
+- Extended the `ggmid.mid.importance` method to support modern
+  distribution plots: `"violin"`, `"beeswarm"`, and `"sinaplot"`.
 - Added
-  [`persp.mid()`](https://ryo-asashi.github.io/midnight/reference/persp.mid.md).
-- Added the “moon” and “moonlit” color themes
-- Added the package document.
-- Updated wrapper fit function `fit_mid_mid()` to improve memory
-  efficiency.
-- Opened pkgdown website and added favicons.
-- Added `mid_surrogate()` and `make_mid_mid()`.
-- Created the package hex logo.
+  [`persp.mid()`](https://ryo-asashi.github.io/midnight/reference/persp.mid.md)
+  for 3D perspective visualizations.
+- Added custom aesthetic color themes: `"moon"` and `"moonlit"`.
+
+### Documentation & Infrastructure
+
+- Launched the official `pkgdown` website with custom favicons.
+- Designed and added the package hex logo.
+- Added comprehensive package-level documentation.

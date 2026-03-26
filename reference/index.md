@@ -1,13 +1,5 @@
 # Package index
 
-## Activation & Control
-
-Functions to toggle the midnight extensions and global options.
-
-- [`nightfall()`](https://ryo-asashi.github.io/midnight/reference/nightfall.md)
-  [`daybreak()`](https://ryo-asashi.github.io/midnight/reference/nightfall.md)
-  : Transition into and out of Midnight
-
 ## Modeling Interfaces
 
 Integration with the tidymodels ecosystem.
@@ -16,12 +8,12 @@ Integration with the tidymodels ecosystem.
   [`fit_mid_reg()`](https://ryo-asashi.github.io/midnight/reference/mid_reg.md)
   : MID Regression
 
-## Data Augmentation
+## Core Computation Engines
 
-Techniques to expand and enrich training data.
+Underlying high-performance solvers.
 
-- [`mixup()`](https://ryo-asashi.github.io/midnight/reference/mixup.md)
-  : Generate Synthetic Data using Mixup
+- [`fastLmMatrix()`](https://ryo-asashi.github.io/midnight/reference/fastLmMatrix.md)
+  : Fit Multivariate Linear Models
 
 ## Visualization & Interpretation
 
@@ -32,9 +24,10 @@ Advanced plotting methods for model insights.
 - [`ggmid(`*`<midimp>`*`)`](https://ryo-asashi.github.io/midnight/reference/ggmid.midimp.md)
   : Plot MID Importance with ggplot2
 
-## Core Computation Engines
+## Activation & Control
 
-Underlying high-performance solvers.
+Functions to toggle the midnight extensions and global options.
 
-- [`fastLmMatrix()`](https://ryo-asashi.github.io/midnight/reference/fastLmMatrix.md)
-  : Fit Multivariate Linear Models
+- [`nightfall()`](https://ryo-asashi.github.io/midnight/reference/nightfall.md)
+  [`daybreak()`](https://ryo-asashi.github.io/midnight/reference/nightfall.md)
+  : Transition into and out of Midnight

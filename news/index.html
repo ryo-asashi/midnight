@@ -18,7 +18,7 @@ img {
 
     <a class="navbar-brand me-2" href="../index.html">midnight</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.902</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,25 +51,38 @@ img {
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="midnight-development-version-01190x">midnight (development version) 0.1.1.90x<a class="anchor" aria-label="anchor" href="#midnight-development-version-01190x"></a></h2>
-<ul><li>Added <code><a href="../reference/nightfall.html">nightfall()</a></code> and <code><a href="../reference/nightfall.html">daybreak()</a></code> functions for a registering S3 method, and setting default OLS solvers and color themes via options.</li>
-<li>Added <code><a href="../reference/mixup.html">mixup()</a></code> for creating synthetic data using Mixup algorithm.</li>
-<li>Reduced dependencies to other packages.</li>
-<li>Added <code><a href="../reference/fastLmMatrix.html">fastLmMatrix()</a></code>, a wrapper function of <code><a href="https://rdrr.io/pkg/RcppEigen/man/fastLm.html" class="external-link">RcppEigen::fastLm()</a></code> supporting matrix responses.</li>
-<li>Renamed and Updated the <code>ggmid.midimp</code> wrapper (for better alignment with <strong>midr</strong> 0.6.0).</li>
+<h2 class="pkg-version" data-toc-text="0.1.2" id="midnight-012">midnight 0.1.2<a class="anchor" aria-label="anchor" href="#midnight-012"></a></h2>
+<div class="section level3">
+<h3 id="new-features-0-1-2">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-1-2"></a></h3>
+<ul><li>Introduced <code><a href="../reference/nightfall.html">nightfall()</a></code> and <code><a href="../reference/nightfall.html">daybreak()</a></code> to seamlessly toggle the package’s extended features, including dynamic S3 method registration, custom color themes, and high-performance OLS solvers.</li>
+<li>Added <code><a href="../reference/fastLmMatrix.html">fastLmMatrix()</a></code>, an optimized wrapper around <code><a href="https://rdrr.io/pkg/RcppEigen/man/fastLm.html" class="external-link">RcppEigen::fastLm()</a></code> that efficiently handles multivariate (matrix) responses.</li>
 </ul></div>
+<div class="section level3">
+<h3 id="minor-improvements-0-1-2">Minor Improvements<a class="anchor" aria-label="anchor" href="#minor-improvements-0-1-2"></a></h3>
+<ul><li>Renamed and updated the <code>ggmid.midimp</code> wrapper to ensure perfect alignment with <code>midr</code> (&gt;= 0.6.0).</li>
+<li>Streamlined the package structure by significantly reducing hard dependencies (<code>Imports</code>).</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.0" id="midnight-010">midnight 0.1.0<a class="anchor" aria-label="anchor" href="#midnight-010"></a></h2>
-<ul><li>Added wrapper method for <code>ggmid.mid.importance</code> with new types: “violin”, “beeswarm”, “sinaplot”.</li>
-<li>Renamed main functions (from <code>mid_surrogate()</code> to <code><a href="../reference/mid_reg.html">mid_reg()</a></code>).</li>
-<li>Added <code><a href="../reference/persp.mid.html">persp.mid()</a></code>.</li>
-<li>Added the “moon” and “moonlit” color themes</li>
-<li>Added the package document.</li>
-<li>Updated wrapper fit function <code>fit_mid_mid()</code> to improve memory efficiency.</li>
-<li>Opened pkgdown website and added favicons.</li>
-<li>Added <code>mid_surrogate()</code> and <code>make_mid_mid()</code>.</li>
-<li>Created the package hex logo.</li>
+<div class="section level3">
+<h3 id="modeling-interfaces-tidymodels-0-1-0">Modeling Interfaces (tidymodels)<a class="anchor" aria-label="anchor" href="#modeling-interfaces-tidymodels-0-1-0"></a></h3>
+<ul><li>Introduced <code><a href="../reference/mid_reg.html">mid_reg()</a></code> as the primary <code>parsnip</code> engine for MID models (formerly <code>mid_surrogate()</code>).</li>
+<li>Added underlying engine utilities (<code>make_mid_mid()</code>) and optimized <code>fit_mid_mid()</code> to improve memory efficiency.</li>
 </ul></div>
+<div class="section level3">
+<h3 id="visualizations--themes-0-1-0">Visualizations &amp; Themes<a class="anchor" aria-label="anchor" href="#visualizations--themes-0-1-0"></a></h3>
+<ul><li>Extended the <code>ggmid.mid.importance</code> method to support modern distribution plots: <code>"violin"</code>, <code>"beeswarm"</code>, and <code>"sinaplot"</code>.</li>
+<li>Added <code><a href="../reference/persp.mid.html">persp.mid()</a></code> for 3D perspective visualizations.</li>
+<li>Added custom aesthetic color themes: <code>"moon"</code> and <code>"moonlit"</code>.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="documentation--infrastructure-0-1-0">Documentation &amp; Infrastructure<a class="anchor" aria-label="anchor" href="#documentation--infrastructure-0-1-0"></a></h3>
+<ul><li>Launched the official <code>pkgdown</code> website with custom favicons.</li>
+<li>Designed and added the package hex logo.</li>
+<li>Added comprehensive package-level documentation.</li>
+</ul></div>
+</div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

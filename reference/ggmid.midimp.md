@@ -67,36 +67,3 @@ is explicitly called.
 
 [`nightfall`](https://ryo-asashi.github.io/midnight/reference/nightfall.md),
 [`mid.importance`](https://ryo-asashi.github.io/midr/reference/mid.importance.html)
-
-## Examples
-
-``` r
-library(midr)
-library(midnight)
-
-mid <- interpret(Ozone ~ .^2, airquality, lambda = .5)
-#> 'model' not passed: response variable in 'data' is used
-imp <- mid.importance(mid)
-
-# Activate the richer S3 method
-old <- nightfall()
-
-# Create a violin plot
-ggmid(imp, type = "violinplot", theme = "moon")
-
-
-# Sina and Beeswarm plots require additional packages
-if (requireNamespace("ggforce", quietly = TRUE)) {
-  ggmid(imp, type = "sinaplot", theme = "bicolor")
-}
-
-
-if (requireNamespace("ggbeeswarm", quietly = TRUE)) {
-  ggmid(imp, type = "beeswarm", theme = "Hokusai3")
-}
-
-
-# Restore the options
-daybreak()
-options(old)
-```

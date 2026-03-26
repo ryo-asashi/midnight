@@ -3,20 +3,21 @@
 ## Authors
 
 - **Ryoichi Asashiba**. Author, maintainer.
+  [](https://orcid.org/0009-0001-9532-7000)
 
 ## Citation
 
 Source:
 [`DESCRIPTION`](https://github.com/ryo-asashi/midnight/blob/main/DESCRIPTION)
 
-Asashiba R (2026). *midnight: Parsnip Engine for Maximum Interpretation
-Decomposition Models*. R package version 0.1.1.902,
+Asashiba R (2026). *midnight: A 'tidymodels' Engine and Other Extensions
+for the 'midr' Package*. R package version 0.1.2,
 <https://github.com/ryo-asashi/midnight>.
 
     @Manual{,
-      title = {midnight: Parsnip Engine for Maximum Interpretation Decomposition Models},
+      title = {midnight: A 'tidymodels' Engine and Other Extensions for the 'midr' Package},
       author = {Ryoichi Asashiba},
       year = {2026},
-      note = {R package version 0.1.1.902},
+      note = {R package version 0.1.2},
       url = {https://github.com/ryo-asashi/midnight},
     }
