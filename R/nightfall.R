@@ -31,8 +31,8 @@ nightfall <- function(methods = TRUE, solvers = TRUE, themes = TRUE) {
   old_themes <- if (isTRUE(themes)) {
     set_mid_themes(
       qualitative = "moon",
-      diverging = "moonlit",
-      sequential = "eclipse"
+      diverging = "eclipse",
+      sequential = "moonlit"
     )
   } else NULL
   invisible(c(old_solvers, old_themes))

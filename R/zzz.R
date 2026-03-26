@@ -18,7 +18,7 @@
   )
   midr::set.color.theme(
     name = "eclipse", source = "midnight", type = "diverging",
-    kernel = c("#942A45", "#D18C99", "#F4F5F7", "#7392B0", "#1E2A4F"),
+    kernel = c("#86B3EB", "#5A7EB3", "#344C7A", "#2A2A2A", "#932A45", "#C8576E", "#FF879D"),
     kernel.args = list(mode = "ramp")
   )
   # DALEX --------
