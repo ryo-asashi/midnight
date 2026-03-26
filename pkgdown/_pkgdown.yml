@@ -27,24 +27,20 @@ articles:
   - articles/midnight
 
 reference:
-  - title: "Activation & Control"
-    desc: "Functions to toggle the midnight extensions and global options."
-    contents:
-      - nightfall
   - title: "Modeling Interfaces"
     desc: "Integration with the tidymodels ecosystem."
     contents:
       - mid_reg
-  - title: "Data Augmentation"
-    desc: "Techniques to expand and enrich training data."
+  - title: "Core Computation Engines"
+    desc: "Underlying high-performance solvers."
     contents:
-      - mixup
+      - fastLmMatrix
   - title: "Visualization & Interpretation"
     desc: "Advanced plotting methods for model insights."
     contents:
       - persp.mid
       - ggmid.midimp
-  - title: "Core Computation Engines"
-    desc: "Underlying high-performance solvers."
+  - title: "Activation & Control"
+    desc: "Functions to toggle the midnight extensions and global options."
     contents:
-      - fastLmMatrix
+      - nightfall

@@ -1,7 +1,7 @@
 Package: midnight
 Type: Package
 Title: A 'tidymodels' Engine and Other Extensions for the 'midr' Package
-Version: 0.2.0
+Version: 0.1.2
 Authors@R: c(
     person("Ryoichi", "Asashiba",
            email = "ryoichi.asashiba@gmail.com",
@@ -9,7 +9,7 @@ Authors@R: c(
            comment = c(ORCID = "0009-0001-9532-7000"))
   )
 Description:
-  Provides a 'parsnip' engine for the 'midr' package, enabling users to fit, tune, and evaluate Maximum Interpretation Decomposition (MID) models within the 'tidymodels' framework. Developed through research by the 'Moonlight Seminar 2025', a study group of actuaries from the Institute of Actuaries of Japan, to enhance practical applications of interpretable modeling. Detailed methodology is available in Asashiba et al. (2025) <doi:10.48550/arXiv.2506.08338>.
+  Provides a 'parsnip' engine for the 'midr' package, enabling users to fit, tune, and evaluate Maximum Interpretation Decomposition (MID) models within the 'tidymodels' framework. Developed through research by the Moonlight Seminar 2025, a study group of actuaries from the Institute of Actuaries of Japan, to enhance practical applications of interpretable modeling. Detailed methodology is available in Asashiba et al. (2025) <doi:10.48550/arXiv.2506.08338>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:

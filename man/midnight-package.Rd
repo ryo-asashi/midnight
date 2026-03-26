@@ -4,11 +4,11 @@
 \name{midnight-package}
 \alias{midnight}
 \alias{midnight-package}
-\title{midnight: Tidymodels Engine and Other Extensions for the 'midr' Package}
+\title{midnight: A 'tidymodels' Engine and Other Extensions for the 'midr' Package}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Provides a 'parsnip' engine for the 'midr' package, enabling users to fit, tune, and evaluate Maximum Interpretation Decomposition (MID) models within the 'tidymodels' framework. Developed through research by the 'Moonlight Seminar 2025', a study group of actuaries from the Institute of Actuaries of Japan, to enhance practical applications of interpretable modeling. Detailed methodology is available in Asashiba et al. (2025) \doi{10.48550/arXiv.2506.08338}.
+Provides a 'parsnip' engine for the 'midr' package, enabling users to fit, tune, and evaluate Maximum Interpretation Decomposition (MID) models within the 'tidymodels' framework. Developed through research by the Moonlight Seminar 2025, a study group of actuaries from the Institute of Actuaries of Japan, to enhance practical applications of interpretable modeling. Detailed methodology is available in Asashiba et al. (2025) \doi{10.48550/arXiv.2506.08338}.
 }
 \seealso{
 Useful links:

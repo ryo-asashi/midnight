@@ -4,21 +4,9 @@
 #' \code{fastLmMatrix()} estimates the linear model for multivariate response using one of several methods implemented using the \code{Eigen} linear algebra library.
 #'
 #' @details
-#' \code{fastLmMatrix()} is a performance-optimized version of the standard \code{lm} function, specifically designed to handle multivariate responses (\eqn{Y} as a matrix).
-#' It leverages the \code{Eigen} C++ template library for high-performance linear algebra, utilizing \code{Eigen::Map} to avoid unnecessary memory copies and providing several decomposition methods with different trade-offs between speed and numerical stability.
+#' \code{fastLmMatrix()} is a performance-optimized version of the standard \code{lm.fit()} function. Unlike \code{RcppEigen::fastLm()}, it is specifically designed to handle multivariate responses (\eqn{Y} as a matrix).
+#' It leverages the Eigen C++ template library for high-performance linear algebra, providing several decomposition methods with different trade-offs between speed and numerical stability.
 #'
-#' @examples
-#' # Multivariate Regression with Anscombe's Quartet
-#' # Regress three 'y' variables on 'x1' simultaneously
-#' Y <- as.matrix(anscombe[, c("y1", "y2", "y3")])
-#' X <- as.matrix(cbind(1, anscombe$x1)) # Include intercept
-#'
-#' fit_ans <- fastLmMatrix(X, Y, method = 0L)
-#' print(fit_ans$coefficients)
-#'
-#' # Formula interface with cbind()
-#' fit_form <- fastLmMatrix(cbind(y1, y2, y3) ~ x1, data = anscombe)
-#' print(fit_form$coefficients)
 #' @param x a model matrix \eqn{X}.
 #' @param ... optional parameters passed to methods.
 #'
@@ -29,10 +17,13 @@
 #' \item{residuals}{\eqn{n \times k} matrix of residuals.}
 #' \item{rank}{an integer giving the numeric rank of the model matrix \eqn{X}.}
 #'
+#' @seealso \code{\link[stats]{lm.fit}}, \code{\link[RcppEigen]{fastLm}}
+#'
 #' @export
 #'
 fastLmMatrix <- function(x, ...)
 UseMethod("fastLmMatrix")
+
 
 #' @rdname fastLmMatrix
 #'
@@ -62,6 +53,7 @@ fastLmMatrix.default <- function(x, y, tol = 1e-7, method = 0L, ...) {
   res$intercept <- any(apply(x, 2L, function(x) all(x == x[1L])))
   res
 }
+
 
 #' @rdname fastLmMatrix
 #'

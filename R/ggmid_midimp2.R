@@ -18,31 +18,6 @@
 #' @param max.nterms an integer specifying the maximum number of terms to display. Defaults to 30.
 #' @param ... optional parameters passed on to the layers.
 #'
-#' @examples
-#' library(midr)
-#' library(midnight)
-#'
-#' mid <- interpret(Ozone ~ .^2, airquality, lambda = .5)
-#' imp <- mid.importance(mid)
-#'
-#' # Activate the richer S3 method
-#' old <- nightfall()
-#'
-#' # Create a violin plot
-#' ggmid(imp, type = "violinplot", theme = "moon")
-#'
-#' # Sina and Beeswarm plots require additional packages
-#' if (requireNamespace("ggforce", quietly = TRUE)) {
-#'   ggmid(imp, type = "sinaplot", theme = "bicolor")
-#' }
-#'
-#' if (requireNamespace("ggbeeswarm", quietly = TRUE)) {
-#'   ggmid(imp, type = "beeswarm", theme = "Hokusai3")
-#' }
-#'
-#' # Restore the options
-#' daybreak()
-#' options(old)
 #' @returns
 #' \code{ggmid.midimp()} returns a "ggplot" object.
 #'

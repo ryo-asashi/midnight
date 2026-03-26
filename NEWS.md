@@ -1,9 +1,8 @@
-# midnight 0.2.0
+# midnight 0.1.2
 
 ## New Features
 -   Introduced `nightfall()` and `daybreak()` to seamlessly toggle the package's extended features, including dynamic S3 method registration, custom color themes, and high-performance OLS solvers.
 -   Added `fastLmMatrix()`, an optimized wrapper around `RcppEigen::fastLm()` that efficiently handles multivariate (matrix) responses.
--   Implemented `mixup()` for generating synthetic training data using the Mixup algorithm.
 
 ## Minor Improvements
 -   Renamed and updated the `ggmid.midimp` wrapper to ensure perfect alignment with `midr` (>= 0.6.0).

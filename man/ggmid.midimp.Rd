@@ -33,32 +33,6 @@ This method replaces the primary layer with modern distribution geoms when \code
 \note{
 This S3 method is \strong{NOT} registered automatically when the \pkg{midnight} package is loaded, and activated when \code{\link{nightfall}()} is explicitly called.
 }
-\examples{
-library(midr)
-library(midnight)
-
-mid <- interpret(Ozone ~ .^2, airquality, lambda = .5)
-imp <- mid.importance(mid)
-
-# Activate the richer S3 method
-old <- nightfall()
-
-# Create a violin plot
-ggmid(imp, type = "violinplot", theme = "moon")
-
-# Sina and Beeswarm plots require additional packages
-if (requireNamespace("ggforce", quietly = TRUE)) {
-  ggmid(imp, type = "sinaplot", theme = "bicolor")
-}
-
-if (requireNamespace("ggbeeswarm", quietly = TRUE)) {
-  ggmid(imp, type = "beeswarm", theme = "Hokusai3")
-}
-
-# Restore the options
-daybreak()
-options(old)
-}
 \seealso{
 \code{\link{nightfall}}, \code{\link[midr]{mid.importance}}
 }
