@@ -1,4 +1,4 @@
-# midnight 0.1.2
+# midnight 0.2.0
 
 ## New Features
 -   Introduced `nightfall()` and `daybreak()` to seamlessly toggle the package's extended features, including dynamic S3 method registration, custom color themes, and high-performance OLS solvers.

@@ -1,7 +1,7 @@
 Package: midnight
 Type: Package
 Title: A 'tidymodels' Engine and Other Extensions for the 'midr' Package
-Version: 0.1.2
+Version: 0.2.0
 Authors@R: c(
     person("Ryoichi", "Asashiba",
            email = "ryoichi.asashiba@gmail.com",
