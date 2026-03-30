@@ -13,6 +13,7 @@ knitr::opts_chunk$set(
   message = FALSE,
   warnings = FALSE
 )
+library(tidymodels)
 ```
 
 # midnight <img src="man/figures/logo.png" align="right" height="138"/>
@@ -32,7 +33,7 @@ You can install the development version of midnight from [GitHub](https://github
 pak::pak("ryo-asashi/midnight")
 ```
 
-## Fit MID Surrogate Models using 'parsnip'
+## Fit MID Models using 'parsnip'
 
 This is a basic example which shows you how to solve a common problem:
 
@@ -43,9 +44,7 @@ library(midnight)
 library(gridExtra)
 library(ISLR2)
 
-options(
-  midr.sequential = "moonlit"
-)
+nightfall() # activate midnight
 ```
 
 ```{r data}
@@ -60,6 +59,8 @@ holdout <- initial_split(all, prop = .5)
 train <- training(holdout)
 valid <- testing(holdout)
 ```
+
+### First-Order MID Model
 
 ```{r 1d_fit, message = FALSE}
 # create a first-order mid surrogate model
@@ -84,13 +85,27 @@ grid.arrange(nrow = 2,
 )
 ```
 
+```{r persp_mid_1}
+par.midr(mar = c(1, 1, 0, 0))
+persp(mid_1$fit, "temp:hr", theta = 50, phi = 20, shade = .5)
+```
+
+### Second-Order MID Model
+
 ```{r 2d_fit, message = FALSE}
 # create a second-order mid surrogate model via "custom formula"
-mid_spec_2 <- mid_reg(penalty = 0.000001)
+mid_spec_2 <- mid_reg(
+  penalty = 0.000001,
+  terms = bikers ~ .^2 # add interaction terms
+) |>
+  set_engine(
+    "midr",
+    method = "llt" # for faster computation
+  )
 mid_spec_2
 # fit the model
 mid_2 <- mid_spec_2 %>%
-  fit(bikers ~ .^2, train) # pass original data on to interpret()
+  fit(bikers ~ ., train)
 mid_2
 # evaluate the model
 augment(mid_2, new_data = valid) %>%
@@ -108,7 +123,7 @@ grid.arrange(nrow = 2,
 )
 ```
 
-```{r persp_mid}
+```{r persp_mid_2}
 par.midr(mar = c(1, 1, 0, 0))
 persp(mid_2$fit, "temp:hr", theta = 50, phi = 20, shade = .5)
 ```
@@ -122,22 +137,22 @@ mid_spec_3 <- mid_reg(
   params_main = tune(),
   params_inter = tune(),
   penalty = tune(),
-  terms = ~(mnth+hr+workingday+weathersit+temp+hum+windspeed)^2
-  # all main effects and all 2-way interactions
+  terms = bikers ~ .^2
 ) |>
   set_engine(
     engine = "midr",
-    method = "llt",
-    verbosity = 0L
+    method = "llt", # for faster computation
+    verbosity = 0L, # for keeping console clean
+    singular.ok = TRUE # for avoiding errors
   )
 mid_spec_3
 # define a cross validation method
 set.seed(42)
 cv <- vfold_cv(train, v = 2)
-# execute the hyperparameter tuning
+# execute the parameter tuning
 tune_res <- mid_spec_3 %>%
   tune_bayes(
-    bikers ~ ., # not allow tune_bayes() to preprocess data
+    bikers ~ ., # pass original data on to interpret()
     resamples = cv,
     iter = 50
   )
@@ -150,12 +165,13 @@ tune_best
 mid_spec_4 <- mid_reg(
   params_main = tune_best$params_main,
   params_inter = tune_best$params_inter,
-  penalty = tune_best$penalty
+  penalty = tune_best$penalty,
+  terms = bikers ~ .^2
 )
 mid_spec_4
 # fit the model
 mid_tune <- mid_spec_4 %>%
-  fit(bikers ~ .^2, train) # pass original data on to interpret()
+  fit(bikers ~ ., train)
 mid_tune
 # evaluate the model
 augment(mid_tune, new_data = valid) %>%
@@ -176,4 +192,19 @@ grid.arrange(nrow = 2,
 ```{r persp_tuned_mid}
 par.midr(mar = c(1, 1, 0, 0))
 persp(mid_tune$fit, "temp:hr", theta = 50, phi = 20, shade = .5)
+```
+
+## Compare MID Models
+
+```{r}
+# construct a midlist object
+mids <- midlist(
+  "1d" = mid_1$fit,
+  "2d" = mid_2$fit,
+  "tuned" = mid_tune$fit
+)
+grid.arrange(
+  ggmid(mids, "hr"),
+  ggmid(mids, "temp", linewidth = 3/4)
+)
 ```

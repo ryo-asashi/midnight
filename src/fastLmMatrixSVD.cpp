@@ -1,5 +1,3 @@
-#define EIGEN_DONT_VECTORIZE
-
 #include <RcppEigen.h>
 
 // [[Rcpp::depends(RcppEigen)]]

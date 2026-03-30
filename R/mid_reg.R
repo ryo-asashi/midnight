@@ -84,13 +84,18 @@ fit_mid_reg <- function(
   } else {
     NULL
   }
-  if (use.formula <- is.null(terms)) {
+  .formula <- NULL
+  if (is.null(terms)) {
+    .formula <- formula
     terms <- attr(stats::terms(mf), "term.labels")
-    terms <- gsub("`", "", terms) # recipe() adds "`" to non-standard terms
+  } else if (rlang::is_formula(terms)) {
+    .formula <- stats::formula(terms)
+    .data <- data[NULL, ]
+    if ("..y" %in% colnames(.data))
+      .data[["..y"]] <- NULL
+    terms <- attr(stats::terms(terms, data = .data), "term.labels")
   }
-  if (rlang::is_formula(terms)) {
-    terms <- attr(stats::terms(terms), "term.labels")
-  }
+  terms <- gsub("`", "", terms) # recipe() adds "`" to non-standard terms
   obj <- midr::interpret(
     object = model,
     x = mf,
@@ -102,15 +107,17 @@ fit_mid_reg <- function(
     terms = terms,
     ...
   )
-  names(obj$call)[2L:4L] <- c("formula", "data", "model")
-  obj$call$formula <- if (use.formula) formula else stats::formula(obj)
-  obj$call$data <- quote(data)
-  obj$call$model <- if (!is.null(model)) quote(model)
-  obj$call$weights <- if (!is.null(weights)) quote(weights)
-  obj$call$k <- params_main
-  obj$call$k2 <- params_inter
-  obj$call$lambda <- penalty
-  obj$call$terms <- if (use.formula) NULL else quote(terms)
+  obj$call <- rlang::call2(
+    "interpret",
+    formula = .formula %||% stats::formula(obj),
+    data = quote(data),
+    model = if (!is.null(model)) quote(model) else NULL,
+    weights = if (!is.null(weights)) quote(weights) else NULL,
+    k = params_main,
+    k2 = params_inter,
+    lambda = penalty,
+    terms = quote(terms)
+  )
   dots <- list(...)
   for (name in names(dots))
     obj$call[[name]] <- dots[[name]]
