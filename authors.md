@@ -11,13 +11,13 @@ Source:
 [`DESCRIPTION`](https://github.com/ryo-asashi/midnight/blob/main/DESCRIPTION)
 
 Asashiba R (2026). *midnight: A 'tidymodels' Engine and Other Extensions
-for the 'midr' Package*. R package version 0.1.2,
+for the 'midr' Package*. R package version 0.2.0,
 <https://github.com/ryo-asashi/midnight>.
 
     @Manual{,
       title = {midnight: A 'tidymodels' Engine and Other Extensions for the 'midr' Package},
       author = {Ryoichi Asashiba},
       year = {2026},
-      note = {R package version 0.1.2},
+      note = {R package version 0.2.0},
       url = {https://github.com/ryo-asashi/midnight},
     }

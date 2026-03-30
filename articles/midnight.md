@@ -44,7 +44,8 @@ mid
 #> 
 #> Call:
 #> interpret(formula = Ozone ~ (Wind + Solar.R)^2, data = data,
-#>  k = 50, lambda = 5)
+#>  model = NULL, weights = NULL, k = 50, k2 = NULL, lambda = 5,
+#>  terms = terms)
 #> 
 #> Intercept: 42.099
 #> 
@@ -119,7 +120,8 @@ mids
 #> 
 #> Call:
 #> interpret(formula = cbind(Ozone, Temp) ~ (Wind + Solar.R)^2,
-#>  data = data, k = 50, lambda = 5)
+#>  data = data, model = NULL, weights = NULL, k = 50, k2 = NULL,
+#>  lambda = 5, terms = terms)
 #> 
 #> Intercept: 42.099, 77.793
 #> 

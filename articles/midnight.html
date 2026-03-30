@@ -42,7 +42,7 @@ img {
 
     <a class="navbar-brand me-2" href="../index.html">midnight</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -136,7 +136,8 @@ model fitting and hyperparameter tuning.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
 <span><span class="co">#&gt; interpret(formula = Ozone ~ (Wind + Solar.R)^2, data = data,</span></span>
-<span><span class="co">#&gt;  k = 50, lambda = 5)</span></span>
+<span><span class="co">#&gt;  model = NULL, weights = NULL, k = 50, k2 = NULL, lambda = 5,</span></span>
+<span><span class="co">#&gt;  terms = terms)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Intercept: 42.099</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -204,7 +205,8 @@ leverage this speed boost across your entire modeling pipeline by using
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
 <span><span class="co">#&gt; interpret(formula = cbind(Ozone, Temp) ~ (Wind + Solar.R)^2,</span></span>
-<span><span class="co">#&gt;  data = data, k = 50, lambda = 5)</span></span>
+<span><span class="co">#&gt;  data = data, model = NULL, weights = NULL, k = 50, k2 = NULL,</span></span>
+<span><span class="co">#&gt;  lambda = 5, terms = terms)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Intercept: 42.099, 77.793</span></span>
 <span><span class="co">#&gt; </span></span>

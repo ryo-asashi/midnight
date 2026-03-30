@@ -42,7 +42,7 @@ img {
 
     <a class="navbar-brand me-2" href="index.html">midnight</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -93,7 +93,7 @@ img {
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"ryo-asashi/midnight"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="fit-mid-surrogate-models-using-parsnip">Fit MID Surrogate Models using ‘parsnip’<a class="anchor" aria-label="anchor" href="#fit-mid-surrogate-models-using-parsnip"></a>
+<h2 id="fit-mid-models-using-parsnip">Fit MID Models using ‘parsnip’<a class="anchor" aria-label="anchor" href="#fit-mid-models-using-parsnip"></a>
 </h2>
 <p>This is a basic example which shows you how to solve a common problem:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -103,9 +103,7 @@ img {
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">gridExtra</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.statlearning.com" class="external-link">ISLR2</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span></span>
-<span>  midr.sequential <span class="op">=</span> <span class="st">"moonlit"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="reference/nightfall.html">nightfall</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># activate midnight</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># split dataset into training / validating subsets</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
@@ -117,6 +115,9 @@ img {
 <span><span class="va">holdout</span> <span class="op">&lt;-</span> <span class="fu">initial_split</span><span class="op">(</span><span class="va">all</span>, prop <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span></span>
 <span><span class="va">train</span> <span class="op">&lt;-</span> <span class="fu">training</span><span class="op">(</span><span class="va">holdout</span><span class="op">)</span></span>
 <span><span class="va">valid</span> <span class="op">&lt;-</span> <span class="fu">testing</span><span class="op">(</span><span class="va">holdout</span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="first-order-mid-model">First-Order MID Model<a class="anchor" aria-label="anchor" href="#first-order-mid-model"></a>
+</h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create a first-order mid surrogate model</span></span>
 <span><span class="va">mid_spec_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mid_reg.html">mid_reg</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -132,7 +133,8 @@ img {
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; interpret(formula = bikers ~ ., data = data)</span></span>
+<span><span class="co">#&gt; interpret(formula = bikers ~ ., data = data, model = NULL, weights = NULL,</span></span>
+<span><span class="co">#&gt;  k = NULL, k2 = NULL, lambda = NULL, terms = terms)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Intercept: 146.06</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -157,24 +159,45 @@ img {
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-ggmid_1d_fit-1.png" width="100%"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/theme_midr.html" class="external-link">par.midr</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/persp.html" class="external-link">persp</a></span><span class="op">(</span><span class="va">mid_1</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"temp:hr"</span>, theta <span class="op">=</span> <span class="fl">50</span>, phi <span class="op">=</span> <span class="fl">20</span>, shade <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-persp_mid_1-1.png" width="100%"></p>
+</div>
+<div class="section level3">
+<h3 id="second-order-mid-model">Second-Order MID Model<a class="anchor" aria-label="anchor" href="#second-order-mid-model"></a>
+</h3>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create a second-order mid surrogate model via "custom formula"</span></span>
-<span><span class="va">mid_spec_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mid_reg.html">mid_reg</a></span><span class="op">(</span>penalty <span class="op">=</span> <span class="fl">0.000001</span><span class="op">)</span></span>
+<span><span class="va">mid_spec_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mid_reg.html">mid_reg</a></span><span class="op">(</span></span>
+<span>  penalty <span class="op">=</span> <span class="fl">0.000001</span>,</span>
+<span>  terms <span class="op">=</span> <span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span><span class="op">^</span><span class="fl">2</span> <span class="co"># add interaction terms</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">set_engine</span><span class="op">(</span></span>
+<span>    <span class="st">"midr"</span>,</span>
+<span>    method <span class="op">=</span> <span class="st">"llt"</span> <span class="co"># for faster computation</span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="va">mid_spec_2</span></span>
 <span><span class="co">#&gt; mid reg Model Specification (regression)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Main Arguments:</span></span>
 <span><span class="co">#&gt;   penalty = 1e-06</span></span>
+<span><span class="co">#&gt;   terms = bikers ~ .^2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Engine-Specific Arguments:</span></span>
+<span><span class="co">#&gt;   method = llt</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Computational engine: midr</span></span>
 <span><span class="co"># fit the model</span></span>
 <span><span class="va">mid_2</span> <span class="op">&lt;-</span> <span class="va">mid_spec_2</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">fit</span><span class="op">(</span><span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span><span class="op">^</span><span class="fl">2</span>, <span class="va">train</span><span class="op">)</span> <span class="co"># pass original data on to interpret()</span></span>
+<span>  <span class="fu">fit</span><span class="op">(</span><span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span>, <span class="va">train</span><span class="op">)</span></span>
 <span><span class="va">mid_2</span></span>
 <span><span class="co">#&gt; parsnip model object</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; interpret(formula = bikers ~ .^2, data = data, lambda = 1e-06)</span></span>
+<span><span class="co">#&gt; interpret(formula = bikers ~ .^2, data = data, model = NULL,</span></span>
+<span><span class="co">#&gt;  weights = NULL, k = NULL, k2 = NULL, lambda = 1e-06, terms = terms,</span></span>
+<span><span class="co">#&gt;  method = "llt")</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Intercept: 146.06</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -192,7 +215,7 @@ img {
 <span><span class="co">#&gt;   .metric .estimator .estimate</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt; 1 rmse    standard        44.3</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">imp_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/mid.importance.html" class="external-link">mid.importance</a></span><span class="op">(</span><span class="va">mid_2</span><span class="op">$</span><span class="va">fit</span>, data <span class="op">=</span> <span class="va">train</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span>,</span>
 <span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">imp_2</span>, max.nterms <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>,</span>
@@ -202,28 +225,29 @@ img {
 <span>       data <span class="op">=</span> <span class="va">valid</span>, main.effects <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-ggmid_2d_fit-1.png" width="100%"></p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/theme_midr.html" class="external-link">par.midr</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/persp.html" class="external-link">persp</a></span><span class="op">(</span><span class="va">mid_2</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"temp:hr"</span>, theta <span class="op">=</span> <span class="fl">50</span>, phi <span class="op">=</span> <span class="fl">20</span>, shade <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-persp_mid-1.png" width="100%"></p>
+<p><img src="reference/figures/README-persp_mid_2-1.png" width="100%"></p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="tune-mid-surrogate-models-using-tune">Tune MID Surrogate Models using ‘tune’<a class="anchor" aria-label="anchor" href="#tune-mid-surrogate-models-using-tune"></a>
 </h2>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create a second-order mid surrogate model via "custom formula"</span></span>
 <span><span class="co"># </span></span>
 <span><span class="va">mid_spec_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mid_reg.html">mid_reg</a></span><span class="op">(</span></span>
 <span>  params_main <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  params_inter <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  penalty <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  terms <span class="op">=</span> <span class="op">~</span><span class="op">(</span><span class="va">mnth</span><span class="op">+</span><span class="va">hr</span><span class="op">+</span><span class="va">workingday</span><span class="op">+</span><span class="va">weathersit</span><span class="op">+</span><span class="va">temp</span><span class="op">+</span><span class="va">hum</span><span class="op">+</span><span class="va">windspeed</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></span>
-<span>  <span class="co"># all main effects and all 2-way interactions</span></span>
+<span>  terms <span class="op">=</span> <span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span><span class="op">^</span><span class="fl">2</span></span>
 <span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">set_engine</span><span class="op">(</span></span>
 <span>    engine <span class="op">=</span> <span class="st">"midr"</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"llt"</span>,</span>
-<span>    verbosity <span class="op">=</span> <span class="fl">0L</span></span>
+<span>    method <span class="op">=</span> <span class="st">"llt"</span>, <span class="co"># for faster computation</span></span>
+<span>    verbosity <span class="op">=</span> <span class="fl">0L</span>, <span class="co"># for keeping console clean</span></span>
+<span>    singular.ok <span class="op">=</span> <span class="cn">TRUE</span> <span class="co"># for avoiding errors</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="va">mid_spec_3</span></span>
 <span><span class="co">#&gt; mid reg Model Specification (regression)</span></span>
@@ -232,20 +256,21 @@ img {
 <span><span class="co">#&gt;   penalty = tune()</span></span>
 <span><span class="co">#&gt;   params_main = tune()</span></span>
 <span><span class="co">#&gt;   params_inter = tune()</span></span>
-<span><span class="co">#&gt;   terms = ~(mnth + hr + workingday + weathersit + temp + hum + windspeed)^2</span></span>
+<span><span class="co">#&gt;   terms = bikers ~ .^2</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Engine-Specific Arguments:</span></span>
 <span><span class="co">#&gt;   method = llt</span></span>
 <span><span class="co">#&gt;   verbosity = 0</span></span>
+<span><span class="co">#&gt;   singular.ok = TRUE</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Computational engine: midr</span></span>
 <span><span class="co"># define a cross validation method</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
 <span><span class="va">cv</span> <span class="op">&lt;-</span> <span class="fu">vfold_cv</span><span class="op">(</span><span class="va">train</span>, v <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span><span class="co"># execute the hyperparameter tuning</span></span>
+<span><span class="co"># execute the parameter tuning</span></span>
 <span><span class="va">tune_res</span> <span class="op">&lt;-</span> <span class="va">mid_spec_3</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">tune_bayes</span><span class="op">(</span></span>
-<span>    <span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span>, <span class="co"># not allow tune_bayes() to preprocess data</span></span>
+<span>    <span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span>, <span class="co"># pass original data on to interpret()</span></span>
 <span>    resamples <span class="op">=</span> <span class="va">cv</span>,</span>
 <span>    iter <span class="op">=</span> <span class="fl">50</span></span>
 <span>  <span class="op">)</span></span>
@@ -255,12 +280,13 @@ img {
 <span><span class="co">#&gt;   penalty params_main params_inter .config</span></span>
 <span><span class="co">#&gt;     &lt;dbl&gt;       &lt;int&gt;        &lt;int&gt; &lt;chr&gt;  </span></span>
 <span><span class="co">#&gt; 1   0.668          70            5 Iter23</span></span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create a second-order mid surrogate model via "custom formula"</span></span>
 <span><span class="va">mid_spec_4</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mid_reg.html">mid_reg</a></span><span class="op">(</span></span>
 <span>  params_main <span class="op">=</span> <span class="va">tune_best</span><span class="op">$</span><span class="va">params_main</span>,</span>
 <span>  params_inter <span class="op">=</span> <span class="va">tune_best</span><span class="op">$</span><span class="va">params_inter</span>,</span>
-<span>  penalty <span class="op">=</span> <span class="va">tune_best</span><span class="op">$</span><span class="va">penalty</span></span>
+<span>  penalty <span class="op">=</span> <span class="va">tune_best</span><span class="op">$</span><span class="va">penalty</span>,</span>
+<span>  terms <span class="op">=</span> <span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span><span class="op">^</span><span class="fl">2</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">mid_spec_4</span></span>
 <span><span class="co">#&gt; mid reg Model Specification (regression)</span></span>
@@ -269,18 +295,20 @@ img {
 <span><span class="co">#&gt;   penalty = tune_best$penalty</span></span>
 <span><span class="co">#&gt;   params_main = tune_best$params_main</span></span>
 <span><span class="co">#&gt;   params_inter = tune_best$params_inter</span></span>
+<span><span class="co">#&gt;   terms = bikers ~ .^2</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Computational engine: midr</span></span>
 <span><span class="co"># fit the model</span></span>
 <span><span class="va">mid_tune</span> <span class="op">&lt;-</span> <span class="va">mid_spec_4</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">fit</span><span class="op">(</span><span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span><span class="op">^</span><span class="fl">2</span>, <span class="va">train</span><span class="op">)</span> <span class="co"># pass original data on to interpret()</span></span>
+<span>  <span class="fu">fit</span><span class="op">(</span><span class="va">bikers</span> <span class="op">~</span> <span class="va">.</span>, <span class="va">train</span><span class="op">)</span></span>
 <span><span class="va">mid_tune</span></span>
 <span><span class="co">#&gt; parsnip model object</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; interpret(formula = bikers ~ .^2, data = data, k = 70L, lambda = 0.668346758138943,</span></span>
-<span><span class="co">#&gt;  k2 = 5L)</span></span>
+<span><span class="co">#&gt; interpret(formula = bikers ~ .^2, data = data, model = NULL,</span></span>
+<span><span class="co">#&gt;  weights = NULL, k = 70L, k2 = 5L, lambda = 0.668346758138943,</span></span>
+<span><span class="co">#&gt;  terms = terms)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Intercept: 146.06</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -298,7 +326,7 @@ img {
 <span><span class="co">#&gt;   .metric .estimator .estimate</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt; 1 rmse    standard        43.0</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">imp_tune</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/mid.importance.html" class="external-link">mid.importance</a></span><span class="op">(</span><span class="va">mid_tune</span><span class="op">$</span><span class="va">fit</span>, data <span class="op">=</span> <span class="va">train</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span>,</span>
 <span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">imp_tune</span>, max.nterms <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>,</span>
@@ -308,10 +336,26 @@ img {
 <span>       data <span class="op">=</span> <span class="va">valid</span>, main.effects <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-ggmid_tune_fit-1.png" width="100%"></p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/theme_midr.html" class="external-link">par.midr</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/persp.html" class="external-link">persp</a></span><span class="op">(</span><span class="va">mid_tune</span><span class="op">$</span><span class="va">fit</span>, <span class="st">"temp:hr"</span>, theta <span class="op">=</span> <span class="fl">50</span>, phi <span class="op">=</span> <span class="fl">20</span>, shade <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-persp_tuned_mid-1.png" width="100%"></p>
+</div>
+<div class="section level2">
+<h2 id="compare-mid-models">Compare MID Models<a class="anchor" aria-label="anchor" href="#compare-mid-models"></a>
+</h2>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># construct a midlist object</span></span>
+<span><span class="va">mids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/midlist.html" class="external-link">midlist</a></span><span class="op">(</span></span>
+<span>  <span class="st">"1d"</span> <span class="op">=</span> <span class="va">mid_1</span><span class="op">$</span><span class="va">fit</span>,</span>
+<span>  <span class="st">"2d"</span> <span class="op">=</span> <span class="va">mid_2</span><span class="op">$</span><span class="va">fit</span>,</span>
+<span>  <span class="st">"tuned"</span> <span class="op">=</span> <span class="va">mid_tune</span><span class="op">$</span><span class="va">fit</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">mids</span>, <span class="st">"hr"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://ryo-asashi.github.io/midr/reference/ggmid.html" class="external-link">ggmid</a></span><span class="op">(</span><span class="va">mids</span>, <span class="st">"temp"</span>, linewidth <span class="op">=</span> <span class="fl">3</span><span class="op">/</span><span class="fl">4</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-2-1.png" width="100%"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
