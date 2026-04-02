@@ -10,18 +10,18 @@ nightfall(methods = TRUE, solvers = TRUE, themes = TRUE)
 daybreak(methods = TRUE, solvers = TRUE, themes = TRUE)
 }
 \arguments{
-\item{methods}{logical. If \code{TRUE}, registers (or restores) the extended S3 methods.}
+\item{methods}{logical. If \code{TRUE}, overrides (or restores) the \code{ggmid.midimp} S3 method.}
 
-\item{solvers}{logical. If \code{TRUE}, switches (or restores) the calculation solvers for matrix responses.}
+\item{solvers}{logical. If \code{TRUE}, sets (or restores) calculation solvers via \code{options()} (e.g., \code{midr.solver.qr}, \code{midr.solver.svd}). These optimized solvers can be utilized by specifying the corresponding method in \code{interpret()} (e.g., \code{method = "qr"}).}
 
-\item{themes}{logical. If \code{TRUE}, applies (or restores) the specific color themes.}
+\item{themes}{logical. If \code{TRUE}, applies (or restores) color themes by setting \code{options()} for \code{midr.qualitative}, \code{midr.sequential}, and \code{midr.diverging}.}
 }
 \value{
 \code{nightfall()} and \code{daybreak()} return an invisible list containing the previous options for solvers and themes.
 }
 \description{
 \code{nightfall()} activates the extended features provided by the \pkg{midnight} package.
-It registers customized S3 methods (e.g., for \code{ggmid.midimp()}), switches the underlying solvers to highly optimized Eigen-based routines, and applies midnight-themed color palettes.
+It overrides specific S3 methods (such as \code{ggmid.midimp}), switches the underlying solvers to highly optimized Eigen-based routines via global options, and applies midnight-themed color palettes.
 
 \code{daybreak()} reverses these changes, restoring the default behavior, solvers, and themes of the \pkg{midr} package.
 }
